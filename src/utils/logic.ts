@@ -38,9 +38,7 @@ export const getNeighborCount = (board: Board, i: number, j: number): number => 
     const r2 = (i - 1 + BOARD_LENGTH) % BOARD_LENGTH;
     const c1 = (j + 1 + BOARD_LENGTH) % BOARD_LENGTH;
     const c2 = (j - 1 + BOARD_LENGTH) % BOARD_LENGTH;
-    const count = board[r1][c1] + board[r1][j] + board[r1][c2] 
-                + board[i][c1] + board[i][c2]
-                + board[r2][c1] + board[r2] [j] + board[r2][c2];
+    const count = board[r1][c1] + board[r1][j] + board[r1][c2] + board[i][c1] + board[i][c2] + board[r2][c1] + board[r2] [j] + board[r2][c2];
     return count;
 };
 
@@ -89,11 +87,13 @@ export const flipCell = (board: Board, i: number, j: number): Board => {
      * @note 你可以使用命令 yarn test flip 来运行我们编写的单元测试以检验自己的实现
      */
     // Step 3 BEGIN
-    let newBoard = board.map((row) => [...row]);
-    if (board[i][j] === 1)
+    const newBoard = board.map((row) => [...row]);
+    if (board[i][j] === 1) {
         newBoard[i][j] = 0;
-    else
+    }
+    else {
         newBoard[i][j] = 1;
+    }
     return newBoard;
     // Step 3 END
 
