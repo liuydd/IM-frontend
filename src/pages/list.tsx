@@ -39,7 +39,13 @@ const ListScreen = () => {
 
     const deleteBoard = (id: number) => {
         // Step 4 BEGIN
-
+        setRefreshing(true);
+        request(`/api/boards/${id}`, "DELETE", true)
+        .then(res => {
+            (res.code === 0)? alert(DELETE_SUCCESS): alert(FAILURE_PREFIX + res.info);
+        })
+        .catch(error => alert(FAILURE_PREFIX + error))
+        .finally(() => setRefreshing(false));
         // Step 4 END
     };
 
