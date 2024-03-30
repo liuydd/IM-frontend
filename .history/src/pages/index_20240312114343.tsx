@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
 import BoardUI from "../components/BoardUI";
-import { CREATE_SUCCESS, FAILURE_PREFIX, LOGIN_REQUIRED, UPDATE_SUCCESS, REGISTER_REQUIRED } from "../constants/string";
+import { CREATE_SUCCESS, FAILURE_PREFIX, LOGIN_REQUIRED, UPDATE_SUCCESS } from "../constants/string";
 import { getBlankBoard, stepBoard, flipCell, boardToString, stringToBoard } from "../utils/logic";
 import { NetworkError, NetworkErrorType, request } from "../utils/network";
 import { RootState } from "../redux/store";
@@ -10,7 +10,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 const BoardScreen = () => {
     /**
-     * @todo [Step 3] 请在下述一处代码缺失部填写合适的代码，使得棋盘状态正确切换且计时器资源分配、释放合理
+     * @todo [Step 3] 请在下述一处代码缺失部分填写合适的代码，使得棋盘状态正确切换且计时器资源分配、释放合理
      */
     const boardCache = useSelector((state: RootState) => state.board.board);
     const userName = useSelector((state: RootState) => state.auth.name);
@@ -80,14 +80,15 @@ const BoardScreen = () => {
 
     const switchAutoPlay = () => {
         // Step 3 BEGIN
-        setAutoPlay(!autoPlay);
-        if (autoPlay) {
+        if(!autoPlay) setAutoPlay(true);
+        else setAutoPlay(false);
+        if(autoPlay){
             clearInterval(timerRef.current);
         }
-        else {
+        else{
             timerRef.current = setInterval(() => {
                 setBoard(board => stepBoard(board));
-            }, 200);
+        }, 200);
         }
         // Step 3 END
     };
