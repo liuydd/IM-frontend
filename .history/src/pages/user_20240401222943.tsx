@@ -3,7 +3,7 @@ import { BACKEND_URL, FAILURE_PREFIX} from "../constants/string";
 import { useRouter } from "next/router";
 import { setName, setToken } from "../redux/auth";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../redux/store";
+import { RootState } from '../redux/store';
 
 const UserScreen = () => {
     //获取现有的userName和token
@@ -25,7 +25,7 @@ const UserScreen = () => {
         fetch(`${BACKEND_URL}/api/user`, {
             method : "DELETE",
             headers : {
-                "Authorization" : `Bearer ${token}`
+                'Authorization' : `Bearer ${token}`
             }
         })
         .then(response => {
@@ -38,7 +38,7 @@ const UserScreen = () => {
             }
         })
         .catch((err) => {
-            alert("An error occurred while deleting account");
+            alert('An error occurred while deleting account');
         });
     };
 
