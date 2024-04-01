@@ -30,7 +30,7 @@ const RegisterScreen = () => {
                     dispatch(setName(username));
                     dispatch(setToken(res.token));
                     alert(REGISTER_SUCCESS_PREFIX + username);
-                    router.push('/login');
+                    router.push('./user'); //通过user_id跳到user页面，似乎是后端的活？
                 }
                 else {
                     alert(REGISTER_FAILED);

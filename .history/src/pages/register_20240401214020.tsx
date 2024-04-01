@@ -30,7 +30,7 @@ const RegisterScreen = () => {
                     dispatch(setName(username));
                     dispatch(setToken(res.token));
                     alert(REGISTER_SUCCESS_PREFIX + username);
-                    router.push('/login');
+                    router.push('./login');
                 }
                 else {
                     alert(REGISTER_FAILED);

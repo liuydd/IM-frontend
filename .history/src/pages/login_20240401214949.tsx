@@ -1,27 +1,22 @@
 import { useState } from "react";
-import { BACKEND_URL, FAILURE_PREFIX, REGISTER_FAILED, REGISTER_SUCCESS_PREFIX } from "../constants/string";
+import { BACKEND_URL, FAILURE_PREFIX, LOGIN_FAILED, LOGIN_SUCCESS_PREFIX } from "../constants/string";
 import { useRouter } from "next/router";
 import { setName, setToken } from "../redux/auth";
 import { useDispatch } from "react-redux";
 
-const RegisterScreen = () => {
+const LoginScreen = () => {
     const [username, setUserName] = useState("");
     const [password, setPassword] = useState("");
-    const [email, setEmail] = useState("");
-    const [phone_number, setPhoneNumber] = useState("");
-    //const [error, setError] = useState("");
 
     const router = useRouter();
     const dispatch = useDispatch();
 
-    const register = () => {
-        fetch(`${BACKEND_URL}/api/register`, {
+    const login = () => {
+        fetch(`${BACKEND_URL}/api/login`, {
             method: "POST",
             body: JSON.stringify({
                 username,
                 password,
-                email, 
-                phone_number,
             }),
         })
             .then((res) => res.json())
@@ -29,11 +24,12 @@ const RegisterScreen = () => {
                 if (Number(res.code) === 0) {
                     dispatch(setName(username));
                     dispatch(setToken(res.token));
-                    alert(REGISTER_SUCCESS_PREFIX + username);
-                    router.push('/login');
+                    alert(LOGIN_SUCCESS_PREFIX + username);
+
+                    router.push('./user/${username}'); //通过user_id跳到user页面，似乎是后端的活？
                 }
                 else {
-                    alert(REGISTER_FAILED);
+                    alert(LOGIN_FAILED);
                 }
             })
             .catch((err) => alert(FAILURE_PREFIX + err));
@@ -53,21 +49,11 @@ const RegisterScreen = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
             />
-            <input
-                type="text"
-                placeholder="Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-            />
-            <input
-                type="text"
-                placeholder="Phone number"
-                value={phone_number}
-                onChange={(e) => setPhoneNumber(e.target.value)}
-            />
-            <button onClick={register} disabled={username === "" || password === ""}>
-                Register
+            <button onClick={login} disabled={username === "" || password === ""}>
+                Login
             </button>
         </>
     );
 };
+
+export default LoginScreen;
