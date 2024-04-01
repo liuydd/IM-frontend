@@ -1,18 +1,18 @@
 import { useState } from "react";
-import { BACKEND_URL, FAILURE_PREFIX, LOGIN_FAILED, LOGIN_SUCCESS_PREFIX } from "../constants/string";
+import { BACKEND_URL, FAILURE_PREFIX, REGISTER_FAILED, REGISTER_SUCCESS_PREFIX } from "../constants/string";
 import { useRouter } from "next/router";
 import { setName, setToken } from "../redux/auth";
 import { useDispatch } from "react-redux";
 
-const LoginScreen = () => {
+const RegisterScreen = () => {
     const [userName, setUserName] = useState("");
     const [password, setPassword] = useState("");
 
     const router = useRouter();
     const dispatch = useDispatch();
 
-    const login = () => {
-        fetch(`${BACKEND_URL}/api/login`, {
+    const register = () => {
+        fetch(`${BACKEND_URL}/api/register`, {
             method: "POST",
             body: JSON.stringify({
                 userName,
@@ -24,11 +24,11 @@ const LoginScreen = () => {
                 if (Number(res.code) === 0) {
                     dispatch(setName(userName));
                     dispatch(setToken(res.token));
-                    alert(LOGIN_SUCCESS_PREFIX + userName);
-                    router.push('./user'); //通过user_id跳到user页面，似乎是后端的活？
+                    alert(REGISTER_SUCCESS_PREFIX + userName);
+                    router.push("/user") //待改
                 }
                 else {
-                    alert(LOGIN_FAILED);
+                    alert(REGISTER_FAILED);
                 }
             })
             .catch((err) => alert(FAILURE_PREFIX + err));
@@ -48,11 +48,9 @@ const LoginScreen = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
             />
-            <button onClick={login} disabled={userName === "" || password === ""}>
-                Login
+            <button onClick={register} disabled={userName === "" || password === ""}>
+                Register
             </button>
         </>
     );
 };
-
-export default LoginScreen;
