@@ -7,8 +7,8 @@ import { NetworkError, NetworkErrorType, request } from "../utils/network";
 import { RootState } from "../redux/store";
 import { resetBoardCache, setBoardCache } from "../redux/board";
 import { useSelector, useDispatch } from "react-redux";
-import LoginScreen from "./login";
-import RegisterScreen from "./register";
+import LoginScreen from './login';
+import RegisterScreen from './register';
 
 
 const IndexScreen = () => {

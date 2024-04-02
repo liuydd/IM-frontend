@@ -7,8 +7,8 @@ import { NetworkError, NetworkErrorType, request } from "../utils/network";
 import { RootState } from "../redux/store";
 import { resetBoardCache, setBoardCache } from "../redux/board";
 import { useSelector, useDispatch } from "react-redux";
-import LoginScreen from "./login";
-import RegisterScreen from "./register";
+import LoginScreen from './login';
+import RegisterScreen from './register';
 
 
 const IndexScreen = () => {
@@ -16,7 +16,7 @@ const IndexScreen = () => {
         <>
             <h1>Login</h1>
             <LoginScreen />
-            <p>还没有账号?请注册 <RegisterScreen /></p>
+            <p>Don't have an account? <RegisterScreen /></p>
         </>
     );
 };
