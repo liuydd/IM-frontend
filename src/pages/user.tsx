@@ -5,7 +5,7 @@ import { setName, setToken } from "../redux/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 
-const UserScreen = () => {
+export default function UserScreen() {
     //获取现有的userName和token
     const userName = useSelector((state: RootState) => state.auth.name);
     const token = useSelector((state: RootState) => state.auth.token);
@@ -52,4 +52,4 @@ const UserScreen = () => {
             </button>
         </>
     );
-};
+}
