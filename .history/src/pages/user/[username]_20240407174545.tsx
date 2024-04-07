@@ -16,15 +16,10 @@ const UserScreen = () => {
     const [showModal, setShowModal] = useState(false);
     const [formData, setFormData] = useState({
         username: "",
-        new_username: "",
         password: "",
-        new_password: "",
         avatar: "",
-        new_avatar: "",
         email: "",
-        new_email: "",
-        phone_number: "",
-        new_phone_number: ""
+        phone_number: ""
     });
 
     const openModal = () => {
@@ -44,7 +39,7 @@ const UserScreen = () => {
     };
 
     const edit = () => {
-        const { username, new_username, password, new_password, new_avatar, new_email, new_phone_number } = formData; //头像怎么修改
+        const { username, password, avatar, email, phone_number } = formData; //头像怎么修改
 
         fetch(`${BACKEND_URL}/api/modify`, {
             method : "POST",
@@ -54,12 +49,10 @@ const UserScreen = () => {
             },
             body : JSON.stringify({
                 username,
-                new_username,
                 password,
-                new_password,
-                new_avatar,
-                new_email,
-                new_phone_number,
+                avatar,
+                email,
+                phone_number,
             })
         })
         .then((res) => res.json())
