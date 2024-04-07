@@ -16,9 +16,7 @@ const IndexScreen = () => {
         <>
             <h1>Login</h1>
             
-            <p>还没有账号?请注册</p>
-            <p>注意：密码只能包含字母和数字，长度不能小于8，不能大于16</p>
-            <p><RegisterScreen /></p>
+            <p>还没有账号?请注册</p><p><RegisterScreen /></p>
         </>
     );
 };

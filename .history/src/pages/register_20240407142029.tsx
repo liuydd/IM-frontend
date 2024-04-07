@@ -33,7 +33,7 @@ const RegisterScreen = () => {
                     router.push("/login");
                 }
                 else {
-                    if (Number(res.code) === 2) {
+                    if (res.message) {
                         alert(REGISTER_FAILED + res.message);
                     } else {
                         alert(REGISTER_FAILED);
