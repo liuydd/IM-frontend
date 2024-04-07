@@ -40,7 +40,6 @@ const UserScreen = () => {
 
     const edit = () => {
         const { username, password, avatar, email, phone_number } = formData; //头像怎么修改
-
         fetch(`${BACKEND_URL}/api/modify`, {
             method : "POST",
             headers : {
@@ -50,7 +49,6 @@ const UserScreen = () => {
             body : JSON.stringify({
                 username,
                 password,
-                avatar,
                 email,
                 phone_number,
             })
@@ -65,8 +63,6 @@ const UserScreen = () => {
             }
         })
         .catch((err) => alert(FAILURE_PREFIX + err));
-
-        closeModal();
     };
 
     const logout = () => {

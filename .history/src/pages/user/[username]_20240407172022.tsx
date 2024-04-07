@@ -13,7 +13,6 @@ const UserScreen = () => {
     const router = useRouter();
     const dispatch = useDispatch();
 
-    const [showModal, setShowModal] = useState(false);
     const [formData, setFormData] = useState({
         username: "",
         password: "",
@@ -22,25 +21,8 @@ const UserScreen = () => {
         phone_number: ""
     });
 
-    const openModal = () => {
-        setShowModal(true);
-      };
-    
-    const closeModal = () => {
-        setShowModal(false);
-    };
-
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
-        setFormData((prevData) => ({
-            ...prevData,
-            [name]: value
-        }));
-    };
-
     const edit = () => {
         const { username, password, avatar, email, phone_number } = formData; //头像怎么修改
-
         fetch(`${BACKEND_URL}/api/modify`, {
             method : "POST",
             headers : {
@@ -50,7 +32,6 @@ const UserScreen = () => {
             body : JSON.stringify({
                 username,
                 password,
-                avatar,
                 email,
                 phone_number,
             })
@@ -65,8 +46,6 @@ const UserScreen = () => {
             }
         })
         .catch((err) => alert(FAILURE_PREFIX + err));
-
-        closeModal();
     };
 
     const logout = () => {
@@ -111,66 +90,11 @@ const UserScreen = () => {
                     Delete Account
                 </button>
             </p>
-            <div>
-                <button onClick = {openModal}>
-                    Account Info
+            <p>
+                <button onClick = {edit}>
+                    Edit Account Info
                 </button>
-                {showModal && (
-                <div className="modal">
-                <div className="modal-content">
-                    <span className="close" onClick={closeModal}>&times;</span>
-                    <h2>Edit Account Info</h2>
-                    <form onSubmit={edit}>
-                    <label>
-                        Username:
-                        <input
-                        type="text"
-                        name="username"
-                        value={formData.username}
-                        onChange={handleChange}
-                        />
-                    </label>
-                    <label>
-                        Password:
-                        <input
-                        type="password"
-                        name="password"
-                        value={formData.password}
-                        onChange={handleChange}
-                        />
-                    </label>
-                    <label>
-                        Avatar:
-                        <input
-                        type="file"
-                        name="avatar"
-                        onChange={handleChange}
-                        />
-                    </label>
-                    <label>
-                        Email:
-                        <input
-                        type="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        />
-                    </label>
-                    <label>
-                        Phone Number:
-                        <input
-                        type="tel"
-                        name="phone_number"
-                        value={formData.phone_number}
-                        onChange={handleChange}
-                        />
-                    </label>
-                    <button type="submit">Save</button>
-                    </form>
-                </div>
-                </div>
-            )}
-            </div>
+            </p>
         </>
     );
 };

@@ -50,7 +50,6 @@ const UserScreen = () => {
             body : JSON.stringify({
                 username,
                 password,
-                avatar,
                 email,
                 phone_number,
             })
