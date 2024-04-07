@@ -5,7 +5,7 @@ import { setName, setToken } from "../redux/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 
-export default function UserScreen() {
+const UserScreen = () => {
     //获取现有的userName和token
     const username = useSelector((state: RootState) => state.auth.name);
     const token = useSelector((state: RootState) => state.auth.token);
@@ -46,7 +46,7 @@ export default function UserScreen() {
     };
 
     const delete_user = () => {
-        fetch(`${BACKEND_URL}/api/user`, {
+        fetch(`${BACKEND_URL}/api/user/${username}`, {
             method : "DELETE",
             headers : {
                 Authorization : `Bearer ${token}`
@@ -76,4 +76,6 @@ export default function UserScreen() {
             </button>
         </>
     );
-}
+};
+
+export default UserScreen;
