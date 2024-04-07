@@ -79,21 +79,12 @@ const UserScreen = () => {
 
     return (
         <>
-            <p>
-                <button onClick = {logout}>
-                    Logout
-                </button>
-            </p>
-            <p>
-                <button onClick = {delete_user}>
-                    Delete Account
-                </button>
-            </p>
-            <p>
-                <button onClick = {edit}>
-                    Edit Account Info
-                </button>
-            </p>
+            <button onClick = {logout}>
+                Logout
+            </button>
+            <button onClick = {delete_user}>
+                Delete Account
+            </button>
         </>
     );
 };

@@ -18,36 +18,24 @@ const UserScreen = () => {
         password: "",
         avatar: "",
         email: "",
-        phone_number: ""
+        phone: ""
     });
 
-    const edit = () => {
-        const { username, password, avatar, email, phone_number } = formData; //头像怎么修改
-        fetch(`${BACKEND_URL}/api/user/${username}`, {
-            method : "PUT",
-            headers : {
-                "Content-Type" : "application/json",
-                Authorization : `Bearer ${token}`
-            },
-            body : JSON.stringify({
-                username,
-                password,
-                email,
-                phone_number,
-            })
-        })
-        .then(response => {
-            if(response.ok) {
-                console.log("成功更新用户信息");
-            }
-            else {
-                console.error("更新用户信息失败");
-            }
-        })
-        .catch((err) => {
-            alert(FAILURE_PREFIX);
-        })
-    };
+    // const edit = () => {
+    //     fetch(`${BACKEND_URL}/api/user`, {
+    //         method : "PUT",
+    //         headers : {
+    //             "Content-Type" : "application/json",
+    //             Authorization : `Bearer ${token}`
+    //         },
+    //         body : JSON.stringify({
+    //             username,
+    //             password,
+    //             email,
+    //             phone_number,
+    //         })
+    //     })
+    // };
 
     const logout = () => {
         localStorage.removeItem("token");
@@ -57,7 +45,7 @@ const UserScreen = () => {
         router.push("/login");
     };
 
-    const delete_user = () => { //删除用户功能有问题，不知道是后端还是前端的问题
+    const delete_user = () => {
         fetch(`${BACKEND_URL}/api/user`, {
             method : "DELETE",
             headers : {
@@ -66,7 +54,8 @@ const UserScreen = () => {
         })
         .then(response => {
             if(response.ok) {
-                logout();
+                logout(); //但是直接logout似乎没有删除这个用户的除用户名和密码外的任何信息？
+                //maybe这是后端的工作
             }
             else {
                 alert(FAILURE_PREFIX);
@@ -79,21 +68,12 @@ const UserScreen = () => {
 
     return (
         <>
-            <p>
-                <button onClick = {logout}>
-                    Logout
-                </button>
-            </p>
-            <p>
-                <button onClick = {delete_user}>
-                    Delete Account
-                </button>
-            </p>
-            <p>
-                <button onClick = {edit}>
-                    Edit Account Info
-                </button>
-            </p>
+            <button onClick = {logout}>
+                Logout
+            </button>
+            <button onClick = {delete_user}>
+                Delete Account
+            </button>
         </>
     );
 };

@@ -18,36 +18,24 @@ const UserScreen = () => {
         password: "",
         avatar: "",
         email: "",
-        phone_number: ""
+        phone: ""
     });
 
-    const edit = () => {
-        const { username, password, avatar, email, phone_number } = formData; //头像怎么修改
-        fetch(`${BACKEND_URL}/api/user/${username}`, {
-            method : "PUT",
-            headers : {
-                "Content-Type" : "application/json",
-                Authorization : `Bearer ${token}`
-            },
-            body : JSON.stringify({
-                username,
-                password,
-                email,
-                phone_number,
-            })
-        })
-        .then(response => {
-            if(response.ok) {
-                console.log("成功更新用户信息");
-            }
-            else {
-                console.error("更新用户信息失败");
-            }
-        })
-        .catch((err) => {
-            alert(FAILURE_PREFIX);
-        })
-    };
+    // const edit = () => { //这个后端还没有接口
+    //     fetch(`${BACKEND_URL}/api/user`, {
+    //         method : "PUT",
+    //         headers : {
+    //             "Content-Type" : "application/json",
+    //             Authorization : `Bearer ${token}`
+    //         },
+    //         body : JSON.stringify({
+    //             username,
+    //             password,
+    //             email,
+    //             phone_number,
+    //         })
+    //     })
+    // };
 
     const logout = () => {
         localStorage.removeItem("token");
@@ -79,21 +67,12 @@ const UserScreen = () => {
 
     return (
         <>
-            <p>
-                <button onClick = {logout}>
-                    Logout
-                </button>
-            </p>
-            <p>
-                <button onClick = {delete_user}>
-                    Delete Account
-                </button>
-            </p>
-            <p>
-                <button onClick = {edit}>
-                    Edit Account Info
-                </button>
-            </p>
+            <button onClick = {logout}>
+                Logout
+            </button>
+            <button onClick = {delete_user}>
+                Delete Account
+            </button>
         </>
     );
 };
