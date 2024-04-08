@@ -79,7 +79,7 @@ const UserScreen = () => {
         localStorage.removeItem("username");
         dispatch(setName(""));
         dispatch(setToken(""));
-        router.push("/");
+        router.push("/login");
     };
 
     const delete_user = () => { //删除用户功能有问题，不知道是后端还是前端的问题

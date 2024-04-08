@@ -16,20 +16,21 @@ const UserScreen = () => {
     const [showModal, setShowModal] = useState(false);
     const [formData, setFormData] = useState({
         username: "",
-        newUsername: "",
+        new_username: "",
         password: "",
-        newPassword: "",
+        new_password: "",
         avatar: "",
-        newAvatar: "",
+        new_avatar: "",
         email: "",
-        newEmail: "",
+        new_email: "",
         phone_number: "",
-        newPhoneNumber: ""
+        new_phone_number: ""
     });
 
     const openModal = () => {
         setShowModal(true);
       };
+    
     const closeModal = () => {
         setShowModal(false);
     };
@@ -43,30 +44,31 @@ const UserScreen = () => {
     };
 
     const edit = () => {
-        const { username, newUsername, password, newPassword, newAvatar, newEmail, newPhoneNumber } = formData; //头像怎么修改
+        const { username, new_username, password, new_password, new_avatar, new_email, new_phone_number } = formData; //头像怎么修改
+
         fetch(`${BACKEND_URL}/api/modify`, {
             method : "POST",
             headers : {
                 "Content-Type" : "application/json",
-                "Authorization" : `Bearer ${token}`
+                Authorization : `Bearer ${token}`
             },
             body : JSON.stringify({
                 username,
-                newUsername,
+                new_username,
                 password,
-                newPassword,
-                newAvatar,
-                newEmail,
-                newPhoneNumber,
+                new_password,
+                new_avatar,
+                new_email,
+                new_phone_number,
             })
         })
         .then((res) => res.json())
         .then((res) => {
             if (Number(res.code) === 0) {
-                alert("用户信息更新成功");
+                alert("用户信息更新成功")
             }
             else {
-                alert("用户信息更新失败");
+                alert("用户信息更新失败")
             }
         })
         .catch((err) => alert(FAILURE_PREFIX + err));
@@ -79,7 +81,7 @@ const UserScreen = () => {
         localStorage.removeItem("username");
         dispatch(setName(""));
         dispatch(setToken(""));
-        router.push("/");
+        router.push("/login");
     };
 
     const delete_user = () => { //删除用户功能有问题，不知道是后端还是前端的问题
@@ -102,12 +104,7 @@ const UserScreen = () => {
         });
     };
 
-    const search = () => {
-        fetch(`${BACKEND_URL}/api/user`, {
-            method : "GET",
-            
-        })
-    };
+    
 
     return (
         <>
