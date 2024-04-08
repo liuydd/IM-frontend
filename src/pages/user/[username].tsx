@@ -16,21 +16,20 @@ const UserScreen = () => {
     const [showModal, setShowModal] = useState(false);
     const [formData, setFormData] = useState({
         username: "",
-        new_username: "",
+        newUsername: "",
         password: "",
-        new_password: "",
+        newPassword: "",
         avatar: "",
-        new_avatar: "",
+        newAvatar: "",
         email: "",
-        new_email: "",
+        newEmail: "",
         phone_number: "",
-        new_phone_number: ""
+        newPhoneNumber: ""
     });
 
     const openModal = () => {
         setShowModal(true);
       };
-    
     const closeModal = () => {
         setShowModal(false);
     };
@@ -44,31 +43,30 @@ const UserScreen = () => {
     };
 
     const edit = () => {
-        const { username, new_username, password, new_password, new_avatar, new_email, new_phone_number } = formData; //头像怎么修改
-
+        const { username, newUsername, password, newPassword, newAvatar, newEmail, newPhoneNumber } = formData; //头像怎么修改
         fetch(`${BACKEND_URL}/api/modify`, {
             method : "POST",
             headers : {
                 "Content-Type" : "application/json",
-                Authorization : `Bearer ${token}`
+                "Authorization" : `Bearer ${token}`
             },
             body : JSON.stringify({
                 username,
-                new_username,
+                newUsername,
                 password,
-                new_password,
-                new_avatar,
-                new_email,
-                new_phone_number,
+                newPassword,
+                newAvatar,
+                newEmail,
+                newPhoneNumber,
             })
         })
         .then((res) => res.json())
         .then((res) => {
             if (Number(res.code) === 0) {
-                alert("用户信息更新成功")
+                alert("用户信息更新成功");
             }
             else {
-                alert("用户信息更新失败")
+                alert("用户信息更新失败");
             }
         })
         .catch((err) => alert(FAILURE_PREFIX + err));
@@ -103,9 +101,6 @@ const UserScreen = () => {
             alert("An error occurred while deleting account");
         });
     };
-
-    
-
     return (
         <>
             <p>

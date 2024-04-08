@@ -38,7 +38,7 @@ const RegisterScreen = () => {
                     // } else if (Number(res.code) === 1) {
                     //     alert(REGISTER_FAILED + res.message);
                     // }
-                    alert(REGISTER_FAILED + res.message)
+                    alert(REGISTER_FAILED + res.message);
                 }
             })
             .catch((err) => alert(FAILURE_PREFIX + err));
