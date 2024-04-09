@@ -5,7 +5,7 @@ import { setName, setToken } from "../../redux/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 
-function Respond2FriendRequest() {
+function FriendRequest() {
     const [username, setUsername] = useState("");
     const [friend, setFriend] = useState("");
     const [response, setResponse] = useState("");
@@ -51,4 +51,4 @@ function Respond2FriendRequest() {
       );
 };
 
-export default Respond2FriendRequest;
+export default FriendRequest;
