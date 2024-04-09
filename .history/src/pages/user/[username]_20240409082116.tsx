@@ -4,7 +4,6 @@ import { useRouter } from "next/router";
 import { setName, setToken } from "../../redux/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
-import FriendRequest from "../friend/send_friend_request";
 
 const UserScreen = () => {
     //获取现有的userName和token
@@ -182,7 +181,6 @@ const UserScreen = () => {
                 </div>
             )}
             </div>
-            <p><FriendRequest /></p>
         </>
     );
 };
