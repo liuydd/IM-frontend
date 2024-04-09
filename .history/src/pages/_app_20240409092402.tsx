@@ -17,7 +17,7 @@ const App = ({ Component, pageProps }: AppProps) => {
             <Head>
                 <title> FishAndChips </title>
             </Head>
-            <div style={{ padding: 12 }}>
+            {/* <div style={{ padding: 12 }}>
                 <Component {...pageProps} />
                 {router.pathname !== "/login" && (auth.token ? (
                     <>
@@ -27,9 +27,9 @@ const App = ({ Component, pageProps }: AppProps) => {
                         </button>
                     </>
                 ) : (
-                    <button onClick={() => router.push("/")}>注册登录</button>
+                    <button onClick={() => router.push("/login")}>Go to login</button>
                 ))}
-            </div>
+            </div> */}
         </>
     );
 };

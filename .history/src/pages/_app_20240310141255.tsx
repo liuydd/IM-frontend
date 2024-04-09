@@ -15,7 +15,7 @@ const App = ({ Component, pageProps }: AppProps) => {
     return (
         <>
             <Head>
-                <title> FishAndChips </title>
+                <title> Conway&#39;s life game</title>
             </Head>
             <div style={{ padding: 12 }}>
                 <Component {...pageProps} />
@@ -27,7 +27,7 @@ const App = ({ Component, pageProps }: AppProps) => {
                         </button>
                     </>
                 ) : (
-                    <button onClick={() => router.push("/")}>注册登录</button>
+                    <button onClick={() => router.push("/login")}>Go to login</button>
                 ))}
             </div>
         </>

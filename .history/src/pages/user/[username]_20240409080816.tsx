@@ -43,7 +43,7 @@ const UserScreen = () => {
     };
 
     const edit = () => {
-        const { username, newUsername, password, newPassword, newAvatar, newEmail, newPhoneNumber } = formData;
+        const { username, newUsername, password, newPassword, newAvatar, newEmail, newPhoneNumber } = formData; //头像怎么修改
         fetch(`${BACKEND_URL}/api/modify`, {
             method : "POST",
             headers : {
