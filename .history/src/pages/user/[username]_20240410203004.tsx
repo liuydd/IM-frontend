@@ -7,7 +7,6 @@ import { RootState } from "../../redux/store";
 import FriendRequest from "../friend/send_friend_request";
 import Respond2FriendRequest from "../friend/respond_friend_request";
 import ListFriendRequests from "../friend/friend_request_list";
-import SearchUser from "../search_target_user";
 
 const UserScreen = () => {
     //获取现有的userName和token
@@ -106,6 +105,33 @@ const UserScreen = () => {
         });
     };
 
+    const searchUser = () => {
+        const [method, setMethod] = useState("");
+        const [targetname, setTargetName] = useState("");
+        const [email, setEmail] = useState("");
+        const [phoneNumber, setPhoneNumber] = useState("");
+        const [searchResult, setSearchResult] = useState(null);
+
+        let url = `/api/search_user?method=${method}`;
+        setMethod(method);
+
+        if(method === 'targetname'){
+            url += `&targetname=${targetname}`;
+        }
+        else if(method === 'email'){
+            url += `&email=${email}`;
+        }
+        else if(method === 'phoneNumber'){
+            url += `&phoneNumber=${phoneNumber}`;
+        }
+        fetch(url)
+        .then((res) => res.json())
+        .then((res) => {
+            if (Number(res.code) === 0) {
+                setSearchResult(res);
+            }
+        })
+    };
 
     return (
         <>
@@ -179,10 +205,10 @@ const UserScreen = () => {
                 </div>
             )}
             </div>
-            <p><SearchUser /></p>
-            <div><p><FriendRequest /></p></div>
-            <div><p><Respond2FriendRequest /></p></div>
-            <div><p><ListFriendRequests /></p></div>
+            
+            <p><FriendRequest /></p>
+            <p><Respond2FriendRequest /></p>
+            <p><ListFriendRequests /></p>
         </>
     );
 };

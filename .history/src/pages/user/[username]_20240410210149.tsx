@@ -179,10 +179,10 @@ const UserScreen = () => {
                 </div>
             )}
             </div>
-            <p><SearchUser /></p>
+            
             <div><p><FriendRequest /></p></div>
             <div><p><Respond2FriendRequest /></p></div>
-            <div><p><ListFriendRequests /></p></div>
+            <p><ListFriendRequests /></p>
         </>
     );
 };

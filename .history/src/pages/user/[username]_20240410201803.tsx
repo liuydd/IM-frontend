@@ -7,7 +7,6 @@ import { RootState } from "../../redux/store";
 import FriendRequest from "../friend/send_friend_request";
 import Respond2FriendRequest from "../friend/respond_friend_request";
 import ListFriendRequests from "../friend/friend_request_list";
-import SearchUser from "../search_target_user";
 
 const UserScreen = () => {
     //获取现有的userName和token
@@ -106,6 +105,24 @@ const UserScreen = () => {
         });
     };
 
+    const searchUser = () => {
+        const [method, setMethod] = useState("");
+        const [targetname, setTargetName] = useState("");
+        const [email, setEmail] = useState("");
+        const [phoneNumber, setPhoneNumber] = useState("");
+        const [searchResult, setSearchResult] = useState(null);
+
+        fetch(`${BACKEND_URL}/api/search_target_user?method=${method}&targetname=${targetname}&email=${email}&phoneNumber=${phoneNumber}`)
+        .then(response => {
+            if (!response.ok) {
+              throw new Error('User not found');
+            }
+            return response.json();
+          })
+          .then(data => {
+            setSearchResult(data);
+          })
+    };
 
     return (
         <>
@@ -179,10 +196,51 @@ const UserScreen = () => {
                 </div>
             )}
             </div>
-            <p><SearchUser /></p>
-            <div><p><FriendRequest /></p></div>
-            <div><p><Respond2FriendRequest /></p></div>
-            <div><p><ListFriendRequests /></p></div>
+            <div>
+            <h1>Search User</h1>
+            {searchResult && (
+                <div>
+                <p>Username: {searchResult.targetInfo.username}</p>
+                <p>Email: {searchResult.targetInfo.email}</p>
+                <p>Phone Number: {searchResult.targetInfo.phoneNumber}</p>
+                </div>
+            )}
+            <label>
+                Method:
+                <select value={method} onChange={e => setMethod(e.target.value)}>
+                <option value="">Select Method</option>
+                <option value="targetname">Username</option>
+                <option value="email">Email</option>
+                <option value="phoneNumber">Phone Number</option>
+                </select>
+            </label>
+            {method && (
+                <div>
+                {method === 'targetname' && (
+                    <label>
+                    Username:
+                    <input type="text" value={targetName} onChange={e => setTargetName(e.target.value)} />
+                    </label>
+                )}
+                {method === 'email' && (
+                    <label>
+                    Email:
+                    <input type="email" value={email} onChange={e => setEmail(e.target.value)} />
+                    </label>
+                )}
+                {method === 'phoneNumber' && (
+                    <label>
+                    Phone Number:
+                    <input type="text" value={phoneNumber} onChange={e => setPhoneNumber(e.target.value)} />
+                    </label>
+                )}
+                <button onClick={searchUser}>Search</button>
+                </div>
+            )}
+            </div>
+            <p><FriendRequest /></p>
+            <p><Respond2FriendRequest /></p>
+            <p><ListFriendRequests /></p>
         </>
     );
 };

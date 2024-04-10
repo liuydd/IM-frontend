@@ -7,7 +7,6 @@ import { RootState } from "../../redux/store";
 import FriendRequest from "../friend/send_friend_request";
 import Respond2FriendRequest from "../friend/respond_friend_request";
 import ListFriendRequests from "../friend/friend_request_list";
-import SearchUser from "../search_target_user";
 
 const UserScreen = () => {
     //获取现有的userName和token
@@ -179,10 +178,10 @@ const UserScreen = () => {
                 </div>
             )}
             </div>
-            <p><SearchUser /></p>
-            <div><p><FriendRequest /></p></div>
-            <div><p><Respond2FriendRequest /></p></div>
-            <div><p><ListFriendRequests /></p></div>
+            
+            <p><FriendRequest /></p>
+            <p><Respond2FriendRequest /></p>
+            <p><ListFriendRequests /></p>
         </>
     );
 };

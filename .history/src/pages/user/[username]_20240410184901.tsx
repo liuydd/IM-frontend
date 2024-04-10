@@ -7,7 +7,6 @@ import { RootState } from "../../redux/store";
 import FriendRequest from "../friend/send_friend_request";
 import Respond2FriendRequest from "../friend/respond_friend_request";
 import ListFriendRequests from "../friend/friend_request_list";
-import SearchUser from "../search_target_user";
 
 const UserScreen = () => {
     //获取现有的userName和token
@@ -87,7 +86,7 @@ const UserScreen = () => {
     };
 
     const delete_user = () => { //删除用户功能有问题，不知道是后端还是前端的问题
-        fetch(`${BACKEND_URL}/api/delete_user`, {
+        fetch(`${BACKEND_URL}/api/user`, {
             method : "DELETE",
             headers : {
                 Authorization : `Bearer ${token}`
@@ -106,6 +105,12 @@ const UserScreen = () => {
         });
     };
 
+    const search = () => {
+        fetch(`${BACKEND_URL}/api/user`, {
+            method : "GET",
+            
+        })
+    };
 
     return (
         <>
@@ -179,10 +184,9 @@ const UserScreen = () => {
                 </div>
             )}
             </div>
-            <p><SearchUser /></p>
-            <div><p><FriendRequest /></p></div>
-            <div><p><Respond2FriendRequest /></p></div>
-            <div><p><ListFriendRequests /></p></div>
+            <p><FriendRequest /></p>
+            <p><Respond2FriendRequest /></p>
+            <p><ListFriendRequests /></p>
         </>
     );
 };
