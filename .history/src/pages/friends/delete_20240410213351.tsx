@@ -5,7 +5,7 @@ import { setName, setToken } from "../../redux/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 
-function DeleteFriend(){
+function delete_friend(){
     const [username, setUsername] = useState("");
     const [friend, setFriend] = useState("");
 
@@ -33,24 +33,5 @@ function DeleteFriend(){
             alert("An error occurred while deleting friend.");
         });
     };
-
-    return (
-        <div>
-        <h2>Delete Friend</h2>
-        <form onSubmit={deleteFriend}>
-            <label>
-            Your Username:
-            <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
-            </label>
-            <br />
-            <label>
-            Friend's Username to Delete:
-            <input type="text" value={friend} onChange={(e) => setFriend(e.target.value)} />
-            </label>
-            <br />
-            <button type="submit">Delete Friend</button>
-        </form>
-        </div>
-    );
 };
-export default DeleteFriend;
+export default delete_friend;

@@ -5,7 +5,7 @@ import { setName, setToken } from "../../redux/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 
-function DeleteFriend(){
+function delete_friend(){
     const [username, setUsername] = useState("");
     const [friend, setFriend] = useState("");
 
@@ -53,4 +53,4 @@ function DeleteFriend(){
         </div>
     );
 };
-export default DeleteFriend;
+export default delete_friend;

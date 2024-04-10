@@ -8,7 +8,6 @@ import FriendRequest from "../friend/send_friend_request";
 import Respond2FriendRequest from "../friend/respond_friend_request";
 import ListFriendRequests from "../friend/friend_request_list";
 import SearchUser from "../search_target_user";
-import DeleteFriend from "../friends/delete";
 
 const UserScreen = () => {
     //获取现有的userName和token
