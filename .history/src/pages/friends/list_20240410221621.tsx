@@ -5,7 +5,7 @@ import { setName, setToken } from "../../redux/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 
-function ListFriends() {
+function listFriends() {
     const [username, setUsername] = useState("");
     const [friendlist, setFriendlist] = useState([""]);
 
@@ -43,4 +43,4 @@ function ListFriends() {
     </div>
     );
 };
-export default ListFriends;
+export default listFriends;

@@ -9,8 +9,6 @@ import Respond2FriendRequest from "../friend/respond_friend_request";
 import ListFriendRequests from "../friend/friend_request_list";
 import SearchUser from "../search_target_user";
 import DeleteFriend from "../friends/delete";
-import ListFriends from "../friends/list";
-import LabelFriends from "../friends/label";
 
 const UserScreen = () => {
     //获取现有的userName和token
@@ -183,10 +181,7 @@ const UserScreen = () => {
             )}
             </div>
             <p><SearchUser /></p>
-            //暂时这样列
             <div><p><DeleteFriend /></p></div>
-            <div><p><ListFriends /></p></div>
-            <div><p><LabelFriends /></p></div>
             <div><p><FriendRequest /></p></div>
             <div><p><Respond2FriendRequest /></p></div>
             <div><p><ListFriendRequests /></p></div>

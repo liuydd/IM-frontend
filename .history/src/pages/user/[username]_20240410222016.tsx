@@ -183,8 +183,7 @@ const UserScreen = () => {
             )}
             </div>
             <p><SearchUser /></p>
-            //暂时这样列
-            <div><p><DeleteFriend /></p></div>
+            <div><p><DeleteFriend /></p></div> //暂时这样列
             <div><p><ListFriends /></p></div>
             <div><p><LabelFriends /></p></div>
             <div><p><FriendRequest /></p></div>
