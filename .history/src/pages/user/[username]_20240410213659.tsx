@@ -181,7 +181,6 @@ const UserScreen = () => {
             )}
             </div>
             <p><SearchUser /></p>
-            <div><p><DeleteFriend /></p></div>
             <div><p><FriendRequest /></p></div>
             <div><p><Respond2FriendRequest /></p></div>
             <div><p><ListFriendRequests /></p></div>
