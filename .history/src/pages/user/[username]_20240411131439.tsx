@@ -171,7 +171,7 @@ const UserScreen = () => {
                         Phone Number:
                         <input
                         type="tel"
-                        name="phoneNumber"
+                        name="phone_number"
                         value={formData.phoneNumber}
                         onChange={handleChange}
                         />
