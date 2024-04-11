@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { BACKEND_URL, FAILURE_PREFIX} from "../../constants/string";
 import { useRouter } from "next/router";
-import { setName, setPassword, setToken } from "../../redux/auth";
+import { setName, setToken } from "../../redux/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import FriendRequest from "../friend/send_friend_request";
@@ -13,19 +13,18 @@ import ListFriends from "../friends/list";
 import LabelFriends from "../friends/label";
 
 const UserScreen = () => {
-    //获取现有的userName, token, password
+    //获取现有的userName和token
     const username = useSelector((state: RootState) => state.auth.name);
     const token = useSelector((state: RootState) => state.auth.token);
-    const password = useSelector((state: RootState) => state.auth.password);
 
     const router = useRouter();
     const dispatch = useDispatch();
 
     const [showModal, setShowModal] = useState(false);
     const [formData, setFormData] = useState({
-        //username: "",
+        username: "",
         newUsername: "",
-        //password: "",
+        password: "",
         newPassword: "",
         avatar: "",
         newAvatar: "",
@@ -44,27 +43,19 @@ const UserScreen = () => {
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
-        if(name === "username"){
-            dispatch(setName(value));
-        }
-        else if(name === "password"){
-            dispatch(setPassword(value));
-        }
-        else{
-            setFormData((prevData) => ({
-                ...prevData,
-                [name]: value
-            }));
-        }
+        setFormData((prevData) => ({
+            ...prevData,
+            [name]: value
+        }));
     };
 
     const edit = () => {
-        const { newUsername, newPassword, newAvatar, newEmail, newPhoneNumber } = formData;
+        const { username, newUsername, password, newPassword, newAvatar, newEmail, newPhoneNumber } = formData;
         fetch(`${BACKEND_URL}/api/modify`, {
             method : "POST",
             headers : {
                 "Content-Type" : "application/json",
-                //Authorization : `Bearer ${token}`
+                Authorization : `Bearer ${token}`
             },
             body : JSON.stringify({
                 username,
@@ -82,7 +73,7 @@ const UserScreen = () => {
                 alert("用户信息更新成功");
             }
             else {
-                alert("用户信息更新失败"+res.info);
+                alert("用户信息更新失败");
             }
         })
         .catch((err) => alert(FAILURE_PREFIX + err));
@@ -146,7 +137,7 @@ const UserScreen = () => {
                         <input
                         type="text"
                         name="username"
-                        value={username}
+                        value={formData.username}
                         onChange={handleChange}
                         />
                     </label>
@@ -155,7 +146,7 @@ const UserScreen = () => {
                         <input
                         type="password"
                         name="password"
-                        value={password}
+                        value={formData.password}
                         onChange={handleChange}
                         />
                     </label>

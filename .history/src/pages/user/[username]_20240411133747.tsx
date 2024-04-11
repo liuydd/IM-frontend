@@ -64,14 +64,14 @@ const UserScreen = () => {
             method : "POST",
             headers : {
                 "Content-Type" : "application/json",
-                //Authorization : `Bearer ${token}`
+                Authorization : `Bearer ${token}`
             },
             body : JSON.stringify({
                 username,
-                newUsername,
+                //newUsername,
                 password,
                 newPassword,
-                newAvatar,
+                //newAvatar,
                 newEmail,
                 newPhoneNumber,
             })
@@ -82,7 +82,7 @@ const UserScreen = () => {
                 alert("用户信息更新成功");
             }
             else {
-                alert("用户信息更新失败"+res.info);
+                alert("用户信息更新失败");
             }
         })
         .catch((err) => alert(FAILURE_PREFIX + err));
