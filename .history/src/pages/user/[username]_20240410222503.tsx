@@ -30,7 +30,7 @@ const UserScreen = () => {
         newAvatar: "",
         email: "",
         newEmail: "",
-        phoneNumber: "",
+        phone_number: "",
         newPhoneNumber: ""
     });
 
@@ -172,7 +172,7 @@ const UserScreen = () => {
                         <input
                         type="tel"
                         name="phone_number"
-                        value={formData.phoneNumber}
+                        value={formData.phone_number}
                         onChange={handleChange}
                         />
                     </label>
