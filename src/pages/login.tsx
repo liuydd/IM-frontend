@@ -3,7 +3,9 @@ import { BACKEND_URL, FAILURE_PREFIX, LOGIN_FAILED, LOGIN_SUCCESS_PREFIX } from 
 import { useRouter } from "next/router";
 import { setName, setToken } from "../redux/auth";
 import { useDispatch } from "react-redux";
-import { Button, Checkbox, Form, Input } from 'antd';
+import { Button, Checkbox, Form, Input, Typography } from 'antd';
+import Link from 'next/link';
+const { Title } = Typography;
 
 const LoginScreen = () => {
     const [username, setUserName] = useState("");
@@ -37,11 +39,14 @@ const LoginScreen = () => {
     };
 
     return (
+        <>
+        <div style={{ textAlign: 'center' }}>
+        <h1>Login</h1>
         <Form
           name="basic"
           labelCol={{ span: 8 }}
           wrapperCol={{ span: 16 }}
-          style={{ maxWidth: 600 }}
+          style={{ maxWidth: 600, display: 'inline-block'  }}
           initialValues={{ remember: true }}
           onFinish={login}
           autoComplete="off"
@@ -76,6 +81,9 @@ const LoginScreen = () => {
             </Button>
           </Form.Item>
         </Form>
+        <p>还没有账号?请 <Link href="/register" >注册</Link></p>
+        </div>
+        </>
       );
 };
 

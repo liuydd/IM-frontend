@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { setName, setToken } from "../redux/auth";
 import { useDispatch } from "react-redux";
 import { Button, Checkbox, Form, Input } from 'antd';
+import Link from 'next/link';
 import { CLIENT_STATIC_FILES_RUNTIME_MAIN_APP } from "next/dist/shared/lib/constants";
 
 const RegisterScreen = () => {
@@ -47,11 +48,15 @@ const RegisterScreen = () => {
     };
 
     return (
+        <>
+        <div style={{ textAlign: 'center' }}>
+        <h1>Register</h1>
+        <p>注意：密码只能包含字母和数字，长度不能小于8，不能大于16</p>
         <Form
           name="basic"
           labelCol={{ span: 8 }}
           wrapperCol={{ span: 16 }}
-          style={{ maxWidth: 600 }}
+          style={{ maxWidth: 600, display: 'inline-block'   }}
           initialValues={{ remember: true }}
           onFinish={register}
           autoComplete="off"
@@ -73,7 +78,7 @@ const RegisterScreen = () => {
           </Form.Item>
     
           <Form.Item
-            label="Email"
+            label="E-mail"
             name="email"
             rules={[{ required: false, message: 'Please input your email!' }]}
           >
@@ -81,8 +86,8 @@ const RegisterScreen = () => {
           </Form.Item>
 
           <Form.Item
-            label="PhoneNumber"
-            name="phoneNumber"
+            label="Phone Number"
+            name="phone"
             rules={[{ required: false, message: 'Please input your phonenumber!' }]}
           >
             <Input value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
@@ -102,6 +107,9 @@ const RegisterScreen = () => {
             </Button>
           </Form.Item>
         </Form>
+        <p>已经有了账号?请 <Link href="/login" >登录</Link></p>
+        </div>
+        </>
       );
 };
 
