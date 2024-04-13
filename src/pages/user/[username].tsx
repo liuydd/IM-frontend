@@ -12,11 +12,12 @@ import DeleteFriend from "../friends/delete";
 import ListFriends from "../friends/list";
 import LabelFriends from "../friends/label";
 import type { MenuProps } from 'antd';
-import { Breadcrumb, Layout, Menu, theme, Button } from 'antd';
+import { Breadcrumb, Layout, Menu, theme, Button, Form, Input, Modal } from 'antd';
 const { Header, Content, Footer, Sider } = Layout;
 import React from 'react';
 import Link from 'next/link';
 import { LogoutOutlined, DeleteOutlined } from '@ant-design/icons';
+import BasicLayout from "../../components/BasicLayout";
 
 const UserScreen = () => {
     //获取现有的userName, token, password
@@ -104,8 +105,8 @@ const UserScreen = () => {
         router.push("/");
     };
 
-    const delete_user = () => {
-        fetch(`${BACKEND_URL}/api/delete_user`, {
+    const deleteUser = () => {
+        fetch(`${BACKEND_URL}/api/deleteUser`, {
             method : "DELETE",
             headers : {
                 Authorization : `Bearer ${token}`
@@ -134,70 +135,7 @@ const UserScreen = () => {
 
     return (
         <>
-            <Layout>
-            <Header style={{
-                position: 'sticky',
-                top: 0,
-                zIndex: 1,
-                width: '100%',
-                display: 'flex',
-                alignItems: 'center',
-            }}>
-                <div className="demo-logo" />
-                <Menu
-                theme="dark"
-                mode="horizontal"
-                defaultSelectedKeys={['2']}
-                style={{ flex: 1, minWidth: 0 }}
-                >
-                {/* 这里放置其他菜单项 */}
-                </Menu>
-                <Button type="primary" icon={<LogoutOutlined />} onClick={logout}>
-                Logout
-                </Button>
-                <Button type="primary" icon={<DeleteOutlined />} onClick={delete_user}>
-                Delete User
-                </Button>
-            </Header>
-            <Layout>
-                <Sider
-                style={{
-                    overflow: 'auto',
-                    height: 'calc(100vh - 64px)', // 减去 Header 的高度
-                    position: 'sticky',
-                    top: '64px', // Header 的高度
-                    left: 0,
-                }}
-                >
-                <div className="demo-logo-vertical" />
-                <Menu theme="dark" mode="inline" defaultSelectedKeys={['4']}>
-                    {items.map((item) => (
-                    <Menu.Item key={item.key}>
-                        <Link href={item.to}>{item.label}</Link>
-                    </Menu.Item>
-                    ))}
-                </Menu>
-                </Sider>
-                <Layout style={{ marginLeft: 200 }}>
-                <Header style={{ padding: 0 }} />
-                <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
-                    <div
-                    style={{
-                        padding: 24,
-                        textAlign: 'center',
-                        // background: colorBgContainer,
-                        // borderRadius: borderRadiusLG,
-                    }}
-                    >
-
-                    </div>
-                </Content>
-                <Footer style={{ textAlign: 'center' }}>
-                    FishAndChips ©{new Date().getFullYear()}
-                </Footer>
-                </Layout>
-            </Layout>
-            </Layout>
+            <BasicLayout logout={logout} deleteUser={deleteUser}>
 
             <div>
                 <button onClick = {openModal}>
@@ -259,6 +197,7 @@ const UserScreen = () => {
                 </div>
             )}
             </div>
+            </BasicLayout>
             <p><SearchUser /></p>
             //暂时这样列
             <div><p><DeleteFriend /></p></div>
