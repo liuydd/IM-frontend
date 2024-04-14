@@ -139,8 +139,17 @@ const UserScreen = () => {
 
     return (
         <>
-            <BasicLayout logout={logout} deleteUser={deleteUser}>
-
+            {/* <BasicLayout logout={logout} deleteUser={deleteUser}> 由于layout有点问题，故暂时还是按原来的写*/}
+            <p>
+                <button onClick = {logout}>
+                    Logout
+                </button>
+            </p>
+            <p>
+                <button onClick = {deleteUser}>
+                    Delete Account
+                </button>
+            </p>
             <div>
                 <button onClick = {openModal}>
                     Account Info
@@ -201,7 +210,7 @@ const UserScreen = () => {
                 </div>
             )}
             </div>
-            </BasicLayout>
+            {/* </BasicLayout> */}
             <p><SearchUser /></p>
             //暂时这样列
             <div><p><DeleteFriend /></p></div>
