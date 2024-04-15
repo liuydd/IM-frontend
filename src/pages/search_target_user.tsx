@@ -22,7 +22,7 @@ function SearchUser(){
     const [searchResult, setSearchResult] = useState<SearchResult | null>(null);
 
     const searchUser = () => {
-        let url = `/api/search_user?method=${method}`;
+        let url = `/api/search_target_user?method=${method}`;
 
         if(method === 'targetname'){
             url += `&targetname=${targetname}`;
