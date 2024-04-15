@@ -5,10 +5,14 @@ import { setName, setToken } from "../../redux/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 
+interface Friend{
+    friend: string;
+    labels: string[];
+}
+
 function ListFriends() {
     const username = useSelector((state: RootState) => state.auth.name);
-    const [friendlist, setFriendlist] = useState([""]);
-
+    const [friendlist, setFriendlist] = useState<Friend[]>([]);
     const fetchFriend = ()=>{
         fetch(`${BACKEND_URL}/api/friends/list`, {
             method: "POST",
@@ -35,8 +39,11 @@ function ListFriends() {
         <h2>Friend List</h2>
         <button onClick={fetchFriend}>Fetch Friends</button>
         <ul>
-        {friendlist.map((friend, index) => (
-            <li key={index}>{friend}</li>
+        {friendlist.map((myfriend, index) => (
+            <li key={index}>
+                <p>Friend Name: {myfriend.friend}</p>
+                <p>Labels: {myfriend.labels.join(', ')}</p>
+            </li>
         ))}
         </ul>
     </div>
