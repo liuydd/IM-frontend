@@ -5,9 +5,13 @@ import { setName, setToken } from "../../redux/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 
-function DeleteFriend(){
+interface DeleteFriendProps {
+    friend: string;
+}
+
+function DeleteFriend(props: DeleteFriendProps){
     const username = useSelector((state: RootState) => state.auth.name);
-    const [friend, setFriend] = useState("");
+    //const [friend, setFriend] = useState("");
 
     const deleteFriend = () =>{
         fetch(`${BACKEND_URL}/api/friends/delete`,{
@@ -17,7 +21,7 @@ function DeleteFriend(){
             },
             body: JSON.stringify({
                 username,
-                friend
+                friend: props.friend
             })
         })
         .then((res) => res.json())
@@ -36,7 +40,8 @@ function DeleteFriend(){
 
     return (
         <div>
-        <h2>Delete Friend</h2>
+        <button onClick={deleteFriend}>Delete Friend</button>
+        {/* <h2>Delete Friend</h2>
         <form onSubmit={deleteFriend}>
             <br />
             <label>
@@ -45,7 +50,7 @@ function DeleteFriend(){
             </label>
             <br />
             <button type="submit">Delete Friend</button>
-        </form>
+        </form> */}
         </div>
     );
 };

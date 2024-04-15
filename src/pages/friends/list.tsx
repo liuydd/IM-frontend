@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { setName, setToken } from "../../redux/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
+import DeleteFriend from "./delete";
 
 interface Friend{
     friend: string;
@@ -43,6 +44,7 @@ function ListFriends() {
             <li key={index}>
                 <p>Friend Name: {myfriend.friend}</p>
                 <p>Labels: {myfriend.labels.join(', ')}</p>
+                <DeleteFriend friend={myfriend.friend} />
             </li>
         ))}
         </ul>
