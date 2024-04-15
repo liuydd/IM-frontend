@@ -28,11 +28,11 @@ function DeleteFriend(props: DeleteFriendProps){
         })
         .then((res) => res.json())
         .then(res => {
-            if(res.ok) {
+            if(Number(res.code) === 0) {
                 alert(res.info)
             }
             else {
-                alert(FAILURE_PREFIX + res.info);
+                alert(res.info);
             }
         })
         .catch((err) => {
