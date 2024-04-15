@@ -11,13 +11,15 @@ interface DeleteFriendProps {
 
 function DeleteFriend(props: DeleteFriendProps){
     const username = useSelector((state: RootState) => state.auth.name);
+    const token = useSelector((state: RootState) => state.auth.token);
     //const [friend, setFriend] = useState("");
 
     const deleteFriend = () =>{
         fetch(`${BACKEND_URL}/api/friends/delete`,{
             method : "DELETE",
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                Authorization : `${token}`
             },
             body: JSON.stringify({
                 username,

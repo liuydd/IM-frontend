@@ -16,6 +16,7 @@ function ListFriendRequests() {
     const [friendRequests, setFriendRequests] = useState<{ requestsSent: FriendRequests[]; requestsReceived: FriendRequests[] }>({ requestsSent: [], requestsReceived: [] });
     //const [loading, setLoading] = useState(true);
     const username = useSelector((state: RootState) => state.auth.name);
+    const token = useSelector((state: RootState) => state.auth.token);
   
     // useEffect(() => {
     //   fetchFriendRequests();
@@ -27,6 +28,7 @@ function ListFriendRequests() {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
+            Authorization : `${token}`
           },
           body: JSON.stringify({ username })
         });

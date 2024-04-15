@@ -71,7 +71,7 @@ const UserScreen = () => {
             method : "POST",
             headers : {
                 "Content-Type" : "application/json",
-                //Authorization : `Bearer ${token}`
+                Authorization : `${token}`
             },
             body : JSON.stringify({
                 username,
@@ -110,7 +110,7 @@ const UserScreen = () => {
         fetch(`${BACKEND_URL}/api/delete_user`, {
             method : "DELETE",
             headers : {
-                Authorization : `Bearer ${token}`
+                Authorization : `${token}`
             },
             body: JSON.stringify({
                 username,

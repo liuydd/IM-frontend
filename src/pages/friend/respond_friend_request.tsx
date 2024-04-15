@@ -7,12 +7,17 @@ import { RootState } from "../../redux/store";
 
 function Respond2FriendRequest() {
     const username = useSelector((state: RootState) => state.auth.name);
+    const token = useSelector((state: RootState) => state.auth.token);
     const [friend, setFriend] = useState("");
     const [response, setResponse] = useState("");
 
     const respondToFriendRequest = () => {
         fetch(`${BACKEND_URL}/api/friend/respond_friend_request`, {
             method: "POST",
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization : `${token}`
+            },
             body: JSON.stringify({
                 username: username,
                 friend: friend,

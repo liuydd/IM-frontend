@@ -13,10 +13,15 @@ interface Friend{
 
 function ListFriends() {
     const username = useSelector((state: RootState) => state.auth.name);
+    const token = useSelector((state: RootState) => state.auth.token);
     const [friendlist, setFriendlist] = useState<Friend[]>([]);
     const fetchFriend = ()=>{
         fetch(`${BACKEND_URL}/api/friends/list`, {
             method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization : `${token}`
+            },
             body: JSON.stringify({
                 username,
             }),

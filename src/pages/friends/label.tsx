@@ -7,12 +7,17 @@ import { RootState } from "../../redux/store";
 
 function LabelFriends(){
     const username = useSelector((state: RootState) => state.auth.name);
+    const token = useSelector((state: RootState) => state.auth.token);
     const [friend, setFriend] = useState("");
     const [label, setLabel] = useState("");
 
     const handleLabelFriend =() =>{
         fetch(`${BACKEND_URL}/api/friends/label`, {
             method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization : `${token}`
+            },
             body: JSON.stringify({
                 username,
                 friend,
