@@ -44,6 +44,7 @@ function ListFriendRequests() {
     return (
       <div>
         <h2>Friend Requests</h2>
+        <button onClick={fetchFriendRequests}>Fetch Friend Requests</button>
         <h3>Sent Requests:</h3>
         <ul>
           {friendRequests.requestsSent.map((request, index) => (
