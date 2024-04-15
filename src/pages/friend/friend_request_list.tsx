@@ -14,12 +14,12 @@ interface FriendRequests {
 
 function ListFriendRequests() {
     const [friendRequests, setFriendRequests] = useState<{ requestsSent: FriendRequests[]; requestsReceived: FriendRequests[] }>({ requestsSent: [], requestsReceived: [] });
-    const [loading, setLoading] = useState(true);
+    //const [loading, setLoading] = useState(true);
     const username = useSelector((state: RootState) => state.auth.name);
   
-    useEffect(() => {
-      fetchFriendRequests();
-    }, []);
+    // useEffect(() => {
+    //   fetchFriendRequests();
+    // }, []);
   
     const fetchFriendRequests = async () => {
       try {
@@ -32,7 +32,7 @@ function ListFriendRequests() {
         });
         const data = await response.json();
         setFriendRequests(data);
-        setLoading(false);
+        //setLoading(false);
       } catch (error) {
         console.error('Error fetching friend requests:', error);
       }
