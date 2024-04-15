@@ -32,6 +32,7 @@ function ListFriends() {
                 setFriendlist(res.friendList);
             }
             else{
+                setFriendlist([]);
                 alert(res.info);
             }
         })
