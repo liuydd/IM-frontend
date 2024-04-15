@@ -9,6 +9,7 @@ interface FriendRequests {
     sender: string;
     receiver: string;
     timestamp: string;
+    responseStatus: string;
   }
 
 function ListFriendRequests() {
@@ -52,6 +53,7 @@ function ListFriendRequests() {
               <p>Sender: {request.sender}</p>
               <p>Receiver: {request.receiver}</p>
               <p>Timestamp: {request.timestamp}</p>
+              <p>Response Status: {request.responseStatus}</p>
             </li>
           ))}
         </ul>
@@ -62,6 +64,7 @@ function ListFriendRequests() {
               <p>Sender: {request.sender}</p>
               <p>Receiver: {request.receiver}</p>
               <p>Timestamp: {request.timestamp}</p>
+              <p>Response Status: {request.responseStatus}</p>
             </li>
           ))}
         </ul>
