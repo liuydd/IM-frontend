@@ -22,7 +22,7 @@ function ListFriendRequests() {
   
     const fetchFriendRequests = async () => {
       try {
-        const response = await fetch('/api/list_friend_request', {
+        const response = await fetch('/api/friend/friend_request_list', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
