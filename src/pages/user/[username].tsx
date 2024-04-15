@@ -107,7 +107,7 @@ const UserScreen = () => {
 
     const deleteUser = () => {
         const username = useSelector((state: RootState) => state.auth.name);
-        fetch(`${BACKEND_URL}/api/deleteUser`, {
+        fetch(`${BACKEND_URL}/api/delete_user`, {
             method : "DELETE",
             headers : {
                 Authorization : `Bearer ${token}`
