@@ -190,7 +190,7 @@ const UserScreen = () => {
                         Email:
                         <input
                         type="email"
-                        name="email"
+                        name="newEmail"
                         value={formData.email}
                         onChange={handleChange}
                         />
@@ -199,7 +199,7 @@ const UserScreen = () => {
                         Phone Number:
                         <input
                         type="tel"
-                        name="phoneNumber"
+                        name="newPhoneNumber"
                         value={formData.phoneNumber}
                         onChange={handleChange}
                         />
