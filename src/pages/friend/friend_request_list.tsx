@@ -12,7 +12,7 @@ interface FriendRequests {
   }
 
 function ListFriendRequests() {
-    const [friendRequests, setFriendRequests] = useState<{ requests_sent: FriendRequests[]; requests_received: FriendRequests[] }>({ requests_sent: [], requests_received: [] });
+    const [friendRequests, setFriendRequests] = useState<{ requestsSent: FriendRequests[]; requestsReceived: FriendRequests[] }>({ requestsSent: [], requestsReceived: [] });
     const [loading, setLoading] = useState(true);
     const username = useSelector((state: RootState) => state.auth.name);
   
@@ -22,7 +22,7 @@ function ListFriendRequests() {
   
     const fetchFriendRequests = async () => {
       try {
-        const response = await fetch('/api/friend/friend_request_list', {
+        const response = await fetch(`${BACKEND_URL}/api/friend/friend_request_list`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -46,7 +46,7 @@ function ListFriendRequests() {
         <h2>Friend Requests</h2>
         <h3>Sent Requests:</h3>
         <ul>
-          {friendRequests.requests_sent.map((request, index) => (
+          {friendRequests.requestsSent.map((request, index) => (
             <li key={index}>
               <p>Sender: {request.sender}</p>
               <p>Receiver: {request.receiver}</p>
@@ -56,7 +56,7 @@ function ListFriendRequests() {
         </ul>
         <h3>Received Requests:</h3>
         <ul>
-          {friendRequests.requests_received.map((request, index) => (
+          {friendRequests.requestsReceived.map((request, index) => (
             <li key={index}>
               <p>Sender: {request.sender}</p>
               <p>Receiver: {request.receiver}</p>

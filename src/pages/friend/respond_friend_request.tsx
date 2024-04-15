@@ -11,7 +11,7 @@ function Respond2FriendRequest() {
     const [response, setResponse] = useState("");
 
     const respondToFriendRequest = () => {
-        fetch(`${BACKEND_URL}/friend/respond_friend_request`, {
+        fetch(`${BACKEND_URL}/api/friend/respond_friend_request`, {
             method: "POST",
             body: JSON.stringify({
                 username: username,
