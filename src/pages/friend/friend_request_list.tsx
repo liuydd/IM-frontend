@@ -22,22 +22,28 @@ function ListFriendRequests() {
     //   fetchFriendRequests();
     // }, []);
   
-    const fetchFriendRequests = async () => {
-      try {
-        const response = await fetch(`${BACKEND_URL}/api/friend/friend_request_list`, {
+    const fetchFriendRequests = () => {
+      
+        fetch(`${BACKEND_URL}/api/friend/friend_request_list`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
             Authorization : `${token}`
           },
           body: JSON.stringify({ username })
-        });
-        const data = await response.json();
-        setFriendRequests(data);
-        //setLoading(false);
-      } catch (error) {
-        console.error('Error fetching friend requests:', error);
-      }
+        })
+        .then((res) => res.json())
+        .then((res) => {
+            if (Number(res.code) === 0) {
+              setFriendRequests(res);
+            }
+            else{
+                alert(res.info);
+            }
+        })
+        .catch((error) => {
+          alert("An error occurred while fetching friends.");
+      });
     };
   
     // if (loading) {
