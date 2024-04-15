@@ -16,9 +16,6 @@ function ListFriends() {
     const fetchFriend = ()=>{
         fetch(`${BACKEND_URL}/api/friends/list`, {
             method: "POST",
-            headers: {
-                'Content-Type': 'application/json',
-              },
             body: JSON.stringify({
                 username,
             }),
