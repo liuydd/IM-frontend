@@ -179,6 +179,24 @@ const UserScreen = () => {
                         />
                     </label>
                     <label>
+                        New Username:
+                        <input
+                        type="text"
+                        name="newUsername"
+                        value={formData.newUsername}
+                        onChange={handleChange}
+                        />
+                    </label>
+                    <label>
+                        New Password:
+                        <input
+                        type="password"
+                        name="newPassword"
+                        value={formData.newPassword}
+                        onChange={handleChange}
+                        />
+                    </label>
+                    <label>
                         Avatar:
                         <input
                         type="file"
