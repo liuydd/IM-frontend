@@ -42,20 +42,24 @@ function CreateGroup({ friendlist }: { friendlist: Friend[] }) {
     return (
         <Form onFinish={createGroup}>
           <Form.Item label="选择群成员">
-            {friendlist.map((friend) => (
-              <Checkbox
-                key={friend.friend}
-                onChange={(e) => {
-                  if (e.target.checked) {
-                    setGroupMembers([...members, { memberName: friend.friend }]);
-                  } else {
-                    setGroupMembers(members.filter((m) => m.memberName !== friend.friend));
-                  }
-                }}
-              >
-                {friend.friend}
-              </Checkbox>
-            ))}
+            {friendlist ? (
+              friendlist.map((friend, index) => (
+                <Checkbox
+                  key={index}
+                  onChange={(e) => {
+                    if (e.target.checked) {
+                      setGroupMembers([...members, { memberName: friend.friend }]);
+                    } else {
+                      setGroupMembers(members.filter((m) => m.memberName !== friend.friend));
+                    }
+                  }}
+                >
+                  {friend.friend}
+                </Checkbox>
+              ))
+            ) : (
+              <p>Loading friend list...</p>
+            )}
           </Form.Item>
           <Form.Item>
             <Button type="primary" htmlType="submit">
