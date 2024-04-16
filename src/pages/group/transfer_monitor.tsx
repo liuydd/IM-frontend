@@ -17,7 +17,7 @@ function TransferMonitor({ groupmemberslist }: { groupmemberslist: GroupMembers[
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const transferMonitor = () =>{
-        fetch(`${BACKEND_URL}/api/login`, {
+        fetch(`${BACKEND_URL}/api/group/transfer_monitor`, {
             method: "POST",
             body: JSON.stringify({
                 username,
