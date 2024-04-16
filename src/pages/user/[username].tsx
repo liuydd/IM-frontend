@@ -57,6 +57,20 @@ const UserScreen = () => {
         else if(name === "password"){
             dispatch(setPassword(value));
         }
+        // else if(name === "newUsername"){
+        //     setFormData((prevData) => ({
+        //         ...prevData,
+        //         [name]: value
+        //     }));
+        //     //dispatch(setName(value));
+        // }
+        // else if(name === "newPassword"){
+        //     setFormData((prevData) => ({
+        //         ...prevData,
+        //         [name]: value
+        //     }));
+        //     //dispatch(setPassword(value));
+        // }
         else{
             setFormData((prevData) => ({
                 ...prevData,
@@ -178,7 +192,7 @@ const UserScreen = () => {
                         onChange={handleChange}
                         />
                     </label>
-                    <label>
+                    {/* <label>
                         New Username:
                         <input
                         type="text"
@@ -186,7 +200,7 @@ const UserScreen = () => {
                         value={formData.newUsername}
                         onChange={handleChange}
                         />
-                    </label>
+                    </label> */}
                     <label>
                         New Password:
                         <input
