@@ -6,6 +6,8 @@
 .pnp.js
 /.swc
 
+/.history
+
 # testing
 /coverage
 /.coverage

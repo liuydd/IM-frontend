@@ -1,0 +1,80 @@
+import { useState } from "react";
+import { BACKEND_URL, FAILURE_PREFIX} from "../../constants/string";
+import { useRouter } from "next/router";
+import { setName, setToken } from "../../redux/auth";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
+
+const UserScreen = () => {
+    //获取现有的userName和token
+    const username = useSelector((state: RootState) => state.auth.name);
+    const token = useSelector((state: RootState) => state.auth.token);
+
+    const router = useRouter();
+    const dispatch = useDispatch();
+
+    const [formData, setFormData] = useState({
+        username: "",
+        password: "",
+        avatar: "",
+        email: "",
+        phone: ""
+    });
+
+    // const edit = () => {
+    //     fetch(`${BACKEND_URL}/api/user`, {
+    //         method : "PUT",
+    //         headers : {
+    //             "Content-Type" : "application/json",
+    //             Authorization : `Bearer ${token}`
+    //         },
+    //         body : JSON.stringify({
+    //             username,
+    //             password,
+    //             email,
+    //             phone_number,
+    //         })
+    //     })
+    // };
+
+    const logout = () => {
+        localStorage.removeItem("token");
+        localStorage.removeItem("username");
+        dispatch(setName(""));
+        dispatch(setToken(""));
+        router.push("/login");
+    };
+
+    const delete_user = () => { //删除用户功能有问题，不知道是后端还是前端的问题
+        fetch(`${BACKEND_URL}/api/user`, {
+            method : "DELETE",
+            headers : {
+                Authorization : `Bearer ${token}`
+            }
+        })
+        .then(response => {
+            if(response.ok) {
+                logout();
+            }
+            else {
+                alert(FAILURE_PREFIX);
+            }
+        })
+        .catch((err) => {
+            alert("An error occurred while deleting account");
+        });
+    };
+
+    return (
+        <>
+            <button onClick = {logout}>
+                Logout
+            </button>
+            <button onClick = {delete_user}>
+                Delete Account
+            </button>
+        </>
+    );
+};
+
+export default UserScreen;

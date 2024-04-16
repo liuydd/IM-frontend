@@ -15,6 +15,7 @@ build:
     - deployer build
   only:
     - master
+    - dev
 
 .test:
   image: node:18
@@ -45,3 +46,4 @@ deploy:
     - deployer dyno replace $CI_PROJECT_NAME "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG" "$REGISTRY_USER" "$REGISTRY_PWD"
   only:
     - master
+    - dev
