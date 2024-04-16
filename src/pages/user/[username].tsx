@@ -62,7 +62,7 @@ const UserScreen = () => {
         //         ...prevData,
         //         [name]: value
         //     }));
-        //     //dispatch(setName(value));
+        //     router.push(`./user/${username}`);
         // }
         // else if(name === "newPassword"){
         //     setFormData((prevData) => ({

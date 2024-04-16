@@ -5,6 +5,7 @@ import { setName, setToken } from "../../redux/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import DeleteFriend from "./delete";
+import CreateGroup from "../group/create";
 
 interface Friend{
     friend: string;
@@ -54,7 +55,9 @@ function ListFriends() {
             </li>
         ))}
         </ul>
-    </div>
+        <CreateGroup friendlist={friendlist} />
+        </div>
+        
     );
 };
 export default ListFriends;
