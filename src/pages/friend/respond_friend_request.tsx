@@ -5,10 +5,14 @@ import { setName, setToken } from "../../redux/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 
-function Respond2FriendRequest() {
+interface RespondProps {
+  friend: string;
+}
+
+function Respond2FriendRequest(props: RespondProps) {
     const username = useSelector((state: RootState) => state.auth.name);
     const token = useSelector((state: RootState) => state.auth.token);
-    const [friend, setFriend] = useState("");
+    //const [friend, setFriend] = useState("");
     const [response, setResponse] = useState("");
 
     const respondToFriendRequest = () => {
@@ -20,7 +24,7 @@ function Respond2FriendRequest() {
             },
             body: JSON.stringify({
                 username: username,
-                friend: friend,
+                friend: props.friend,
                 response: response
             })
         })
@@ -39,10 +43,10 @@ function Respond2FriendRequest() {
     return (
         <div>
           <h2>Respond to Friend Request</h2>
-          <div>
+          {/* <div>
             <label>好友申请信息提示: </label>
             <input type="text" value={friend} onChange={e => setFriend(e.target.value)} />
-          </div>
+          </div> */}
           <div>
             <label>Response:</label>
             <select value={response} onChange={e => setResponse(e.target.value)}>

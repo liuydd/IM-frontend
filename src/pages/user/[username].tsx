@@ -219,7 +219,7 @@ const UserScreen = () => {
                     {/* <ListFriends /> */}
                     {/* <LabelFriends /> */}
                     <FriendRequest />
-                    <Respond2FriendRequest />
+                    {/* <Respond2FriendRequest /> */}
                     {/* <ListFriendRequests /> */}
                 </Content>
             </Layout>

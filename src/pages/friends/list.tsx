@@ -7,6 +7,7 @@ import { RootState } from "../../redux/store";
 import DeleteFriend from "./delete";
 import CreateGroup from "../group/create";
 import LabelFriends from "./label";
+import { Input, Select, Button, Typography } from 'antd';
 
 interface Friend{
     friend: string;
@@ -46,7 +47,7 @@ function ListFriends() {
     return (
         <div>
         <h2>Friend List</h2>
-        <button onClick={fetchFriend}>Fetch Friends</button>
+        <Button onClick={fetchFriend}>Fetch Friends</Button>
         <ul>
         {friendlist.map((myfriend, index) => (
             <li key={index}>

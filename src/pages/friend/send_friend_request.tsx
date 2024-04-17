@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { setName, setToken } from "../../redux/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
+import { Input, Select, Button, Typography } from 'antd';
 
 function FriendRequest() {
     //const [username, setUsername] = useState("");
@@ -42,7 +43,7 @@ function FriendRequest() {
           <label>Friend's Username:</label>
           <input type="text" value={friend} onChange={e => setFriend(e.target.value)} />
         </div>
-        <button onClick={sendFriendRequest}>Send Request</button>
+        <Button onClick={sendFriendRequest}>Send Request</Button>
       </div>
     );
   }
