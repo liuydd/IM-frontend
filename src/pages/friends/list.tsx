@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import DeleteFriend from "./delete";
 import CreateGroup from "../group/create";
+import LabelFriends from "./label";
 
 interface Friend{
     friend: string;
@@ -52,6 +53,7 @@ function ListFriends() {
                 <p>Friend Name: {myfriend.friend}</p>
                 <p>Labels: {myfriend.labels.join(', ')}</p>
                 <DeleteFriend friend={myfriend.friend} />
+                <LabelFriends friend={myfriend.friend} />
             </li>
         ))}
         </ul>

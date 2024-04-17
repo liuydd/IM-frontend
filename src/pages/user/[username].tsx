@@ -217,7 +217,7 @@ const UserScreen = () => {
                 <Content>
                     <SearchUser />
                     {/* <ListFriends /> */}
-                    <LabelFriends />
+                    {/* <LabelFriends /> */}
                     <FriendRequest />
                     <Respond2FriendRequest />
                     {/* <ListFriendRequests /> */}

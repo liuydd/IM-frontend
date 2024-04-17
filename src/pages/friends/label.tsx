@@ -5,10 +5,13 @@ import { setName, setToken } from "../../redux/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 
-function LabelFriends(){
+interface LabelFriendProps {
+    friend: string;
+}
+function LabelFriends(props: LabelFriendProps){
     const username = useSelector((state: RootState) => state.auth.name);
     const token = useSelector((state: RootState) => state.auth.token);
-    const [friend, setFriend] = useState("");
+    //const [friend, setFriend] = useState("");
     const [label, setLabel] = useState("");
 
     const handleLabelFriend =() =>{
@@ -20,8 +23,8 @@ function LabelFriends(){
             },
             body: JSON.stringify({
                 username,
-                friend,
-                label
+                friend: props.friend,
+                label,
             }),
         })
         .then((res) => res.json())
@@ -41,12 +44,12 @@ function LabelFriends(){
     return (
         <div>
             <h2>Label Friend</h2>
-            <br />
+            {/* <br />
             <label>
             Friend's Username:
             <input type="text" value={friend} onChange={(e) => setFriend(e.target.value)} />
             </label>
-            <br />
+            <br /> */}
             <label>
             Label:
             <input type="text" value={label} onChange={(e) => setLabel(e.target.value)} />
