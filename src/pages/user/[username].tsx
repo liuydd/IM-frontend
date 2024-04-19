@@ -19,6 +19,7 @@ import Link from 'next/link';
 import { LogoutOutlined, DeleteOutlined } from '@ant-design/icons';
 import { UserOutlined } from '@ant-design/icons';
 import { Avatar } from 'antd';
+// import ChatPage from "../../components/chat/ChatLayout"; //测试页面
 
 const UserScreen = () => {
     //获取现有的userName, token, password
@@ -149,7 +150,7 @@ const UserScreen = () => {
         { label: "User", key: "1", to: `/user/${username}` },
         { label: "Friend List", key: "2", to: "/friends/list" },
         { label: "Friend Request List", key: "3", to: "/friend/friend_request_list" },
-        { label: "Messages", key: "4", to: "/messages" },
+        { label: "Messages", key: "4", to: "/group/list" },
     ];
 
     return (
@@ -215,6 +216,7 @@ const UserScreen = () => {
                 </Menu>
                 </Sider>
                 <Content>
+                    {/* <ChatPage /> */}
                     <SearchUser />
                     {/* <ListFriends /> */}
                     {/* <LabelFriends /> */}
