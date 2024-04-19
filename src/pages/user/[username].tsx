@@ -19,7 +19,7 @@ import Link from 'next/link';
 import { LogoutOutlined, DeleteOutlined } from '@ant-design/icons';
 import { UserOutlined } from '@ant-design/icons';
 import { Avatar } from 'antd';
-// import ChatPage from "../../components/chat/ChatLayout"; //测试页面
+import ChatPage from "../../components/chat/ChatLayout"; //测试页面
 
 const UserScreen = () => {
     //获取现有的userName, token, password
@@ -150,8 +150,23 @@ const UserScreen = () => {
         { label: "User", key: "1", to: `/user/${username}` },
         { label: "Friend List", key: "2", to: "/friends/list" },
         { label: "Friend Request List", key: "3", to: "/friend/friend_request_list" },
-        { label: "Messages", key: "4", to: "/group/list" },
+        //{ label: "Messages", key: "4", to: "/group/list" },
     ];
+
+    const [showChatSidebar, setShowChatSidebar] = useState(false);
+    const [selectedChat, setSelectedChat] = useState("");
+
+    const handleMenuClick = () => {
+        setShowChatSidebar(true);
+    };
+
+    const cancelMenuClick = () => {
+        setShowChatSidebar(false);
+    };
+
+    const handleChatSelect = (info: { key: string }) => {
+        setSelectedChat(info.key);
+      };
 
     return (
         <Layout>
@@ -213,14 +228,38 @@ const UserScreen = () => {
                         <Link href={item.to}>{item.label}</Link>
                     </Menu.Item>
                     ))}
+                    <Menu.Item key="messages" onClick={handleMenuClick}>
+                        Messages
+                    </Menu.Item>
                 </Menu>
                 </Sider>
                 <Content>
-                    {/* <ChatPage /> */}
-                    <SearchUser />
+                    <Layout>
+                    {showChatSidebar && (
+                        <Sider 
+                            width={200} theme="light"
+                            style={{
+                                overflow: 'auto',
+                                height: 'calc(100vh - 64px)', // 减去 Header 的高度
+                                position: 'sticky',
+                                top: '64px', // Header 的高度
+                            }}
+                        >
+                        <Menu mode="inline" onSelect={handleChatSelect}>
+                            <Menu.Item key="chat1">Chat 1</Menu.Item>
+                            <Menu.Item key="chat2">Chat 2</Menu.Item>
+                            <Menu.Item key="chat3">Chat 3</Menu.Item>
+                            {/* Add more chat options as needed */}
+                        </Menu>
+                        <Button block onClick={cancelMenuClick}>关闭</Button>
+                        </Sider>
+                        )}
+                    <ChatPage chat={selectedChat} />
+                    </Layout>
+                    {/* <SearchUser /> */}
                     {/* <ListFriends /> */}
                     {/* <LabelFriends /> */}
-                    <FriendRequest />
+                    {/* <FriendRequest /> */}
                     {/* <Respond2FriendRequest /> */}
                     {/* <ListFriendRequests /> */}
                 </Content>

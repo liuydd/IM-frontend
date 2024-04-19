@@ -3,7 +3,7 @@ import { Layout, Input, Button, List } from "antd";
 
 const { Content, Footer } = Layout;
 
-const ChatPage = () => {
+const ChatPage = ({chat}: {chat: string}) => {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState<string[]>([]);
 
@@ -17,6 +17,16 @@ const ChatPage = () => {
       setMessage('');
     }
   };
+
+  if (chat === "") {
+    return(
+        <Layout style={{ minHeight: '100vh' }}>
+      <Content style={{ padding: '16px' }}>
+        请选择一个对话
+      </Content>
+    </Layout>
+    );
+  }
 
   return (
     <Layout style={{ minHeight: '100vh' }}>
