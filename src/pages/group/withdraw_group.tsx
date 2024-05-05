@@ -7,7 +7,8 @@ import { RootState } from "../../redux/store";
 import { Button, message } from "antd";
 
 function WithdrawGroup(){
-    const username = useSelector((state: RootState) => state.auth.name);
+    const userid = useSelector((state: RootState) => state.auth.userid);
+    const groupid = useSelector((state: RootState) => state.group.groupid);
     const token = useSelector((state: RootState) => state.auth.token);
 
     const withdrawGroup = ()=>{
@@ -15,11 +16,11 @@ function WithdrawGroup(){
             method: "DELETE",
             headers: {
             "Content-Type": "application/json",
+            Authorization: `${token}`,
             },
             body: JSON.stringify({
-                // groupid,
-                // userid
-                username, //暂时传这个，后面根据后端需要的消息再修改
+                userid,
+                groupid
             }),
         })
         .then((res) => res.json())

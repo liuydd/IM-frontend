@@ -13,15 +13,21 @@ interface GroupMembers{
 function AssignManager({ groupmemberslist }: { groupmemberslist: GroupMembers[] }) {
     const username = useSelector((state: RootState) => state.auth.name);
     const token = useSelector((state: RootState) => state.auth.token);
+    const groupid = useSelector((state: RootState) => state.group.groupid);
     const [newManager, setNewManager] = useState("");
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const assignManager = () =>{
-        fetch(`${BACKEND_URL}/api/assign_manager`, {
+        fetch(`${BACKEND_URL}/api/group/assign_manager`, {
             method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `${token}`,
+            },
             body: JSON.stringify({
                 username,
                 newManager,
+                groupid,
             }),
         })
             .then((res) => res.json())

@@ -11,13 +11,14 @@ interface SearchResult {
     code: number;
     info: string;
     targetInfo: {
-      username: string;
-      email: string;
-      phoneNumber: string;
+        userid: number;
+        username: string;
+        email: string;
+        phoneNumber: string;
     };
 }
 
-function SearchUser(){
+function SearchUser() {
     const [method, setMethod] = useState("");
     const [targetname, setTargetName] = useState("");
     const [email, setEmail] = useState("");
@@ -27,25 +28,25 @@ function SearchUser(){
     const searchUser = () => {
         let url = `/api/search_target_user?method=${method}`;
 
-        if(method === 'targetname'){
+        if (method === 'targetname') {
             url += `&targetname=${targetname}`;
         }
-        else if(method === 'email'){
+        else if (method === 'email') {
             url += `&email=${email}`;
         }
-        else if(method === 'phoneNumber'){
+        else if (method === 'phoneNumber') {
             url += `&phoneNumber=${phoneNumber}`;
         }
         fetch(url)
-        .then((res) => res.json())
-        .then((res) => {
-            if (Number(res.code) === 0) {
-                setSearchResult(res);
-            }
-            else{
-                alert(res.info);
-            }
-        })
+            .then((res) => res.json())
+            .then((res) => {
+                if (Number(res.code) === 0) {
+                    setSearchResult(res);
+                }
+                else {
+                    alert(res.info);
+                }
+            })
     };
 
     return (

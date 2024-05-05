@@ -6,10 +6,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 
 interface LabelFriendProps {
-    friend: string;
+    friendid: number;
 }
 function LabelFriends(props: LabelFriendProps){
-    const username = useSelector((state: RootState) => state.auth.name);
+    const userid = useSelector((state: RootState) => state.auth.userid);
     const token = useSelector((state: RootState) => state.auth.token);
     //const [friend, setFriend] = useState("");
     const [label, setLabel] = useState("");
@@ -22,8 +22,8 @@ function LabelFriends(props: LabelFriendProps){
                 Authorization : `${token}`
             },
             body: JSON.stringify({
-                username,
-                friend: props.friend,
+                userid,
+                friendid: props.friendid,
                 label,
             }),
         })

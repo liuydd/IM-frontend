@@ -7,15 +7,15 @@ import { RootState } from "../../redux/store";
 import { Button, Checkbox, Form, Input } from "antd";
 
 interface GroupMembers{
-    memberName: string,
+    memberid: number,
 }
 interface Friend{
-    friend: string;
+    friendid: number;
     labels: string[];
 }
 
 function CreateGroup({ friendlist }: { friendlist: Friend[] }) {
-    const username = useSelector((state: RootState) => state.auth.name);
+    const userid = useSelector((state: RootState) => state.auth.userid);
     const token = useSelector((state: RootState) => state.auth.token);
     const [members, setGroupMembers] = useState<GroupMembers[]>([]);
 
@@ -27,7 +27,7 @@ function CreateGroup({ friendlist }: { friendlist: Friend[] }) {
                 Authorization: `${token}`,
             },
             body: JSON.stringify({
-                username,
+                userid,
                 members,
             })
         })
@@ -48,13 +48,13 @@ function CreateGroup({ friendlist }: { friendlist: Friend[] }) {
                   key={index}
                   onChange={(e) => {
                     if (e.target.checked) {
-                      setGroupMembers([...members, { memberName: friend.friend }]);
+                      setGroupMembers([...members, { memberid: friend.friendid }]);
                     } else {
-                      setGroupMembers(members.filter((m) => m.memberName !== friend.friend));
+                      setGroupMembers(members.filter((m) => m.memberid !== friend.friendid));
                     }
                   }}
                 >
-                  {friend.friend}
+                  {friend.friendid}
                 </Checkbox>
               ))
             ) : (

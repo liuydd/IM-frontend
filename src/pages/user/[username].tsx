@@ -23,6 +23,7 @@ import ChatPage from "../../components/chat/ChatLayout"; //测试页面
 
 const UserScreen = () => {
     //获取现有的userName, token, password
+    const userid = useSelector((state: RootState) => state.auth.userid);
     const username = useSelector((state: RootState) => state.auth.name);
     const token = useSelector((state: RootState) => state.auth.token);
     const password = useSelector((state: RootState) => state.auth.password);
@@ -90,6 +91,7 @@ const UserScreen = () => {
                 Authorization : `${token}`
             },
             body : JSON.stringify({
+                userid,
                 username,
                 newUsername,
                 password,
@@ -129,7 +131,7 @@ const UserScreen = () => {
                 Authorization : `${token}`
             },
             body: JSON.stringify({
-                username,
+                userid,
             })
         })
         .then(response => {

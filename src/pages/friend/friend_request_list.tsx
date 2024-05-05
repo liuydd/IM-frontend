@@ -17,7 +17,7 @@ interface FriendRequests {
 function ListFriendRequests() {
     const [friendRequests, setFriendRequests] = useState<{ requestsSent: FriendRequests[]; requestsReceived: FriendRequests[] }>({ requestsSent: [], requestsReceived: [] });
     //const [loading, setLoading] = useState(true);
-    const username = useSelector((state: RootState) => state.auth.name);
+    const userid = useSelector((state: RootState) => state.auth.userid);
     const token = useSelector((state: RootState) => state.auth.token);
   
     // useEffect(() => {
@@ -32,7 +32,7 @@ function ListFriendRequests() {
             'Content-Type': 'application/json',
             Authorization : `${token}`
           },
-          body: JSON.stringify({ username })
+          body: JSON.stringify({ userid })
         })
         .then((res) => res.json())
         .then((res) => {

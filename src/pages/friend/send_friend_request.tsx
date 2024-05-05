@@ -8,7 +8,7 @@ import { Input, Select, Button, Typography } from 'antd';
 
 function FriendRequest() {
     //const [username, setUsername] = useState("");
-    const username = useSelector((state: RootState) => state.auth.name);
+    const userid = useSelector((state: RootState) => state.auth.userid);
     const token = useSelector((state: RootState) => state.auth.token);
     const [friend, setFriend] = useState("");
   
@@ -20,7 +20,7 @@ function FriendRequest() {
                 Authorization : `${token}`
             },
             body : JSON.stringify({
-                username,
+                userid,
                 friend,
             })
         })

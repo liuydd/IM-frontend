@@ -11,10 +11,10 @@ interface GroupMembers{
 }
 
 function RemoveMember({ groupmemberslist }: { groupmemberslist: GroupMembers[] }) {
-    const username = useSelector((state: RootState) => state.auth.name);
+    const userid = useSelector((state: RootState) => state.auth.userid);
+    const groupid = useSelector((state: RootState) => state.group.groupid);
     const token = useSelector((state: RootState) => state.auth.token);
-    const [targetmembers, setTargetMembers] = useState<string[]>([]);
-    //若需要得到groupid，可能需要改redux/auth.ts
+    const [targetid, setTargetMembers] = useState<string[]>([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const removeMember = ()=>{
@@ -25,8 +25,9 @@ function RemoveMember({ groupmemberslist }: { groupmemberslist: GroupMembers[] }
                 Authorization: `${token}`,
             },
             body: JSON.stringify({
-                username,
-                targetmembers,
+                userid,
+                groupid,
+                targetid,
             })
         })
         .then((res) => res.json())
@@ -67,7 +68,7 @@ function RemoveMember({ groupmemberslist }: { groupmemberslist: GroupMembers[] }
           >
             <Checkbox.Group
                 onChange={(selectedValues: string[]) => setTargetMembers(selectedValues)}
-                value={targetmembers}
+                value={targetid}
             >
             {groupmemberslist? (groupmemberslist.map((member, index) => (
                 <Checkbox key={index} value={member.memberName}>

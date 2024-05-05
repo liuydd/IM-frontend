@@ -10,12 +10,13 @@ import LabelFriends from "./label";
 import { Input, Select, Button, Typography } from 'antd';
 
 interface Friend{
+    friendid: number;
     friend: string;
     labels: string[];
 }
 
 function ListFriends() {
-    const username = useSelector((state: RootState) => state.auth.name);
+    const userid = useSelector((state: RootState) => state.auth.userid);
     const token = useSelector((state: RootState) => state.auth.token);
     const [friendlist, setFriendlist] = useState<Friend[]>([]);
     const fetchFriend = ()=>{
@@ -26,7 +27,7 @@ function ListFriends() {
                 Authorization : `${token}`
             },
             body: JSON.stringify({
-                username,
+                userid,
             }),
         })
         .then((res) => res.json())
@@ -53,8 +54,8 @@ function ListFriends() {
             <li key={index}>
                 <p>Friend Name: {myfriend.friend}</p>
                 <p>Labels: {myfriend.labels.join(', ')}</p>
-                <DeleteFriend friend={myfriend.friend} />
-                <LabelFriends friend={myfriend.friend} />
+                <DeleteFriend friendid={myfriend.friendid} />
+                <LabelFriends friendid={myfriend.friendid} />
             </li>
         ))}
         </ul>
