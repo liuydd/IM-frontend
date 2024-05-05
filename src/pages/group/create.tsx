@@ -11,6 +11,7 @@ interface GroupMembers{
 }
 interface Friend{
     friendid: number;
+    friend: string;
     labels: string[];
 }
 
@@ -54,7 +55,7 @@ function CreateGroup({ friendlist }: { friendlist: Friend[] }) {
                     }
                   }}
                 >
-                  {friend.friendid}
+                  {friend.friend}
                 </Checkbox>
               ))
             ) : (
