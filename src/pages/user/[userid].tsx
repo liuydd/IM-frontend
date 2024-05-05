@@ -33,9 +33,9 @@ const UserScreen = () => {
 
     const [showModal, setShowModal] = useState(false);
     const [formData, setFormData] = useState({
-        //username: "",
+        username: "",
         newUsername: "",
-        //password: "",
+        password: "",
         newPassword: "",
         avatar: "",
         newAvatar: "",
@@ -54,36 +54,20 @@ const UserScreen = () => {
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
-        if(name === "username"){
+        setFormData((prevData) => ({
+            ...prevData,
+            [name]: value
+        }));
+        if(name === "newUsername"){
             dispatch(setName(value));
         }
-        else if(name === "password"){
+        else if(name === "newPassword"){
             dispatch(setPassword(value));
-        }
-        // else if(name === "newUsername"){
-        //     setFormData((prevData) => ({
-        //         ...prevData,
-        //         [name]: value
-        //     }));
-        //     router.push(`./user/${username}`);
-        // }
-        // else if(name === "newPassword"){
-        //     setFormData((prevData) => ({
-        //         ...prevData,
-        //         [name]: value
-        //     }));
-        //     //dispatch(setPassword(value));
-        // }
-        else{
-            setFormData((prevData) => ({
-                ...prevData,
-                [name]: value
-            }));
         }
     };
 
     const edit = () => {
-        const { newUsername, newPassword, newAvatar, newEmail, newPhoneNumber } = formData;
+        const { username, password, newUsername, newPassword, newAvatar, newEmail, newPhoneNumber } = formData;
         fetch(`${BACKEND_URL}/api/modify`, {
             method : "POST",
             headers : {
@@ -206,6 +190,9 @@ const UserScreen = () => {
                         >
                             <h2>Edit Account Info</h2>
                             <Form onFinish={edit}>
+                                <Form.Item label="Password">
+                                    <Input.Password name="password" value={formData.password} onChange={handleChange} />
+                                </Form.Item>
                                 <Form.Item label="New Username">
                                     <Input name="newUsername" value={formData.newUsername} onChange={handleChange} />
                                 </Form.Item>

@@ -10,6 +10,7 @@ const { Title } = Typography;
 const LoginScreen = () => {
     const [username, setUserName] = useState("");
     const [password, setPassword] = useState("");
+    const [userid, setUserId] = useState(0);
 
     const router = useRouter();
     const dispatch = useDispatch();
@@ -29,7 +30,7 @@ const LoginScreen = () => {
                     dispatch(setToken(res.token));
                     alert(LOGIN_SUCCESS_PREFIX + username);
 
-                    router.push(`./user/${username}`);
+                    router.push(`./user/${userid}`);
                 }
                 else {
                     alert(LOGIN_FAILED+res.info);
