@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { Input, Select, Button, Typography } from 'antd';
 const { Title } = Typography;
 const { Option } = Select;
+import FriendRequest from "./friend/send_friend_request";
 
 interface SearchResult {
     code: number;
@@ -89,6 +90,7 @@ function SearchUser() {
                     <p>Username: {searchResult.targetInfo.username}</p>
                     <p>Email: {searchResult.targetInfo.email}</p>
                     <p>Phone Number: {searchResult.targetInfo.phoneNumber}</p>
+                    <FriendRequest friend = {searchResult.targetInfo.username} />
                 </div>
             )}
         </div>

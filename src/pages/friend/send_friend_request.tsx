@@ -6,11 +6,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { Input, Select, Button, Typography } from 'antd';
 
-function FriendRequest() {
+interface RespondProps {
+    friend: string;
+  }
+
+function FriendRequest(props: RespondProps) {
     //const [username, setUsername] = useState("");
     const userid = useSelector((state: RootState) => state.auth.userid);
     const token = useSelector((state: RootState) => state.auth.token);
-    const [friend, setFriend] = useState("");
+    // const [friend, setFriend] = useState("");
   
     const sendFriendRequest = () => {
         fetch(`${BACKEND_URL}/api/friend/send_friend_request`, {
@@ -21,7 +25,7 @@ function FriendRequest() {
             },
             body : JSON.stringify({
                 userid,
-                friend,
+                friend: props.friend,
             })
         })
         .then((res) => res.json())
@@ -38,12 +42,12 @@ function FriendRequest() {
   
     return (
       <div>
-        <h2>Send Friend Request</h2>
+        {/* <h2>Send Friend Request</h2>
         <div>
           <label>Friend's Username:</label>
           <input type="text" value={friend} onChange={e => setFriend(e.target.value)} />
-        </div>
-        <Button onClick={sendFriendRequest}>Send Request</Button>
+        </div> */}
+        <Button onClick={sendFriendRequest}>Add friend</Button>
       </div>
     );
   }

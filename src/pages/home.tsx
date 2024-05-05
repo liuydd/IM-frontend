@@ -1,16 +1,16 @@
 import { useState } from "react";
-import { BACKEND_URL, FAILURE_PREFIX} from "../../constants/string";
+import { BACKEND_URL, FAILURE_PREFIX} from "../constants/string";
 import { useRouter } from "next/router";
-import { setName, setPassword, setToken } from "../../redux/auth";
+import { setName, setPassword, setToken } from "../redux/auth";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../redux/store";
-import FriendRequest from "../friend/send_friend_request";
-import Respond2FriendRequest from "../friend/respond_friend_request";
-import ListFriendRequests from "../friend/friend_request_list";
-import SearchUser from "../search_target_user";
-import DeleteFriend from "../friends/delete";
-import ListFriends from "../friends/list";
-import LabelFriends from "../friends/label";
+import { RootState } from "../redux/store";
+import FriendRequest from "./friend/send_friend_request";
+import Respond2FriendRequest from "./friend/respond_friend_request";
+import ListFriendRequests from "./friend/friend_request_list";
+import SearchUser from "./search_target_user";
+import DeleteFriend from "./friends/delete";
+import ListFriends from "./friends/list";
+import LabelFriends from "./friends/label";
 import type { MenuProps } from 'antd';
 import { Breadcrumb, Layout, Menu, theme, Button, Form, Input, Modal, Image } from 'antd';
 const { Header, Content, Footer, Sider } = Layout;
@@ -19,7 +19,7 @@ import Link from 'next/link';
 import { LogoutOutlined, DeleteOutlined } from '@ant-design/icons';
 import { UserOutlined } from '@ant-design/icons';
 import { Avatar } from 'antd';
-import ChatPage from "../../components/chat/ChatLayout"; //测试页面
+import ChatPage from "../components/chat/ChatLayout"; //测试页面
 
 const UserScreen = () => {
     //获取现有的userName, token, password
@@ -243,6 +243,7 @@ const UserScreen = () => {
                         <Button block onClick={cancelMenuClick}>关闭</Button>
                         </Sider>
                         )}
+                    <SearchUser />
                     <ChatPage chat={selectedChat} />
                     </Layout>
                     {/* <SearchUser /> */}

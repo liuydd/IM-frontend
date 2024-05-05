@@ -30,7 +30,7 @@ const LoginScreen = () => {
                     dispatch(setToken(res.token));
                     alert(LOGIN_SUCCESS_PREFIX + username);
 
-                    router.push(`./user/${userid}`);
+                    router.push(`./home`);
                 }
                 else {
                     alert(LOGIN_FAILED+res.info);
