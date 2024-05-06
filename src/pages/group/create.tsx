@@ -6,9 +6,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { Button, Checkbox, Form, Input } from "antd";
 
-interface GroupMembers{
-    memberid: number,
-}
+// interface GroupMembers{
+//     memberid: number,
+// }
 interface Friend{
     friendid: number;
     friend: string;
@@ -18,7 +18,12 @@ interface Friend{
 function CreateGroup({ friendlist }: { friendlist: Friend[] }) {
     const userid = useSelector((state: RootState) => state.auth.userid);
     const token = useSelector((state: RootState) => state.auth.token);
-    const [members, setGroupMembers] = useState<GroupMembers[]>([]);
+    // const [members, setGroupMembers] = useState<GroupMembers[]>([]);
+    const [members, setGroupMembers] = useState<number[]>([]);
+
+    const handleMemberChange = (checkedValues: number[]) => {
+      setGroupMembers(checkedValues);
+    };
 
     const createGroup = () =>{
         fetch(`${BACKEND_URL}/api/group/create`, {
@@ -47,13 +52,21 @@ function CreateGroup({ friendlist }: { friendlist: Friend[] }) {
               friendlist.map((friend, index) => (
                 <Checkbox
                   key={index}
-                  onChange={(e) => {
-                    if (e.target.checked) {
-                      setGroupMembers([...members, { memberid: friend.friendid }]);
-                    } else {
-                      setGroupMembers(members.filter((m) => m.memberid !== friend.friendid));
-                    }
-                  }}
+                  value={friend.friendid}
+                  onChange={(e) =>
+                    handleMemberChange(
+                      e.target.checked
+                        ? [...members, e.target.value]
+                        : members.filter((member) => member !== e.target.value)
+                    )
+                  }
+                  // onChange={(e) => {
+                  //   if (e.target.checked) {
+                  //     setGroupMembers([...members, {memberid : friend.friendid }]);
+                  //   } else {
+                  //     setGroupMembers(members.filter((m) => m.memberid !== friend.friendid));
+                  //   }
+                  // }}
                 >
                   {friend.friend}
                 </Checkbox>

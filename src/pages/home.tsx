@@ -133,7 +133,7 @@ const UserScreen = () => {
 
     const [collapsed, setCollapsed] = useState(false);
     const items = [
-        { label: "User", key: "1", to: `/user/${username}` },
+        { label: "User", key: "1", to: "/home" },
         { label: "Friend List", key: "2", to: "/friends/list" },
         { label: "Friend Request List", key: "3", to: "/friend/friend_request_list" },
         //{ label: "Messages", key: "4", to: "/group/list" },
@@ -246,12 +246,6 @@ const UserScreen = () => {
                     <SearchUser />
                     <ChatPage chat={selectedChat} />
                     </Layout>
-                    {/* <SearchUser /> */}
-                    {/* <ListFriends /> */}
-                    {/* <LabelFriends /> */}
-                    {/* <FriendRequest /> */}
-                    {/* <Respond2FriendRequest /> */}
-                    {/* <ListFriendRequests /> */}
                 </Content>
             </Layout>
         </Layout>

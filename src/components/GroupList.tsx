@@ -5,7 +5,7 @@ import { RootState } from "../redux/store";
 import { Card, Divider } from "antd";
 
 function GroupList() {
-  //const userid = useSelector((state: RootState) => state.auth.userid);
+  const userid = useSelector((state: RootState) => state.auth.userid);
   const username = useSelector((state: RootState) => state.auth.name);
   const [groups, setGroups] = useState({
     monitorGroup: [],
@@ -14,8 +14,7 @@ function GroupList() {
   });
 
   useEffect(() => {
-    //fetch(`${BACKEND_URL}/api/group/list_group?userid=${userid}`)
-    fetch(`${BACKEND_URL}/api/group/list?username=${username}`)
+    fetch(`${BACKEND_URL}/api/group/list_group?userid=${userid}`)
       .then((res) => res.json())
       .then((res) => {
         if (Number(res.code) === 0) {
