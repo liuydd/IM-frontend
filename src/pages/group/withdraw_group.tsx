@@ -6,9 +6,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { Button, message } from "antd";
 
-function WithdrawGroup(){
+function WithdrawGroup({ groupid }: { groupid: number }){
     const userid = useSelector((state: RootState) => state.auth.userid);
-    const groupid = useSelector((state: RootState) => state.group.groupid);
+    // const groupid = useSelector((state: RootState) => state.group.groupid);
     const token = useSelector((state: RootState) => state.auth.token);
 
     const withdrawGroup = ()=>{

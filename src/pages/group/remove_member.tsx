@@ -4,17 +4,18 @@ import { useRouter } from "next/router";
 import { setName, setPassword, setToken } from "../../redux/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
-import { Button, Checkbox, Form, Input, Modal } from "antd";
+import { Button, Checkbox, Form, Input, Modal, Radio } from "antd";
 
-interface GroupMembers{
-    memberName: string,
-}
+// interface GroupMembers{
+//     memberName: string,
+// }
 
-function RemoveMember({ groupmemberslist }: { groupmemberslist: GroupMembers[] }) {
+function RemoveMember({ groupmemberslist, groupid }: { groupmemberslist: string[], groupid: number }) {
     const userid = useSelector((state: RootState) => state.auth.userid);
-    const groupid = useSelector((state: RootState) => state.group.groupid);
+    // const groupid = useSelector((state: RootState) => state.group.groupid);
     const token = useSelector((state: RootState) => state.auth.token);
-    const [targetid, setTargetMembers] = useState<string[]>([]);
+    // const [targetid, setTargetMembers] = useState<number[]>([]);
+    const [targetid, setTargetMembers] = useState(0);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const removeMember = ()=>{
@@ -66,18 +67,27 @@ function RemoveMember({ groupmemberslist }: { groupmemberslist: GroupMembers[] }
             onOk={handleOk}
             onCancel={handleCancel}
           >
-            <Checkbox.Group
-                onChange={(selectedValues: string[]) => setTargetMembers(selectedValues)}
+            {/* <Checkbox.Group
+                onChange={(selectedValues: number[]) => setTargetMembers(selectedValues)}
                 value={targetid}
             >
             {groupmemberslist? (groupmemberslist.map((member, index) => (
-                <Checkbox key={index} value={member.memberName}>
-                {member.memberName}
+                <Checkbox key={index} value={Number(member)}>
+                {member}
                 </Checkbox>
             ))):(
                 <p>Loading group members list...</p>
               )}
-            </Checkbox.Group>
+            </Checkbox.Group> */}
+            <Radio.Group onChange={(e) => setTargetMembers(e.target.value)} value={targetid}>
+              {groupmemberslist? (groupmemberslist.map((member, index) => (
+                <Radio key={index} value={member}>
+                  {member}
+                </Radio>
+              ))): (
+                <p>Loading group members list...</p>
+              )}
+            </Radio.Group>
           </Modal>
         </div>
       );

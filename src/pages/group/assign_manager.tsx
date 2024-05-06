@@ -15,7 +15,7 @@ function AssignManager({ groupmemberslist, groupid }: { groupmemberslist: string
     const userid = useSelector((state: RootState) => state.auth.userid);
     const token = useSelector((state: RootState) => state.auth.token);
     // const groupid = useSelector((state: RootState) => state.group.groupid);
-    const [newManager, setNewManager] = useState("");
+    const [newManager, setNewManager] = useState(0);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const assignManager = () =>{

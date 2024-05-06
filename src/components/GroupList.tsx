@@ -55,6 +55,7 @@ function GroupList() {
           <p>Monitor: {group.monitor}</p>
           <p><AssignManager groupmemberslist = {group.members} groupid ={group.groupid}/></p>
           <p><TransferMonitor groupmemberslist = {group.members} groupid ={group.groupid}/></p>
+          <p><RemoveMember groupmemberslist = {group.members} groupid ={group.groupid}/></p>
           <Divider>Managers</Divider>
           <ul>
             {group.managers.map((manager) => (
@@ -75,6 +76,7 @@ function GroupList() {
         <Card key={group.groupid} title={group.groupname}>
           <p>Monitor: {group.monitor}</p>
           <Divider>Managers</Divider>
+          <p><RemoveMember groupmemberslist = {group.members} groupid ={group.groupid}/></p>
           <ul>
             {group.managers.map((manager) => (
               <li key={manager}>{manager}</li>
@@ -92,6 +94,7 @@ function GroupList() {
       <h2>Groups You Are a Member Of</h2>
       {memberOfGroup && memberOfGroup.map((group) => (
         <Card key={group.groupid} title={group.groupname}>
+          <p><WithdrawGroup groupid = {group.groupid}/></p>
           <p>Monitor: {group.monitor}</p>
           <Divider>Managers</Divider>
           <ul>
