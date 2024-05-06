@@ -1,19 +1,20 @@
 import { useState } from "react";
 import { BACKEND_URL, FAILURE_PREFIX} from "../../constants/string";
 import { useRouter } from "next/router";
-import { setName, setPassword, setToken } from "../../redux/auth";
+import { setName, setPassword, setToken, setUserid } from "../../redux/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { Button, Modal, Radio } from "antd";
 
-interface GroupMembers{
-    memberName: string,
-}
+// interface GroupMembers{
+//     memberName: string,
+// }
 
-function AssignManager({ groupmemberslist }: { groupmemberslist: GroupMembers[] }) {
+function AssignManager({ groupmemberslist, groupid }: { groupmemberslist: string[], groupid: number }) {
     const username = useSelector((state: RootState) => state.auth.name);
+    const userid = useSelector((state: RootState) => state.auth.userid);
     const token = useSelector((state: RootState) => state.auth.token);
-    const groupid = useSelector((state: RootState) => state.group.groupid);
+    // const groupid = useSelector((state: RootState) => state.group.groupid);
     const [newManager, setNewManager] = useState("");
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -25,7 +26,8 @@ function AssignManager({ groupmemberslist }: { groupmemberslist: GroupMembers[] 
               Authorization: `${token}`,
             },
             body: JSON.stringify({
-                username,
+                userid,
+                // username,
                 newManager,
                 groupid,
             }),
@@ -69,8 +71,8 @@ function AssignManager({ groupmemberslist }: { groupmemberslist: GroupMembers[] 
           >
             <Radio.Group onChange={(e) => setNewManager(e.target.value)} value={newManager}>
               {groupmemberslist? (groupmemberslist.map((member, index) => (
-                <Radio key={index} value={member.memberName}>
-                  {member.memberName}
+                <Radio key={index} value={member}>
+                  {member}
                 </Radio>
               ))): (
                 <p>Loading group members list...</p>

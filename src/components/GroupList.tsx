@@ -53,6 +53,8 @@ function GroupList() {
       {monitorGroup && monitorGroup.map((group) => (
         <Card key={group.groupid} title={group.groupname}>
           <p>Monitor: {group.monitor}</p>
+          <p><AssignManager groupmemberslist = {group.members} groupid ={group.groupid}/></p>
+          <p><TransferMonitor groupmemberslist = {group.members} groupid ={group.groupid}/></p>
           <Divider>Managers</Divider>
           <ul>
             {group.managers.map((manager) => (

@@ -6,15 +6,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { Button, Modal, Radio } from "antd";
 
-interface GroupMembers {
-  memberName: string,
-}
+// interface GroupMembers {
+//   memberName: string,
+// }
 
-function TransferMonitor({ groupmemberslist }: { groupmemberslist: GroupMembers[] }) {
+function TransferMonitor({ groupmemberslist, groupid }: { groupmemberslist: string[], groupid: number }) {
   const userid = useSelector((state: RootState) => state.auth.userid);
   const token = useSelector((state: RootState) => state.auth.token);
-  const groupid = useSelector((state: RootState) => state.group.groupid);
-  const [newMonitor, setNewMonitor] = useState("");
+  // const groupid = useSelector((state: RootState) => state.group.groupid);
+  const [newMonitor, setNewMonitor] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const transferMonitor = () => {
@@ -70,8 +70,8 @@ function TransferMonitor({ groupmemberslist }: { groupmemberslist: GroupMembers[
       >
         <Radio.Group onChange={(e) => setNewMonitor(e.target.value)} value={newMonitor}>
           {groupmemberslist ? (groupmemberslist.map((member, index) => (
-            <Radio key={index} value={member.memberName}>
-              {member.memberName}
+            <Radio key={index} value={member}>
+              {member}
             </Radio>
           ))) : (
             <p>Loading group members list...</p>
