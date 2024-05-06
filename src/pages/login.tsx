@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { BACKEND_URL, FAILURE_PREFIX, LOGIN_FAILED, LOGIN_SUCCESS_PREFIX } from "../constants/string";
 import { useRouter } from "next/router";
-import { setName, setToken } from "../redux/auth";
+import { setName, setToken, setUserid } from "../redux/auth";
 import { useDispatch } from "react-redux";
 import { Button, Checkbox, Form, Input, Typography } from 'antd';
 import Link from 'next/link';
@@ -28,6 +28,7 @@ const LoginScreen = () => {
                 if (Number(res.code) === 0) {
                     dispatch(setName(username));
                     dispatch(setToken(res.token));
+                    dispatch(setUserid(res.userid));
                     alert(LOGIN_SUCCESS_PREFIX + username);
 
                     router.push(`./home`);
