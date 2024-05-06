@@ -12,7 +12,7 @@ function WithdrawGroup({ groupid }: { groupid: number }){
     const token = useSelector((state: RootState) => state.auth.token);
 
     const withdrawGroup = ()=>{
-        fetch(`${BACKEND_URL}/group/withdraw_group`, {
+        fetch(`${BACKEND_URL}/api/group/withdraw_group`, {
             method: "DELETE",
             headers: {
             "Content-Type": "application/json",
