@@ -10,7 +10,6 @@ const { Title } = Typography;
 const LoginScreen = () => {
     const [username, setUserName] = useState("");
     const [password, setPassword] = useState("");
-    const [userid, setUserId] = useState(0);
 
     const router = useRouter();
     const dispatch = useDispatch();

@@ -8,6 +8,7 @@ import DeleteFriend from "./delete";
 import CreateGroup from "../group/create";
 import LabelFriends from "./label";
 import { Input, Select, Button, Typography } from 'antd';
+import GroupList from "../../components/GroupList";
 
 interface Friend{
     friendid: number;
@@ -60,6 +61,7 @@ function ListFriends() {
         ))}
         </ul>
         <CreateGroup friendlist={friendlist} />
+        <GroupList />
         </div>
         
     );
