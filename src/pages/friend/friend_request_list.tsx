@@ -4,6 +4,8 @@ import { useRouter } from "next/router";
 import { setName, setToken } from "../../redux/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
+import Respond2FriendRequest from "./respond_friend_request";
+import { Input, Select, Button, Typography } from 'antd';
 
 interface FriendRequests {
     sender: string;
@@ -15,7 +17,7 @@ interface FriendRequests {
 function ListFriendRequests() {
     const [friendRequests, setFriendRequests] = useState<{ requestsSent: FriendRequests[]; requestsReceived: FriendRequests[] }>({ requestsSent: [], requestsReceived: [] });
     //const [loading, setLoading] = useState(true);
-    const username = useSelector((state: RootState) => state.auth.name);
+    const userid = useSelector((state: RootState) => state.auth.userid);
     const token = useSelector((state: RootState) => state.auth.token);
   
     // useEffect(() => {
@@ -30,7 +32,7 @@ function ListFriendRequests() {
             'Content-Type': 'application/json',
             Authorization : `${token}`
           },
-          body: JSON.stringify({ username })
+          body: JSON.stringify({ userid })
         })
         .then((res) => res.json())
         .then((res) => {
@@ -53,12 +55,12 @@ function ListFriendRequests() {
     return (
       <div>
         <h2>Friend Requests</h2>
-        <button onClick={fetchFriendRequests}>Fetch Friend Requests</button>
+        <Button onClick={fetchFriendRequests}>Fetch Friend Requests</Button>
         <h3>Sent Requests:</h3>
         <ul>
           {friendRequests.requestsSent.map((request, index) => (
             <li key={index}>
-              <p>Sender: {request.sender}</p>
+              {/* <p>Sender: {request.sender}</p> */}
               <p>Receiver: {request.receiver}</p>
               <p>Timestamp: {request.timestamp}</p>
               <p>Response Status: {request.responseStatus}</p>
@@ -70,9 +72,10 @@ function ListFriendRequests() {
           {friendRequests.requestsReceived.map((request, index) => (
             <li key={index}>
               <p>Sender: {request.sender}</p>
-              <p>Receiver: {request.receiver}</p>
+              {/* <p>Receiver: {request.receiver}</p> */}
               <p>Timestamp: {request.timestamp}</p>
               <p>Response Status: {request.responseStatus}</p>
+              <Respond2FriendRequest friend = {request.sender} />
             </li>
           ))}
         </ul>

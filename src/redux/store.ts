@@ -2,11 +2,13 @@ import { configureStore } from "@reduxjs/toolkit";
 
 import authReducer from "./auth";
 import boardReducer from "./board";
+import groupReducer from "./group";
 
 const store = configureStore({
     reducer: {
         auth: authReducer,
         board: boardReducer,
+        group: groupReducer,
     },
 });
 

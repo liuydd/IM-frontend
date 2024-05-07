@@ -4,12 +4,17 @@ import { useRouter } from "next/router";
 import { setName, setToken } from "../../redux/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
+import { Input, Select, Button, Typography } from 'antd';
 
-function FriendRequest() {
+interface RespondProps {
+    friend: string;
+  }
+
+function FriendRequest(props: RespondProps) {
     //const [username, setUsername] = useState("");
-    const username = useSelector((state: RootState) => state.auth.name);
+    const userid = useSelector((state: RootState) => state.auth.userid);
     const token = useSelector((state: RootState) => state.auth.token);
-    const [friend, setFriend] = useState("");
+    // const [friend, setFriend] = useState("");
   
     const sendFriendRequest = () => {
         fetch(`${BACKEND_URL}/api/friend/send_friend_request`, {
@@ -19,8 +24,8 @@ function FriendRequest() {
                 Authorization : `${token}`
             },
             body : JSON.stringify({
-                username,
-                friend,
+                userid,
+                friend: props.friend,
             })
         })
         .then((res) => res.json())
@@ -37,12 +42,12 @@ function FriendRequest() {
   
     return (
       <div>
-        <h2>Send Friend Request</h2>
+        {/* <h2>Send Friend Request</h2>
         <div>
           <label>Friend's Username:</label>
           <input type="text" value={friend} onChange={e => setFriend(e.target.value)} />
-        </div>
-        <button onClick={sendFriendRequest}>Send Request</button>
+        </div> */}
+        <Button onClick={sendFriendRequest}>Add friend</Button>
       </div>
     );
   }

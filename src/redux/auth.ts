@@ -4,12 +4,14 @@ interface AuthState {
     token: string;
     name: string;
     password: string;
+    userid: number;
 }
 
 const initialState: AuthState = {
     token: "",
     name: "",
     password: "",
+    userid: 0, // 用户ID
 };
 
 export const authSlice = createSlice({
@@ -25,13 +27,17 @@ export const authSlice = createSlice({
         setPassword: (state, action: PayloadAction<string>) => {
             state.password = action.payload;
         },
+        setUserid: (state, action: PayloadAction<number>) => {
+            state.userid = action.payload;
+        },
         resetAuth: (state) => {
             state.token = "";
             state.name = "";
             state.password = "";
+            state.userid = 0;
         },
     },
 });
 
-export const { setToken, setName, setPassword, resetAuth } = authSlice.actions;
+export const { setToken, setName, setPassword, setUserid, resetAuth } = authSlice.actions;
 export default authSlice.reducer;

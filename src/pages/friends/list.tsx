@@ -5,14 +5,19 @@ import { setName, setToken } from "../../redux/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import DeleteFriend from "./delete";
+import CreateGroup from "../group/create";
+import LabelFriends from "./label";
+import { Input, Select, Button, Typography } from 'antd';
+import GroupList from "../../components/GroupList";
 
 interface Friend{
+    friendid: number;
     friend: string;
     labels: string[];
 }
 
 function ListFriends() {
-    const username = useSelector((state: RootState) => state.auth.name);
+    const userid = useSelector((state: RootState) => state.auth.userid);
     const token = useSelector((state: RootState) => state.auth.token);
     const [friendlist, setFriendlist] = useState<Friend[]>([]);
     const fetchFriend = ()=>{
@@ -23,7 +28,7 @@ function ListFriends() {
                 Authorization : `${token}`
             },
             body: JSON.stringify({
-                username,
+                userid,
             }),
         })
         .then((res) => res.json())
@@ -44,17 +49,21 @@ function ListFriends() {
     return (
         <div>
         <h2>Friend List</h2>
-        <button onClick={fetchFriend}>Fetch Friends</button>
+        <Button onClick={fetchFriend}>Fetch Friends</Button>
         <ul>
         {friendlist.map((myfriend, index) => (
             <li key={index}>
                 <p>Friend Name: {myfriend.friend}</p>
                 <p>Labels: {myfriend.labels.join(', ')}</p>
-                <DeleteFriend friend={myfriend.friend} />
+                <DeleteFriend friendid={myfriend.friendid} />
+                <LabelFriends friendid={myfriend.friendid} />
             </li>
         ))}
         </ul>
-    </div>
+        <CreateGroup friendlist={friendlist} />
+        <GroupList />
+        </div>
+        
     );
 };
 export default ListFriends;

@@ -12,6 +12,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "@emoji-mart/data": "^1.1.2",
     "@reduxjs/toolkit": "^1.9.5",
     "antd": "^5.16.1",
     "jest-sonar-reporter": "^2.0.0",

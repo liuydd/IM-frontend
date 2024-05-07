@@ -18,7 +18,7 @@ const MySider = () =>{
       } = theme.useToken();
 
     return (
-            <Layout>
+             <Layout>
                 <Sider
                 style={{
                     overflow: 'auto',
@@ -39,8 +39,7 @@ const MySider = () =>{
                     ))}
                 </Menu>
                 </Sider>
-                
-            </Layout>
+             </Layout>
     );
 };
 

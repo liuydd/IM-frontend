@@ -6,11 +6,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 
 interface DeleteFriendProps {
-    friend: string;
+    friendid: number;
 }
 
 function DeleteFriend(props: DeleteFriendProps){
-    const username = useSelector((state: RootState) => state.auth.name);
+    const userid = useSelector((state: RootState) => state.auth.userid);
     const token = useSelector((state: RootState) => state.auth.token);
     //const [friend, setFriend] = useState("");
 
@@ -22,8 +22,8 @@ function DeleteFriend(props: DeleteFriendProps){
                 Authorization : `${token}`
             },
             body: JSON.stringify({
-                username,
-                friend: props.friend
+                userid,
+                friendid: props.friendid
             })
         })
         .then((res) => res.json())
