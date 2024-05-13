@@ -40,7 +40,7 @@ const GetInvitation = ({ groupid }: { groupid: number }) => {
                 if (Number(res.code) === 0) {
                     setInvitation(res.invitations);
                     setIsModalOpen(true);
-                    alert(res.info);
+                    // alert(res.info);
                 }
                 else {
                     alert(res.info);
@@ -75,7 +75,7 @@ const GetInvitation = ({ groupid }: { groupid: number }) => {
               renderItem={(item: Invitation) => (
                 <List.Item>
                   <List.Item.Meta
-                    title={`邀请来自 ${item.sender}`}
+                    title={`${item.receiver}请求入群 邀请来自 ${item.sender}`}
                     description={`时间：${item.timestamp}`}
                   />
                   <div><ProcessInvitation id = {item.id} /></div>
