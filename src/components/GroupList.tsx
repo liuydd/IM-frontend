@@ -8,6 +8,7 @@ import RemoveMember from "../pages/group/remove_member";
 import TransferMonitor from "../pages/group/transfer_monitor";
 import WithdrawGroup from "../pages/group/withdraw_group";
 import EditAnnouncement from "../pages/group/edit_announcement";
+import ListAnnouncement from "../pages/group/list_announcement";
 
 interface Group {
   groupid: number;
@@ -15,6 +16,7 @@ interface Group {
   monitor: string;
   managers: string[];
   members: string[];
+  announcements: string[];
 }
 
 function GroupList() {
@@ -53,6 +55,7 @@ function GroupList() {
       <h2>Groups You Monitor</h2>
       {monitorGroup && monitorGroup.map((group) => (
         <Card key={group.groupid} title={group.groupname}>
+          <ListAnnouncement groupid = {group.groupid} />
           <p>Monitor: {group.monitor}</p>
           <p><AssignManager groupmemberslist = {group.members} groupid ={group.groupid}/></p>
           <p><TransferMonitor groupmemberslist = {group.members} groupid ={group.groupid}/></p>
