@@ -6,12 +6,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { Button, Modal, List } from "antd";
 
+interface Announcement {
+    author: string;
+    content: string;
+    timestamp: string;
+}
+
 function ListAnnouncement({ groupid }: { groupid: number }) {
     const username = useSelector((state: RootState) => state.auth.name);
     const userid = useSelector((state: RootState) => state.auth.userid);
     const token = useSelector((state: RootState) => state.auth.token);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [announcements, setAnnouncements] = useState([]);
+    const [announcements, setAnnouncements] = useState<Announcement[]>([]);
 
     const listannouncement = () =>{
         fetch(`${BACKEND_URL}/api/group/list_announcement`, {
@@ -28,9 +34,9 @@ function ListAnnouncement({ groupid }: { groupid: number }) {
             .then((res) => res.json())
             .then((res) => {
                 if (Number(res.code) === 0) {
-                    alert(res.info);
+                    // alert(res.info);
                     setAnnouncements(res.announcements);
-                    setIsModalOpen(true);
+                    // setIsModalOpen(true);
                 }
                 else {
                     alert(res.info);
@@ -39,6 +45,10 @@ function ListAnnouncement({ groupid }: { groupid: number }) {
             .catch((err) => alert(FAILURE_PREFIX + err));
     };
 
+    const showModal = () => {
+        listannouncement();
+        setIsModalOpen(true);
+    }
 
     const handleOk = () => {
         setIsModalOpen(false);
@@ -50,7 +60,7 @@ function ListAnnouncement({ groupid }: { groupid: number }) {
 
     return(
         <div>
-            <Button type="primary" onClick={listannouncement}>
+            <Button type="primary" onClick={showModal}>
                 历史群公告
             </Button>
             <Modal
@@ -59,7 +69,7 @@ function ListAnnouncement({ groupid }: { groupid: number }) {
                 onOk={handleOk}
                 onCancel={handleCancel}
             >
-                <List
+                {/* <List
                     dataSource={announcements}
                     renderItem={(item: any) => (
                         <List.Item>
@@ -69,7 +79,16 @@ function ListAnnouncement({ groupid }: { groupid: number }) {
                             />
                         </List.Item>
                     )}
-                />
+                /> */}
+                <ul>
+                {announcements.map((announcement, index) => (
+                    <li key={index}>
+                        <p>创建者: {announcement.author}</p>
+                        <p>创建时间：{announcement.timestamp}</p>
+                        <p>{announcement.content}</p>
+                    </li>
+                ))}
+                </ul>
             </Modal>
         </div>
     );

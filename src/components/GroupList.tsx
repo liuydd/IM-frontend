@@ -18,7 +18,7 @@ interface Group {
   monitor: string;
   managers: string[];
   members: string[];
-  announcements: string[];
+  // announcements: string[];
 }
 
 function GroupList() {
