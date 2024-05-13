@@ -12,12 +12,17 @@ import ListAnnouncement from "../pages/group/list_announcement";
 import InviteMember from "../pages/group/invitation/send";
 import GetInvitation from "../pages/group/invitation/get";
 
+interface GroupMembers{
+  name: string;
+  id: number;
+}
+
 interface Group {
   groupid: number;
   groupname: string;
   monitor: string;
-  managers: string[];
-  members: string[];
+  managers: GroupMembers[];
+  members: GroupMembers[];
   // announcements: string[];
 }
 
@@ -67,13 +72,13 @@ function GroupList() {
           <Divider>Managers</Divider>
           <ul>
             {group.managers.map((manager) => (
-              <li key={manager}>{manager}</li>
+              <li key={manager.id}>{manager.name}</li>
             ))}
           </ul>
           <Divider>Members</Divider>
           <ul>
             {group.members.map((member) => (
-              <li key={member}>{member}</li>
+              <li key={member.id}>{member.name}</li>
             ))}
           </ul>
           <InviteMember groupid = {group.groupid}/>
@@ -90,13 +95,13 @@ function GroupList() {
           <p><RemoveMember groupmemberslist = {group.members} groupid ={group.groupid}/></p>
           <ul>
             {group.managers.map((manager) => (
-              <li key={manager}>{manager}</li>
+              <li key={manager.id}>{manager.name}</li>
             ))}
           </ul>
           <Divider>Members</Divider>
           <ul>
             {group.members.map((member) => (
-              <li key={member}>{member}</li>
+              <li key={member.id}>{member.name}</li>
             ))}
           </ul>
           <InviteMember groupid = {group.groupid}/>
@@ -113,13 +118,13 @@ function GroupList() {
           <Divider>Managers</Divider>
           <ul>
             {group.managers.map((manager) => (
-              <li key={manager}>{manager}</li>
+              <li key={manager.id}>{manager.name}</li>
             ))}
           </ul>
           <Divider>Members</Divider>
           <ul>
             {group.members.map((member) => (
-              <li key={member}>{member}</li>
+              <li key={member.id}>{member.name}</li>
             ))}
           </ul>
           <InviteMember groupid = {group.groupid}/>

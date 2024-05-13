@@ -10,7 +10,12 @@ import { Button, Modal, Radio } from "antd";
 //   memberName: string,
 // }
 
-function TransferMonitor({ groupmemberslist, groupid }: { groupmemberslist: string[], groupid: number }) {
+interface GroupMembers{
+  name: string;
+  id: number;
+}
+
+function TransferMonitor({ groupmemberslist, groupid }: { groupmemberslist: GroupMembers[], groupid: number }) {
   const userid = useSelector((state: RootState) => state.auth.userid);
   const token = useSelector((state: RootState) => state.auth.token);
   // const groupid = useSelector((state: RootState) => state.group.groupid);
@@ -70,8 +75,8 @@ function TransferMonitor({ groupmemberslist, groupid }: { groupmemberslist: stri
       >
         <Radio.Group onChange={(e) => setNewMonitor(e.target.value)} value={newMonitor}>
           {groupmemberslist ? (groupmemberslist.map((member, index) => (
-            <Radio key={index} value={member}>
-              {member}
+            <Radio key={index} value={member.id}>
+              {member.name}
             </Radio>
           ))) : (
             <p>Loading group members list...</p>

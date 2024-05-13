@@ -9,8 +9,12 @@ import { Button, Modal, Radio } from "antd";
 // interface GroupMembers{
 //     memberName: string,
 // }
+interface GroupMembers{
+  name: string;
+  id: number;
+}
 
-function AssignManager({ groupmemberslist, groupid }: { groupmemberslist: string[], groupid: number }) {
+function AssignManager({ groupmemberslist, groupid }: { groupmemberslist: GroupMembers[], groupid: number }) {
     const username = useSelector((state: RootState) => state.auth.name);
     const userid = useSelector((state: RootState) => state.auth.userid);
     const token = useSelector((state: RootState) => state.auth.token);
@@ -71,8 +75,8 @@ function AssignManager({ groupmemberslist, groupid }: { groupmemberslist: string
           >
             <Radio.Group onChange={(e) => setNewManager(e.target.value)} value={newManager}>
               {groupmemberslist? (groupmemberslist.map((member, index) => (
-                <Radio key={index} value={member}>
-                  {member}
+                <Radio key={index} value={member.id}>
+                  {member.name}
                 </Radio>
               ))): (
                 <p>Loading group members list...</p>
