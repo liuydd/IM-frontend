@@ -10,6 +10,7 @@ import WithdrawGroup from "../pages/group/withdraw_group";
 import EditAnnouncement from "../pages/group/edit_announcement";
 import ListAnnouncement from "../pages/group/list_announcement";
 import InviteMember from "../pages/group/invitation/send";
+import GetInvitation from "../pages/group/invitation/get";
 
 interface Group {
   groupid: number;
@@ -57,6 +58,7 @@ function GroupList() {
       {monitorGroup && monitorGroup.map((group) => (
         <Card key={group.groupid} title={group.groupname}>
           <ListAnnouncement groupid = {group.groupid} />
+          <GetInvitation groupid = {group.groupid} />
           <p>Monitor: {group.monitor}</p>
           <p><AssignManager groupmemberslist = {group.members} groupid ={group.groupid}/></p>
           <p><TransferMonitor groupmemberslist = {group.members} groupid ={group.groupid}/></p>
@@ -81,6 +83,8 @@ function GroupList() {
       <h2>Groups You Manage</h2>
       {manageGroup && manageGroup.map((group) => (
         <Card key={group.groupid} title={group.groupname}>
+          <ListAnnouncement groupid = {group.groupid} />
+          <GetInvitation groupid = {group.groupid} />
           <p>Monitor: {group.monitor}</p>
           <Divider>Managers</Divider>
           <p><RemoveMember groupmemberslist = {group.members} groupid ={group.groupid}/></p>
@@ -103,6 +107,8 @@ function GroupList() {
       {memberOfGroup && memberOfGroup.map((group) => (
         <Card key={group.groupid} title={group.groupname}>
           <p><WithdrawGroup groupid = {group.groupid}/></p>
+          <ListAnnouncement groupid = {group.groupid} />
+          <GetInvitation groupid = {group.groupid} />
           <p>Monitor: {group.monitor}</p>
           <Divider>Managers</Divider>
           <ul>

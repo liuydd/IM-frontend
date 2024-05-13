@@ -17,7 +17,7 @@ const ProcessInvitation = (props: RespondProps) =>{
     const [response, setResponse] = useState("");
 
     const processinvitation = () => {
-    fetch(`${BACKEND_URL}/api/friend/respond_friend_request`, {
+    fetch(`${BACKEND_URL}/api/group/invitation/process`, {
         method: "POST",
         headers: {
             'Content-Type': 'application/json',
