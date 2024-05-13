@@ -9,6 +9,7 @@ import TransferMonitor from "../pages/group/transfer_monitor";
 import WithdrawGroup from "../pages/group/withdraw_group";
 import EditAnnouncement from "../pages/group/edit_announcement";
 import ListAnnouncement from "../pages/group/list_announcement";
+import InviteMember from "../pages/group/invitation/send";
 
 interface Group {
   groupid: number;
@@ -73,6 +74,7 @@ function GroupList() {
               <li key={member}>{member}</li>
             ))}
           </ul>
+          <InviteMember groupid = {group.groupid}/>
         </Card>
       ))}
 
@@ -93,6 +95,7 @@ function GroupList() {
               <li key={member}>{member}</li>
             ))}
           </ul>
+          <InviteMember groupid = {group.groupid}/>
         </Card>
       ))}
 
@@ -113,6 +116,7 @@ function GroupList() {
               <li key={member}>{member}</li>
             ))}
           </ul>
+          <InviteMember groupid = {group.groupid}/>
         </Card>
       ))}
     </div>
