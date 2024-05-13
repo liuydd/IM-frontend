@@ -7,6 +7,7 @@ import AssignManager from "../pages/group/assign_manager";
 import RemoveMember from "../pages/group/remove_member";
 import TransferMonitor from "../pages/group/transfer_monitor";
 import WithdrawGroup from "../pages/group/withdraw_group";
+import EditAnnouncement from "../pages/group/edit_announcement";
 
 interface Group {
   groupid: number;
@@ -56,6 +57,7 @@ function GroupList() {
           <p><AssignManager groupmemberslist = {group.members} groupid ={group.groupid}/></p>
           <p><TransferMonitor groupmemberslist = {group.members} groupid ={group.groupid}/></p>
           <p><RemoveMember groupmemberslist = {group.members} groupid ={group.groupid}/></p>
+          <p><EditAnnouncement groupid={group.groupid}/></p>
           <Divider>Managers</Divider>
           <ul>
             {group.managers.map((manager) => (
