@@ -30,6 +30,7 @@ function ListAnnouncement({ groupid }: { groupid: number }) {
                 if (Number(res.code) === 0) {
                     alert(res.info);
                     setAnnouncements(res.announcements);
+                    setIsModalOpen(true);
                 }
                 else {
                     alert(res.info);
@@ -38,12 +39,8 @@ function ListAnnouncement({ groupid }: { groupid: number }) {
             .catch((err) => alert(FAILURE_PREFIX + err));
     };
 
-    const showModal = () => {
-        setIsModalOpen(true);
-        };
 
     const handleOk = () => {
-        listannouncement();
         setIsModalOpen(false);
         };
     
@@ -53,7 +50,7 @@ function ListAnnouncement({ groupid }: { groupid: number }) {
 
     return(
         <div>
-            <Button type="primary" onClick={showModal}>
+            <Button type="primary" onClick={listannouncement}>
                 历史群公告
             </Button>
             <Modal

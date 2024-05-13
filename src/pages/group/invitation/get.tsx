@@ -39,6 +39,7 @@ const GetInvitation = ({ groupid }: { groupid: number }) => {
             .then((res) => {
                 if (Number(res.code) === 0) {
                     setInvitation(res.invitations);
+                    setIsModalOpen(true);
                     alert(res.info);
                 }
                 else {
@@ -48,12 +49,8 @@ const GetInvitation = ({ groupid }: { groupid: number }) => {
             .catch((err) => alert(FAILURE_PREFIX + err));
     };
 
-    const showModal = () => {
-        setIsModalOpen(true);
-      };
     
       const handleOk = () => {
-        getinvitation();
         setIsModalOpen(false);
       };
     
@@ -64,7 +61,7 @@ const GetInvitation = ({ groupid }: { groupid: number }) => {
 
       return (
         <div>
-          <Button type="primary" onClick={showModal}>
+          <Button type="primary" onClick={getinvitation}>
             入群请求
           </Button>
           <Modal
