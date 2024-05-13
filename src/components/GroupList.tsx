@@ -7,13 +7,23 @@ import AssignManager from "../pages/group/assign_manager";
 import RemoveMember from "../pages/group/remove_member";
 import TransferMonitor from "../pages/group/transfer_monitor";
 import WithdrawGroup from "../pages/group/withdraw_group";
+import EditAnnouncement from "../pages/group/edit_announcement";
+import ListAnnouncement from "../pages/group/list_announcement";
+import InviteMember from "../pages/group/invitation/send";
+import GetInvitation from "../pages/group/invitation/get";
+
+interface GroupMembers{
+  name: string;
+  id: number;
+}
 
 interface Group {
   groupid: number;
   groupname: string;
   monitor: string;
-  managers: string[];
-  members: string[];
+  managers: GroupMembers[];
+  members: GroupMembers[];
+  // announcements: string[];
 }
 
 function GroupList() {
@@ -52,42 +62,49 @@ function GroupList() {
       <h2>Groups You Monitor</h2>
       {monitorGroup && monitorGroup.map((group) => (
         <Card key={group.groupid} title={group.groupname}>
+          <ListAnnouncement groupid = {group.groupid} />
+          <GetInvitation groupid = {group.groupid} />
           <p>Monitor: {group.monitor}</p>
           <p><AssignManager groupmemberslist = {group.members} groupid ={group.groupid}/></p>
           <p><TransferMonitor groupmemberslist = {group.members} groupid ={group.groupid}/></p>
           <p><RemoveMember groupmemberslist = {group.members} groupid ={group.groupid}/></p>
+          <p><EditAnnouncement groupid={group.groupid}/></p>
           <Divider>Managers</Divider>
           <ul>
             {group.managers.map((manager) => (
-              <li key={manager}>{manager}</li>
+              <li key={manager.id}>{manager.name}</li>
             ))}
           </ul>
           <Divider>Members</Divider>
           <ul>
             {group.members.map((member) => (
-              <li key={member}>{member}</li>
+              <li key={member.id}>{member.name}</li>
             ))}
           </ul>
+          <InviteMember groupid = {group.groupid}/>
         </Card>
       ))}
 
       <h2>Groups You Manage</h2>
       {manageGroup && manageGroup.map((group) => (
         <Card key={group.groupid} title={group.groupname}>
+          <ListAnnouncement groupid = {group.groupid} />
+          <GetInvitation groupid = {group.groupid} />
           <p>Monitor: {group.monitor}</p>
           <Divider>Managers</Divider>
           <p><RemoveMember groupmemberslist = {group.members} groupid ={group.groupid}/></p>
           <ul>
             {group.managers.map((manager) => (
-              <li key={manager}>{manager}</li>
+              <li key={manager.id}>{manager.name}</li>
             ))}
           </ul>
           <Divider>Members</Divider>
           <ul>
             {group.members.map((member) => (
-              <li key={member}>{member}</li>
+              <li key={member.id}>{member.name}</li>
             ))}
           </ul>
+          <InviteMember groupid = {group.groupid}/>
         </Card>
       ))}
 
@@ -95,19 +112,22 @@ function GroupList() {
       {memberOfGroup && memberOfGroup.map((group) => (
         <Card key={group.groupid} title={group.groupname}>
           <p><WithdrawGroup groupid = {group.groupid}/></p>
+          <ListAnnouncement groupid = {group.groupid} />
+          <GetInvitation groupid = {group.groupid} />
           <p>Monitor: {group.monitor}</p>
           <Divider>Managers</Divider>
           <ul>
             {group.managers.map((manager) => (
-              <li key={manager}>{manager}</li>
+              <li key={manager.id}>{manager.name}</li>
             ))}
           </ul>
           <Divider>Members</Divider>
           <ul>
             {group.members.map((member) => (
-              <li key={member}>{member}</li>
+              <li key={member.id}>{member.name}</li>
             ))}
           </ul>
+          <InviteMember groupid = {group.groupid}/>
         </Card>
       ))}
     </div>

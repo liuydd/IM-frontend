@@ -10,7 +10,12 @@ import { Button, Checkbox, Form, Input, Modal, Radio } from "antd";
 //     memberName: string,
 // }
 
-function RemoveMember({ groupmemberslist, groupid }: { groupmemberslist: string[], groupid: number }) {
+interface GroupMembers{
+  name: string;
+  id: number;
+}
+
+function RemoveMember({ groupmemberslist, groupid }: { groupmemberslist: GroupMembers[], groupid: number }) {
     const userid = useSelector((state: RootState) => state.auth.userid);
     // const groupid = useSelector((state: RootState) => state.group.groupid);
     const token = useSelector((state: RootState) => state.auth.token);
@@ -81,8 +86,8 @@ function RemoveMember({ groupmemberslist, groupid }: { groupmemberslist: string[
             </Checkbox.Group> */}
             <Radio.Group onChange={(e) => setTargetMembers(e.target.value)} value={targetid}>
               {groupmemberslist? (groupmemberslist.map((member, index) => (
-                <Radio key={index} value={member}>
-                  {member}
+                <Radio key={index} value={member.id}>
+                  {member.name}
                 </Radio>
               ))): (
                 <p>Loading group members list...</p>
