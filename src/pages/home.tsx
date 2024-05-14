@@ -243,7 +243,7 @@ const UserScreen = () => {
                         <Button block onClick={cancelMenuClick}>关闭</Button>
                         </Sider>
                         )}
-                    <SearchUser />
+                    {!showChatSidebar &&(<SearchUser />)}
                     <ChatPage chat={selectedChat} />
                     </Layout>
                 </Content>
