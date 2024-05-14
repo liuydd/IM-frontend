@@ -20,6 +20,7 @@ import { LogoutOutlined, DeleteOutlined } from '@ant-design/icons';
 import { UserOutlined } from '@ant-design/icons';
 import { Avatar } from 'antd';
 import ChatPage from "../components/chat/ChatLayout"; //测试页面
+import HomePage from "../components/chat/HomePage";
 
 const UserScreen = () => {
     //获取现有的userName, token, password
@@ -225,26 +226,30 @@ const UserScreen = () => {
                 <Content>
                     <Layout>
                     {showChatSidebar && (
-                        <Sider 
-                            width={200} theme="light"
-                            style={{
-                                overflow: 'auto',
-                                height: 'calc(100vh - 64px)', // 减去 Header 的高度
-                                position: 'sticky',
-                                top: '64px', // Header 的高度
-                            }}
-                        >
-                        <Menu mode="inline" onSelect={handleChatSelect}>
-                            <Menu.Item key="chat1">Chat 1</Menu.Item>
-                            <Menu.Item key="chat2">Chat 2</Menu.Item>
-                            <Menu.Item key="chat3">Chat 3</Menu.Item>
-                            {/* Add more chat options as needed */}
-                        </Menu>
-                        <Button block onClick={cancelMenuClick}>关闭</Button>
-                        </Sider>
+                        // <Sider 
+                        //     width={200} theme="light"
+                        //     style={{
+                        //         overflow: 'auto',
+                        //         height: 'calc(100vh - 64px)', // 减去 Header 的高度
+                        //         position: 'sticky',
+                        //         top: '64px', // Header 的高度
+                        //     }}
+                        // >
+                        // <Menu mode="inline" onSelect={handleChatSelect}>
+                        //     <Menu.Item key="chat1">Chat 1</Menu.Item>
+                        //     <Menu.Item key="chat2">Chat 2</Menu.Item>
+                        //     <Menu.Item key="chat3">Chat 3</Menu.Item>
+                        //     {/* Add more chat options as needed */}
+                        // </Menu>
+                        // <Button block onClick={cancelMenuClick}>关闭</Button>
+                        // </Sider>
+                        <div>
+                            <HomePage />
+                            <Button block onClick={cancelMenuClick}>关闭</Button>
+                        </div>
                         )}
                     {!showChatSidebar &&(<SearchUser />)}
-                    <ChatPage chat={selectedChat} />
+                    {/* <ChatPage chat={selectedChat} /> */}
                     </Layout>
                 </Content>
             </Layout>
