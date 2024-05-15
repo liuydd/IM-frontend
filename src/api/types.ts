@@ -4,6 +4,8 @@ export type Message = {
   sender: string; // 发送者
   content: string; // 消息内容
   timestamp: number; // 时间戳
+  isRead: boolean; // 判断消息是否已读（针对私聊）
+  readBy: string[]; // 已读该消息的成员列表（针对群聊）
 };
 
 export type Conversation = {

@@ -10,6 +10,7 @@ import {
   joinConversation,
   leaveConversation,
   useMessageListener,
+  markMessagesAsRead,
 } from '../../api/chat';
 import { db } from '../../api/db';
 
@@ -44,6 +45,7 @@ const HomePage = () => {
     db.activeConversationId = activeChat || null;
     if (activeChat) {
       db.clearUnreadCount(activeChat).then(refresh);
+      markMessagesAsRead(me!, activeChat); // 标记未读消息为已读
     }
   }, [activeChat, refresh]);
 
