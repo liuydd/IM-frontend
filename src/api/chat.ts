@@ -4,14 +4,14 @@ import { getUrl } from './utils';
 import { Conversation, Message } from './types';
 
 export type AddMessageArgs = {
-  userid: number;
+  // userid: number;
   me: string;
   conversation: Conversation;
   content: string;
 };
 
 export type GetMessagesArgs = {
-  userid: number;
+  // userid: number;
   me?: string;
   conversationId?: number;
   cursor?: number;
@@ -39,13 +39,13 @@ export type LeaveConversationsArgs = {
 
 // 向服务器添加一条消息
 export async function addMessage({
-  userid,
+  // userid,
   me,
   conversation,
   content,
 }: AddMessageArgs) {
   const { data } = await axios.post(getUrl('messages'), {
-    userid: userid,
+    // userid: userid,
     username: me, // 发送者的用户名
     conversation_id: conversation.id, // 会话ID
     content: content, // 消息内容
@@ -55,7 +55,7 @@ export async function addMessage({
 
 // 从服务器获取消息列表
 export async function getMessages({
-  userid,
+  // userid,
   me,
   conversationId,
   cursor,
@@ -66,8 +66,8 @@ export async function getMessages({
     // 使用循环来处理分页，直到没有下一页
     const { data } = await axios.get(getUrl('messages'), {
       params: {
-        userid: userid,
-        // username: me, // 查询消息的用户名
+        // userid: userid,
+        username: me, // 查询消息的用户名
         conversation_id: conversationId, // 查询消息的会话 ID
         after: cursor || 0, // 用于分页的游标，表示从此时间戳之后的消息
         limit: limit || 100, // 每次请求的消息数量限制

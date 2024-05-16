@@ -8,11 +8,11 @@ export type MessageBubbleProps = {
   content: string; // 消息内容
   timestamp: number; // 消息时间戳
   isMe: boolean; // 判断消息是否为当前用户发送
-  isRead: boolean; // 判断消息是否已读（针对私聊）
-  readBy: string[]; // 已读该消息的成员列表（针对群聊）
-  conversationType?: 'private_chat' | 'group_chat';
-  onReply? : (data: { messagecontent: string }) => void;
-  responseCount?: number;
+  // isRead: boolean; // 判断消息是否已读（针对私聊）
+  // readBy: string[]; // 已读该消息的成员列表（针对群聊）
+  // conversationType?: 'private_chat' | 'group_chat';
+  // onReply? : (data: { messagecontent: string }) => void;
+  // responseCount?: number;
 };
 
 // 消息气泡组件
@@ -21,11 +21,11 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({
   content,
   timestamp,
   isMe,
-  isRead,
-  readBy,
-  conversationType,
-  onReply,
-  responseCount,
+  // isRead,
+  // readBy,
+  // conversationType,
+  // onReply,
+  // responseCount,
 }) => {
   // 格式化时间戳为易读的时间格式
   const formattedTime = new Date(timestamp).toLocaleTimeString('zh-CN', {
@@ -52,18 +52,18 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({
     setClicked(open);
   };
 
-  const handleReply = () => {
-    if (onReply) {
-      onReply({ messagecontent: content });
-    }
-  };
+  // const handleReply = () => {
+  //   if (onReply) {
+  //     onReply({ messagecontent: content });
+  //   }
+  // };
 
   return (
     <div className={`${styles.container} ${isMe ? styles.me : styles.others}`}>
       {/* 根据消息发送者显示不同的气泡样式 */}
       <div className={styles.sender}>
         {sender} @ {formattedTime} {/* 显示发送者和消息时间 */}
-        {conversationType === 'private_chat' && !isMe && (
+        {/* {conversationType === 'private_chat' && !isMe && (
           <span>({isRead ? '已读' : '未读'})</span>
         )}
         {conversationType === 'group_chat' && !isMe && (
@@ -73,7 +73,7 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({
         )}
         {!isMe && (
           <span>({responseCount ? responseCount : 0 + ' 条回复'})</span>
-        )}
+        )} */}
       </div>
       <div
         className={`${styles.bubble} ${

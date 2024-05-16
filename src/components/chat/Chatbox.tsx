@@ -54,7 +54,7 @@ const Chatbox: React.FC<ChatboxProps> = ({
     }
     const content = inputValue.trim();
     setSending(true);
-    addMessage({ userid, me, content, conversation: conversation! }) // 调用API发送消息
+    addMessage({ me, content, conversation: conversation! }) // 调用API发送消息
       // .then((res) => res.json())
       // .then((res) =>{
       //   alert(res.error)
@@ -71,7 +71,7 @@ const Chatbox: React.FC<ChatboxProps> = ({
     // }
     const content = messagecontent + ' 回复：\n' + inputValue.trim();
     setSending(true);
-    addMessage({ userid, me, content, conversation: conversation! }) // 调用API发送消息
+    addMessage({ me, content, conversation: conversation! }) // 调用API发送消息
       .then(() => setInputValue(''))
       .catch(() => message.error('消息发送失败'))
       .finally(() => setSending(false));
@@ -91,7 +91,8 @@ const Chatbox: React.FC<ChatboxProps> = ({
       <div className={styles.messages}>
         {/* 消息列表容器 */}
         {messages?.map((item) => ( //这里后续要传isRead和ReadBY（？
-          <MessageBubble key={item.id} isMe={item.sender == me} onReply={() => handleReply({ messagecontent: item.content })} {...item} /> // 渲染每条消息为MessageBubble组件
+          // <MessageBubble key={item.id} isMe={item.sender == me} onReply={() => handleReply({ messagecontent: item.content })} {...item} /> // 渲染每条消息为MessageBubble组件
+          <MessageBubble key={item.id} isMe={item.sender == me} {...item} />
         ))}
         <div ref={messageEndRef} /> {/* 用于自动滚动到消息列表底部的空div */}
       </div>
