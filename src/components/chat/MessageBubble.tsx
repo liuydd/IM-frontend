@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './MessageBubble.module.css';
 import { useState } from 'react';
+import { Popover, Button } from 'antd';
 
 export type MessageBubbleProps = {
   sender: string; // 消息发送者
@@ -10,6 +11,7 @@ export type MessageBubbleProps = {
   isRead: boolean; // 判断消息是否已读（针对私聊）
   readBy: string[]; // 已读该消息的成员列表（针对群聊）
   conversationType?: 'private_chat' | 'group_chat';
+  onReply?: () => void;
 };
 
 // 消息气泡组件
@@ -21,6 +23,7 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({
   isRead,
   readBy,
   conversationType,
+  onReply,
 }) => {
   // 格式化时间戳为易读的时间格式
   const formattedTime = new Date(timestamp).toLocaleTimeString('zh-CN', {
@@ -28,6 +31,30 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({
     minute: '2-digit',
     second: '2-digit',
   });
+
+  const [clicked, setClicked] = useState(false);
+  const [hovered, setHovered] = useState(false);
+
+  const hide = () => {
+    setClicked(false);
+    setHovered(false);
+  };
+
+  const handleHoverChange = (open: boolean) => {
+    setHovered(open);
+    setClicked(false);
+  };
+
+  const handleClickChange = (open: boolean) => {
+    setHovered(false);
+    setClicked(open);
+  };
+
+  const handleReply = () => {
+    if (onReply) {
+      onReply();
+    }
+  };
 
   return (
     <div className={`${styles.container} ${isMe ? styles.me : styles.others}`}>
@@ -48,7 +75,25 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({
           isMe ? styles.meBubble : styles.othersBubble
         }`}
       >
-        {content} {/* 显示消息内容 */}
+        {/* {content}  */}
+        {!isMe && (
+          <Popover
+          style={{ width: 500 }}
+          title="回复"
+          trigger="hover"
+          open={hovered}
+          onOpenChange={handleHoverChange}
+        >
+          <Popover
+            title="回复"
+            trigger="contextMenu"
+            open={clicked}
+            onOpenChange={handleClickChange}
+          >
+            {content} {/* 显示消息内容 */}
+          </Popover>
+        </Popover>
+        )}
       </div>
     </div>
   );
