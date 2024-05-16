@@ -67,7 +67,7 @@ export async function getMessages({
     const { data } = await axios.get(getUrl('messages'), {
       params: {
         userid: userid,
-        username: me, // 查询消息的用户名
+        // username: me, // 查询消息的用户名
         conversation_id: conversationId, // 查询消息的会话 ID
         after: cursor || 0, // 用于分页的游标，表示从此时间戳之后的消息
         limit: limit || 100, // 每次请求的消息数量限制
