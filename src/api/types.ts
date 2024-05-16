@@ -6,6 +6,8 @@ export type Message = {
   timestamp: number; // 时间戳
   isRead: boolean; // 判断消息是否已读（针对私聊）
   readBy: string[]; // 已读该消息的成员列表（针对群聊）
+  responseCount?: number;
+  conversationType?: 'private_chat' | 'group_chat';
 };
 
 export type Conversation = {

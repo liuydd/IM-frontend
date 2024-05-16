@@ -11,6 +11,7 @@ export type AddMessageArgs = {
 };
 
 export type GetMessagesArgs = {
+  userid: number;
   me?: string;
   conversationId?: number;
   cursor?: number;
@@ -47,13 +48,14 @@ export async function addMessage({
     userid: userid,
     username: me, // 发送者的用户名
     conversation_id: conversation.id, // 会话ID
-    content, // 消息内容
+    content: content, // 消息内容
   });
   return data;
 }
 
 // 从服务器获取消息列表
 export async function getMessages({
+  userid,
   me,
   conversationId,
   cursor,
@@ -64,6 +66,7 @@ export async function getMessages({
     // 使用循环来处理分页，直到没有下一页
     const { data } = await axios.get(getUrl('messages'), {
       params: {
+        userid: userid,
         username: me, // 查询消息的用户名
         conversation_id: conversationId, // 查询消息的会话 ID
         after: cursor || 0, // 用于分页的游标，表示从此时间戳之后的消息

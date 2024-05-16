@@ -55,6 +55,10 @@ const Chatbox: React.FC<ChatboxProps> = ({
     const content = inputValue.trim();
     setSending(true);
     addMessage({ userid, me, content, conversation: conversation! }) // 调用API发送消息
+      // .then((res) => res.json())
+      // .then((res) =>{
+      //   alert(res.error)
+      // })
       .then(() => setInputValue(''))
       .catch(() => message.error('消息发送失败'))
       .finally(() => setSending(false));

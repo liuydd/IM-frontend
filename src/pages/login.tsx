@@ -7,6 +7,7 @@ import { Button, Checkbox, Form, Input, Typography } from 'antd';
 import Link from 'next/link';
 import { useLocalStorageState, useRequest } from 'ahooks';
 const { Title } = Typography;
+import { db } from '../api/db';
 
 const LoginScreen = () => {
     const [username, setUserName] = useState("");
