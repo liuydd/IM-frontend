@@ -13,11 +13,14 @@ import {
   markMessagesAsRead,
 } from '../../api/chat';
 import { db } from '../../api/db';
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
 
 // 首页组件
 const HomePage = () => {
   // 使用localStorage状态管理当前用户(me)和活跃会话ID(activeChat)，页面刷新后可以保持不变
   const [me, setMe] = useLocalStorageState('me', { defaultValue: 'test' }); //TODO待改成username，或者保留这个，将现有的usernmae/userid加进来
+  // const me = useSelector((state: RootState) => state.auth.name);
   const [activeChat, setActiveChat] = useLocalStorageState<number | null>(
     'activeChat',
     { defaultValue: null }
@@ -64,15 +67,15 @@ const HomePage = () => {
                 <span style={{ color: 'grey' }}>(未设置)</span>
               )}
             </div>
-            <div className={`${styles.inputItem} ${styles.hint}`}>
+            {/* <div className={`${styles.inputItem} ${styles.hint}`}>
               用户名仅允许字母数字下划线
-            </div>
+            </div> */}
             <Operations // 操作面板组件
-              onSwitchUser={(username) => {
-                setMe(username);
-                setActiveChat(null);
-                db.clearCachedData().then(refresh);
-              }}
+              // onSwitchUser={(username) => {
+              //   // setMe(username);
+              //   setActiveChat(null);
+              //   db.clearCachedData().then(refresh);
+              // }}
               onNewPrivateChat={async (target) => {
                 const conv = await addConversation({
                   type: 'private_chat',

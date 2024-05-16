@@ -5,11 +5,13 @@ import { setName, setToken, setUserid } from "../redux/auth";
 import { useDispatch } from "react-redux";
 import { Button, Checkbox, Form, Input, Typography } from 'antd';
 import Link from 'next/link';
+import { useLocalStorageState, useRequest } from 'ahooks';
 const { Title } = Typography;
 
 const LoginScreen = () => {
     const [username, setUserName] = useState("");
     const [password, setPassword] = useState("");
+    const [me, setMe] = useLocalStorageState('me', { defaultValue: 'test' });
 
     const router = useRouter();
     const dispatch = useDispatch();
@@ -28,6 +30,7 @@ const LoginScreen = () => {
                     dispatch(setName(username));
                     dispatch(setToken(res.token));
                     dispatch(setUserid(res.userid));
+                    setMe(username);
                     alert(LOGIN_SUCCESS_PREFIX + username);
 
                     router.push(`./home`);

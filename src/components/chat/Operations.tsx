@@ -3,7 +3,7 @@ import { Button, Input, InputNumber, Select, message } from 'antd';
 import styles from './Operations.module.css';
 
 export type OperationsProps = {
-  onSwitchUser: (username: string) => void; // 切换用户的回调函数
+  // onSwitchUser: (username: string) => void; // 切换用户的回调函数
   onNewPrivateChat: (target: string) => void; // 创建新私聊的回调函数
   onNewGroupChat: (target: string[]) => void; // 创建新群聊的回调函数
   onJoinGroupChat: (chatId: number) => void; // 加入群聊的回调函数
@@ -19,7 +19,7 @@ function checkUsername(value: string) {
 
 // 操作面板组件
 export const Operations: React.FC<OperationsProps> = ({
-  onSwitchUser,
+  // onSwitchUser,
   onNewPrivateChat,
   onNewGroupChat,
   onJoinGroupChat,
