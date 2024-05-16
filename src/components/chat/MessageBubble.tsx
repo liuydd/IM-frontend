@@ -80,8 +80,8 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({
           isMe ? styles.meBubble : styles.othersBubble
         }`}
       >
-        {/* {content}  */}
-        {!isMe && (
+        {content} 
+        {/* {!isMe && (
           <Popover
           style={{ width: 500 }}
           title="回复"
@@ -96,9 +96,9 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({
             onOpenChange={handleClickChange}
           >
             {content} {/* 显示消息内容 */}
-          </Popover>
+          {/* </Popover>
         </Popover>
-        )}
+        )} */}
       </div>
     </div>
   );
