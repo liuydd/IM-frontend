@@ -7,6 +7,8 @@ import { Conversation, Message } from '../../api/types';
 import { addMessage } from '../../api/chat';
 import { getConversationDisplayName } from '../../api/utils';
 import { db } from '../../api/db';
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
 
 export type ChatboxProps = {
   me: string; // 当前用户
@@ -24,6 +26,7 @@ const Chatbox: React.FC<ChatboxProps> = ({
   const [sending, setSending] = useState(false); // 控制发送按钮的状态
   const [inputValue, setInputValue] = useState(''); // 控制输入框的值
   const messageEndRef = useRef<HTMLDivElement>(null); // 指向消息列表末尾的引用，用于自动滚动
+  const userid = useSelector((state: RootState) => state.auth.userid);
 
   // 使用ahooks的useRequest钩子从IndexedDB异步获取消息数据，依赖项为lastUpdateTime
   const { data: messages } = useRequest(
@@ -51,7 +54,7 @@ const Chatbox: React.FC<ChatboxProps> = ({
     }
     const content = inputValue.trim();
     setSending(true);
-    addMessage({ me, content, conversation: conversation! }) // 调用API发送消息
+    addMessage({ userid, me, content, conversation: conversation! }) // 调用API发送消息
       .then(() => setInputValue(''))
       .catch(() => message.error('消息发送失败'))
       .finally(() => setSending(false));
@@ -64,7 +67,7 @@ const Chatbox: React.FC<ChatboxProps> = ({
     // }
     const content = messagecontent + ' 回复：\n' + inputValue.trim();
     setSending(true);
-    addMessage({ me, content, conversation: conversation! }) // 调用API发送消息
+    addMessage({ userid, me, content, conversation: conversation! }) // 调用API发送消息
       .then(() => setInputValue(''))
       .catch(() => message.error('消息发送失败'))
       .finally(() => setSending(false));

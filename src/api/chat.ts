@@ -4,6 +4,7 @@ import { getUrl } from './utils';
 import { Conversation, Message } from './types';
 
 export type AddMessageArgs = {
+  userid: number;
   me: string;
   conversation: Conversation;
   content: string;
@@ -37,11 +38,13 @@ export type LeaveConversationsArgs = {
 
 // 向服务器添加一条消息
 export async function addMessage({
+  userid,
   me,
   conversation,
   content,
 }: AddMessageArgs) {
   const { data } = await axios.post(getUrl('messages'), {
+    userid: userid,
     username: me, // 发送者的用户名
     conversation_id: conversation.id, // 会话ID
     content, // 消息内容
