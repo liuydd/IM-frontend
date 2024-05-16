@@ -11,7 +11,7 @@ export type MessageBubbleProps = {
   isRead: boolean; // 判断消息是否已读（针对私聊）
   readBy: string[]; // 已读该消息的成员列表（针对群聊）
   conversationType?: 'private_chat' | 'group_chat';
-  onReply?: () => void;
+  onReply? : (data: { messagecontent: string }) => void;
 };
 
 // 消息气泡组件
@@ -52,7 +52,7 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({
 
   const handleReply = () => {
     if (onReply) {
-      onReply();
+      onReply({ messagecontent: content });
     }
   };
 

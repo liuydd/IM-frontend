@@ -57,6 +57,19 @@ const Chatbox: React.FC<ChatboxProps> = ({
       .finally(() => setSending(false));
   };
 
+  const handleReply = ({messagecontent} : {messagecontent: string}) =>{ //messagecontent: 回复的那条消息的内容
+    // if (!inputValue) {
+    //   message.error('消息内容不能为空');
+    //   return;
+    // }
+    const content = messagecontent + ' 回复：\n' + inputValue.trim();
+    setSending(true);
+    addMessage({ me, content, conversation: conversation! }) // 调用API发送消息
+      .then(() => setInputValue(''))
+      .catch(() => message.error('消息发送失败'))
+      .finally(() => setSending(false));
+  }; //待改，怎么区分被回复的消息和直接发送的消息。而且感觉发消息的逻辑也有点问题
+
   return (
     <div className={styles.container}>
       {conversation && (
@@ -71,7 +84,7 @@ const Chatbox: React.FC<ChatboxProps> = ({
       <div className={styles.messages}>
         {/* 消息列表容器 */}
         {messages?.map((item) => ( //这里后续要传isRead和ReadBY（？
-          <MessageBubble key={item.id} isMe={item.sender == me} {...item} /> // 渲染每条消息为MessageBubble组件
+          <MessageBubble key={item.id} isMe={item.sender == me} onReply={() => handleReply({ messagecontent: item.content })} {...item} /> // 渲染每条消息为MessageBubble组件
         ))}
         <div ref={messageEndRef} /> {/* 用于自动滚动到消息列表底部的空div */}
       </div>
