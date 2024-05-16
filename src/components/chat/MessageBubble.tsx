@@ -12,6 +12,7 @@ export type MessageBubbleProps = {
   readBy: string[]; // 已读该消息的成员列表（针对群聊）
   conversationType?: 'private_chat' | 'group_chat';
   onReply? : (data: { messagecontent: string }) => void;
+  responseCount?: number;
 };
 
 // 消息气泡组件
@@ -24,6 +25,7 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({
   readBy,
   conversationType,
   onReply,
+  responseCount,
 }) => {
   // 格式化时间戳为易读的时间格式
   const formattedTime = new Date(timestamp).toLocaleTimeString('zh-CN', {
@@ -68,6 +70,9 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({
           <span>
             ({readBy.length > 0 ? readBy.join(', ') + ' 已读' : '尚未有人已读'})
           </span>
+        )}
+        {!isMe && (
+          <span>({responseCount ? responseCount : 0 + ' 条回复'})</span>
         )}
       </div>
       <div
