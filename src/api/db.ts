@@ -72,8 +72,21 @@ export class CachedData extends Dexie {
 
   //删除消息
   async removeMessage(message_id: number){
-    await this.messages.delete(message_id);
+    try {
+      // 根据 message_id 获取消息
+      const message = await this.messages.get(message_id);
+      if (message) {
+        // 如果找到了消息，就删除它
+        await this.messages.delete(message_id);
+        console.log('Message deleted successfully');
+      } else {
+        console.log('Message not found');
+      }
+    } catch (error) {
+      console.error('Error deleting message:', error);
+    }
   }
+  
 
   // 根据新消息批量更新会话的未读计数
   async updateUnreadCounts(messages: Message[]) {

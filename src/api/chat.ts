@@ -66,16 +66,33 @@ export async function deleteMessage({
   // conversation,
   message_id,
 }: DeleteMessageArgs){
-  const res = await axios.delete(getUrl('messages'), {
-    data: {
-      username: me,
-      // conversation_id: conversation.id,
-      message_id : message_id,
-    },
-    headers: {
-      'Content-Type': 'application/json',
-    }
-  });
+  // const res = await axios.delete(getUrl('messages'), {
+  //   data: {
+  //     username: me,
+  //     // conversation_id: conversation.id,
+  //     message_id : message_id,
+  //   },
+  //   headers: {
+  //     'Content-Type': 'application/json',
+  //   }
+  // });
+  try {
+    const res = await axios.delete(getUrl('messages'), {
+      data: {
+        username: me,
+        message_id: message_id,
+      },
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    console.log('Message deleted successfully');
+    return res.data; // 如果需要返回删除操作的结果，可以根据需要进行处理
+  } catch (error) {
+    console.error('Error deleting message:', error);
+    throw error; // 将错误继续向上抛出，以便上层代码处理
+  }
+  
 }
 
 // 从服务器获取消息列表
@@ -134,9 +151,9 @@ export async function joinConversation({
 }
 
 //将某个聊天会话的消息全标记为已读
-export async function markMessagesAsRead(me: string, conversationId: number) {
-  await axios.post(getUrl(`conversations/${conversationId}/read`), {username: me});
-}
+// export async function markMessagesAsRead(me: string, conversationId: number) {
+//   await axios.post(getUrl(`conversations/${conversationId}/read`), {username: me});
+// }
 
 //得到某条消息的已读未读状态
 export async function getMessageReadStatus(me: string, messageId: number) {
