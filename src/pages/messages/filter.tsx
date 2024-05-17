@@ -33,8 +33,11 @@ const Filterchat = ({conversationId, groupmemberslist}: {conversationId: number,
         if(sendername !== ''){
             url += `&sendername=${sendername}`
         }
-        if(start !== null && end !== null){
-            url += `&start=${start}&end=${end}`
+        if(start !== null){
+            url += `&start=${start}`
+        }
+        if(end !== null){
+            url += `&end=${end}`
         }
         fetch(url)
             .then((res)=>res.json())
