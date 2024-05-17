@@ -67,7 +67,7 @@ export async function deleteMessage({
   message_id,
 }: DeleteMessageArgs){
   const res = await axios.delete(getUrl('messages'), {
-    body: {
+    data: {
       username: me,
       // conversation_id: conversation.id,
       message_id : message_id,
