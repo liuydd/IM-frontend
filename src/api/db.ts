@@ -70,6 +70,11 @@ export class CachedData extends Dexie {
     await this.conversations.bulkDelete(convIds);
   }
 
+  //删除消息
+  async removeMessage(message_id: number){
+    await this.messages.delete(message_id);
+  }
+
   // 根据新消息批量更新会话的未读计数
   async updateUnreadCounts(messages: Message[]) {
     const conversationIds = messages.map((message) => message.conversation);

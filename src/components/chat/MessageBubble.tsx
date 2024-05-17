@@ -2,12 +2,15 @@ import React from 'react';
 import styles from './MessageBubble.module.css';
 import { useState } from 'react';
 import { Popover, Button } from 'antd';
+import { deleteMessage } from '../../api/chat';
+import { db } from '../../api/db';
 
 export type MessageBubbleProps = {
   sender: string; // 消息发送者
   content: string; // 消息内容
   timestamp: number; // 消息时间戳
   isMe: boolean; // 判断消息是否为当前用户发送
+  message_id : number;
   // isRead: boolean; // 判断消息是否已读（针对私聊）
   // readBy: string[]; // 已读该消息的成员列表（针对群聊）
   // conversationType?: 'private_chat' | 'group_chat';
@@ -21,6 +24,7 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({
   content,
   timestamp,
   isMe,
+  message_id,
   // isRead,
   // readBy,
   // conversationType,
@@ -52,11 +56,16 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({
     setClicked(open);
   };
 
-  // const handleReply = () => {
-  //   if (onReply) {
-  //     onReply({ messagecontent: content });
-  //   }
-  // };
+  const handleReply = () => {
+    // if (onReply) {
+    //   onReply({ messagecontent: content });
+    // }
+  };
+
+  const handleDelete = () => {
+    deleteMessage({me: sender, message_id : message_id});
+    db.removeMessage(message_id);
+  }
 
   return (
     <div className={`${styles.container} ${isMe ? styles.me : styles.others}`}>
@@ -80,25 +89,33 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({
           isMe ? styles.meBubble : styles.othersBubble
         }`}
       >
-        {content} 
-        {/* {!isMe && (
+        {/* {content}  */}
+        {/* {( */}
           <Popover
           style={{ width: 500 }}
-          title="回复"
+          // title="回复"
+          content = {<div>
+            <Button onClick={handleDelete}>删除</Button>
+            <Button onClick={handleReply}>回复</Button>
+          </div>}
           trigger="hover"
           open={hovered}
           onOpenChange={handleHoverChange}
         >
           <Popover
-            title="回复"
+            // title="回复"
+            content = {<div>
+              <Button onClick={handleDelete}>删除</Button>
+              <Button onClick={handleReply}>回复</Button>
+            </div>}
             trigger="contextMenu"
             open={clicked}
             onOpenChange={handleClickChange}
           >
-            {content} {/* 显示消息内容 */}
-          {/* </Popover>
+            {content} 
+          </Popover>
         </Popover>
-        )} */}
+        {/* // )} */}
       </div>
     </div>
   );

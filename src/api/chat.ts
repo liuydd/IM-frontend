@@ -10,6 +10,13 @@ export type AddMessageArgs = {
   content: string;
 };
 
+export type DeleteMessageArgs = {
+  // userid: number;
+  me: string;
+  // conversation: Conversation;
+  message_id : number;
+};
+
 export type GetMessagesArgs = {
   // userid: number;
   me?: string;
@@ -51,6 +58,24 @@ export async function addMessage({
     content: content, // 消息内容
   });
   return data;
+}
+
+//向服务器中删除一条消息
+export async function deleteMessage({
+  me,
+  // conversation,
+  message_id,
+}: DeleteMessageArgs){
+  const res = await axios.delete(getUrl('messages'), {
+    data: {
+      username: me,
+      // conversation_id: conversation.id,
+      message_id : message_id,
+    },
+    headers: {
+      'Content-Type': 'application/json',
+    }
+  });
 }
 
 // 从服务器获取消息列表

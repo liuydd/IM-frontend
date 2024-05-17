@@ -9,7 +9,7 @@ import { getConversationDisplayName } from '../../api/utils';
 import { db } from '../../api/db';
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
-import Filterchat from './FilterChat';
+import Filterchat from '../../pages/messages/filter';
 
 export type ChatboxProps = {
   me: string; // 当前用户
@@ -96,7 +96,7 @@ const Chatbox: React.FC<ChatboxProps> = ({
         {/* 消息列表容器 */}
         {messages?.map((item) => ( //这里后续要传isRead和ReadBY（？
           // <MessageBubble key={item.id} isMe={item.sender == me} onReply={() => handleReply({ messagecontent: item.content })} {...item} /> // 渲染每条消息为MessageBubble组件
-          <MessageBubble key={item.id} isMe={item.sender == me} {...item} />
+          <MessageBubble key={item.id} isMe={item.sender == me} message_id={item.id} {...item} />
         ))}
         <div ref={messageEndRef} /> {/* 用于自动滚动到消息列表底部的空div */}
       </div>

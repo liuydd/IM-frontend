@@ -1,5 +1,4 @@
 import React, { useRef, useState } from 'react';
-import { useRequest } from 'ahooks';
 import { db } from '../../api/db';
 import { Conversation, Message } from '../../api/types';
 import { DatePicker, Space, Button, Select, Radio, Modal, TimePicker } from 'antd';
@@ -9,6 +8,7 @@ import { getMessages } from '../../api/chat';
 import { BACKEND_URL, FAILURE_PREFIX } from "../../constants/string";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
+import { useLocalStorageState, useRequest } from 'ahooks';
 
 // interface GroupMembers{
 //     name: string;
@@ -16,20 +16,24 @@ import { RootState } from "../../redux/store";
 // }
 
 const Filterchat = ({conversationId, groupmemberslist}: {conversationId: number, groupmemberslist: string[]}) => {
-    const [start, setStartDate] = useState('');
-    const [end, setEndDate] = useState('');
+    // const [start, setStartDate] = useState('');
+    // const [end, setEndDate] = useState('');
+    const [start, setStartDate] = useState<number | null>(null);
+    const [end, setEndDate] = useState<number | null>(null);
     // const [senderid, setSenderid] = useState(0);
     const [sendername, setSendername] = useState('');
-    const userid = useSelector((state: RootState) => state.auth.userid);
+    const [username, setUsername] = useLocalStorageState('username', { defaultValue: 'test' });
+    // const userid = useSelector((state: RootState) => state.auth.userid);
+
     const [messages, setMessages] = useState<Message[]>([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const handleFilter = () => {
-        let url = `${BACKEND_URL}/api/messages/filter?userid=${userid}&conversationId=${conversationId}`;
+        let url = `${BACKEND_URL}/api/messages/filter?username=${username}&conversationId=${conversationId}`;
         if(sendername !== ''){
             url += `&sendername=${sendername}`
         }
-        if(start !== '' && end !== ''){
+        if(start !== null && end !== null){
             url += `&start=${start}&end=${end}`
         }
         fetch(url)
@@ -84,13 +88,15 @@ const Filterchat = ({conversationId, groupmemberslist}: {conversationId: number,
             <TimePicker
                 format="HH:mm:ss"
                 onChange={(time) => {
-                setStartDate(time ? time.format('HH:mm:ss') : '');
+                // setStartDate(time ? time.format('HH:mm:ss') : '');
+                setStartDate(time ? time.valueOf() : null);
                 }}
             />
           <TimePicker
                 format="HH:mm:ss"
                 onChange={(time) => {
-                setEndDate(time ? time.format('HH:mm:ss') : '');
+                // setEndDate(time ? time.format('HH:mm:ss') : '');
+                setEndDate(time ? time.valueOf() : null);
                 }}
           />
             <Radio.Group onChange={(e) => setSendername(e.target.value)} value={sendername}>
