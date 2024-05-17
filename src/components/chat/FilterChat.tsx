@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import { useRequest } from 'ahooks';
 import { db } from '../../api/db';
 import { Conversation, Message } from '../../api/types';
-import { DatePicker, Space, Button, Select, Radio, Modal } from 'antd';
+import { DatePicker, Space, Button, Select, Radio, Modal, TimePicker } from 'antd';
 const { RangePicker } = DatePicker;
 const { Option } = Select;
 import { getMessages } from '../../api/chat';
@@ -25,15 +25,23 @@ const Filterchat = ({conversationId, groupmemberslist}: {conversationId: number,
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const handleFilter = () => {
-        fetch(`${BACKEND_URL}/api/messages/filter?userid=${userid}&conversationId=${conversationId}&sendername=${sendername}&start=${start}&end=${end}`)
-        .then((res)=>res.json())
-        .then((res)=>{
-            if (Number(res.code) === 0) {
-                setMessages(res.messages);
-            }
-            else {
-                alert(res.info);
-            }
+        let url = `${BACKEND_URL}/api/messages/filter?userid=${userid}&conversationId=${conversationId}`;
+        if(sendername !== ''){
+            url += `&sendername=${sendername}`
+        }
+        if(start !== '' && end !== ''){
+            url += `&start=${start}&end=${end}`
+        }
+        fetch(url)
+            .then((res)=>res.json())
+            .then((res)=>{
+                if (Number(res.code) === 0) {
+                    setMessages(res.messages);
+                    alert("success")
+                }
+                else {
+                    alert(res.info);
+                }
         })
     };
 
@@ -61,7 +69,7 @@ const Filterchat = ({conversationId, groupmemberslist}: {conversationId: number,
             onCancel={handleCancel}
           >
             <Space direction="vertical" size={12}>
-            <RangePicker 
+            {/* <RangePicker 
                 showTime
                 onChange={(dates) => {
                     if (dates && dates.length === 2) {
@@ -72,7 +80,19 @@ const Filterchat = ({conversationId, groupmemberslist}: {conversationId: number,
                         setEndDate('');
                     }
                 }}
+            /> */}
+            <TimePicker
+                format="HH:mm:ss"
+                onChange={(time) => {
+                setStartDate(time ? time.format('HH:mm:ss') : '');
+                }}
             />
+          <TimePicker
+                format="HH:mm:ss"
+                onChange={(time) => {
+                setEndDate(time ? time.format('HH:mm:ss') : '');
+                }}
+          />
             <Radio.Group onChange={(e) => setSendername(e.target.value)} value={sendername}>
               {groupmemberslist? (groupmemberslist.map((member, index) => (
                 <Radio key={index} value={member}>
@@ -85,11 +105,11 @@ const Filterchat = ({conversationId, groupmemberslist}: {conversationId: number,
             <Button type="primary" onClick={handleFilter}>Filter</Button>
         </Space>
             <ul>
-                {messages.map((v, index) => (
+                {messages.map((message, index) => (
                     <li key={index}>
-                        <p>发送者: message.sender</p>
-                        <p>发送时间: message.timestamp</p>
-                        <p>message.content</p>
+                        <p>发送者: {message.sender}</p>
+                        <p>发送时间: {message.timestamp}</p>
+                        <p>{message.content}</p>
                     </li>
                 ))}
                 </ul>
