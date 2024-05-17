@@ -10,21 +10,22 @@ import { BACKEND_URL, FAILURE_PREFIX } from "../../constants/string";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 
-interface GroupMembers{
-    name: string;
-    id: number;
-}
+// interface GroupMembers{
+//     name: string;
+//     id: number;
+// }
 
-const Filterchat = ({conversationId, groupmemberslist, groupid}: {conversationId: number, groupmemberslist: GroupMembers[], groupid: number}) => {
+const Filterchat = ({conversationId, groupmemberslist}: {conversationId: number, groupmemberslist: string[]}) => {
     const [start, setStartDate] = useState('');
     const [end, setEndDate] = useState('');
-    const [senderid, setSenderid] = useState(0);
+    // const [senderid, setSenderid] = useState(0);
+    const [sendername, setSendername] = useState('');
     const userid = useSelector((state: RootState) => state.auth.userid);
     const [messages, setMessages] = useState<Message[]>([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const handleFilter = () => {
-        fetch(`${BACKEND_URL}/api/filter_messages?userid=${userid}&conversationId=${conversationId}&senderid=${senderid}&start=${start}&end=${end}`)
+        fetch(`${BACKEND_URL}/api/messages/filter?userid=${userid}&conversationId=${conversationId}&sendername=${sendername}&start=${start}&end=${end}`)
         .then((res)=>res.json())
         .then((res)=>{
             if (Number(res.code) === 0) {
@@ -72,10 +73,10 @@ const Filterchat = ({conversationId, groupmemberslist, groupid}: {conversationId
                     }
                 }}
             />
-            <Radio.Group onChange={(e) => setSenderid(e.target.value)} value={senderid}>
+            <Radio.Group onChange={(e) => setSendername(e.target.value)} value={sendername}>
               {groupmemberslist? (groupmemberslist.map((member, index) => (
-                <Radio key={index} value={member.id}>
-                  {member.name}
+                <Radio key={index} value={member}>
+                  {member}
                 </Radio>
               ))): (
                 <p>Loading group members list...</p>

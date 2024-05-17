@@ -9,6 +9,7 @@ import { getConversationDisplayName } from '../../api/utils';
 import { db } from '../../api/db';
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
+import Filterchat from './FilterChat';
 
 export type ChatboxProps = {
   me: string; // 当前用户
@@ -81,9 +82,12 @@ const Chatbox: React.FC<ChatboxProps> = ({
     <div className={styles.container}>
       {conversation && (
         <>
-          <div className={styles.title}>
-            {getConversationDisplayName(conversation)}
-          </div>
+          <div className={styles.titleContainer}>
+            <div className={styles.title}>
+              {getConversationDisplayName(conversation)}
+            </div>
+            <Filterchat conversationId={conversation.id} groupmemberslist={conversation.members} />
+        </div>
           <Divider className={styles.divider} />
         </>
       )}

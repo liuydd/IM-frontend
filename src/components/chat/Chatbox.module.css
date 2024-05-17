@@ -1,6 +1,12 @@
+.titleContainer {
+  display: flex;
+  align-items: center; /* 让子元素在垂直方向上居中对齐 */
+}
+
 .title {
   padding: 15px 20px;
   font-size: 18px;
+  margin-right: 10px; /* 给右边的组件一些间距 */
 }
 
 .divider {
