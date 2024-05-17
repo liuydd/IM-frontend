@@ -22,7 +22,7 @@ const Filterchat = ({conversationId, groupmemberslist}: {conversationId: number,
     const [end, setEndDate] = useState<number | null>(null);
     // const [senderid, setSenderid] = useState(0);
     const [sendername, setSendername] = useState('');
-    const [username, setUsername] = useLocalStorageState('username', { defaultValue: 'test' });
+    const [username, setUsername] = useLocalStorageState('me', { defaultValue: 'test' });
     // const userid = useSelector((state: RootState) => state.auth.userid);
 
     const [messages, setMessages] = useState<Message[]>([]);
