@@ -68,6 +68,7 @@ const Chatbox: React.FC<ChatboxProps> = ({
       .then(() => {
         setInputValue('');
         if (onUpdateLastUpdateTime) {
+          alert('hello');
           onUpdateLastUpdateTime(); // 调用回调函数通知父组件更新 lastUpdateTime
         }
       })

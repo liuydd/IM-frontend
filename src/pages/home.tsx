@@ -21,14 +21,28 @@ import { UserOutlined } from '@ant-design/icons';
 import { Avatar } from 'antd';
 import ChatPage from "../components/chat/ChatLayout"; //测试页面
 import HomePage from "../components/chat/HomePage";
+import faye from "../avatars/faye.jpg";
+import spike from "../avatars/spike.jpg";
+import { StaticImageData } from "next/image";
 
 const UserScreen = () => {
     //获取现有的userName, token, password
     const userid = useSelector((state: RootState) => state.auth.userid);
+    const avatar = useSelector((state: RootState) => state.auth.avatar);
     const username = useSelector((state: RootState) => state.auth.name);
     const token = useSelector((state: RootState) => state.auth.token);
     const password = useSelector((state: RootState) => state.auth.password);
+    const [selectedAvatar, setSelectedAvatar] = useState<string>(faye.src);
 
+    const avatarMap: { [key: string]:  StaticImageData} = {
+        "faye": faye,
+        "spike": spike,
+    };
+    const UserAvatar = avatarMap[avatar]; // 根据字符串值获取图片路径
+
+    const handleModifyAvatarClick = (avatarSrc: string) => {
+        setSelectedAvatar(avatarSrc);
+    };
     const router = useRouter();
     const dispatch = useDispatch();
 
@@ -178,9 +192,31 @@ const UserScreen = () => {
                 <div>
                     <Avatar
                         size={{ xs: 24, sm: 32, md: 40, lg: 64, xl: 80, xxl: 100 }}
-                        icon={<UserOutlined />}
+                        src={UserAvatar.src}
                     />
                 </div>
+                <div>
+                {/* <h3>Select an Avatar</h3>
+                <div style={{ display: 'flex', gap: '10px' }}>
+                    <img
+                        src={faye.src}
+                        alt="faye"
+                        width={50}
+                        height={50}
+                        style={{ cursor: 'pointer', border: selectedAvatar === faye.src ? '2px solid blue' : 'none' }}
+                        onClick={() => handleAvatarClick(faye.src)}
+                    />
+                    <img
+                        src={spike.src}
+                        alt="spike"
+                        width={50}
+                        height={50}
+                        style={{ cursor: 'pointer', border: selectedAvatar === spike.src ? '2px solid blue' : 'none' }}
+                        onClick={() => handleAvatarClick(spike.src)}
+                    />
+                </div> */}
+            </div>
+
                 <div>
                     <Button onClick={openModal}>Account Info</Button>
                     {showModal && (
