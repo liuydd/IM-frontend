@@ -11,7 +11,7 @@ import {
   leaveConversation,
   useMessageListener,
   // deleteMessage,
-  // markMessagesAsRead,
+  markMessagesAsRead,
 } from '../../api/chat';
 import { db } from '../../api/db';
 import { useDispatch, useSelector } from "react-redux";
@@ -48,8 +48,8 @@ const HomePage = () => {
   useEffect(() => {
     db.activeConversationId = activeChat || null;
     if (activeChat) {
-      db.clearUnreadCount(activeChat).then(refresh);
-      // markMessagesAsRead(me!, activeChat); // 标记未读消息为已读
+      db.clearUnreadCount(activeChat);
+      markMessagesAsRead(me!, activeChat).then(refresh); // 标记未读消息为已读
     }
   }, [activeChat, refresh]);
 

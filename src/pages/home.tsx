@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { BACKEND_URL, FAILURE_PREFIX} from "../constants/string";
 import { useRouter } from "next/router";
-import { setName, setPassword, setToken } from "../redux/auth";
+import { setName, setPassword, setToken,setavatar } from "../redux/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import FriendRequest from "./friend/send_friend_request";
@@ -12,7 +12,7 @@ import DeleteFriend from "./friends/delete";
 import ListFriends from "./friends/list";
 import LabelFriends from "./friends/label";
 import type { MenuProps } from 'antd';
-import { Breadcrumb, Layout, Menu, theme, Button, Form, Input, Modal, Image } from 'antd';
+import { Breadcrumb, Layout, Menu, theme, Button, Form, Input, Modal, Image,Tooltip } from 'antd';
 const { Header, Content, Footer, Sider } = Layout;
 import React from 'react';
 import Link from 'next/link';
@@ -38,7 +38,8 @@ const UserScreen = () => {
     const username = useSelector((state: RootState) => state.auth.name);
     const token = useSelector((state: RootState) => state.auth.token);
     const password = useSelector((state: RootState) => state.auth.password);
-    const [selectedAvatar, setSelectedAvatar] = useState<string>(faye.src);
+    const [selectedAvatar, setSelectedAvatar] = useState<string>(avatar);
+    const [avatarHovered, setAvatarHovered] = useState(false);
 
     const avatarMap: { [key: string]:  StaticImageData} = {
         "faye": faye,
@@ -52,9 +53,6 @@ const UserScreen = () => {
     };
     const UserAvatar = avatarMap[avatar]; // 根据字符串值获取图片路径
 
-    const handleModifyAvatarClick = (avatarSrc: string) => {
-        setSelectedAvatar(avatarSrc);
-    };
     const router = useRouter();
     const dispatch = useDispatch();
 
@@ -78,18 +76,28 @@ const UserScreen = () => {
         setShowPasswordModal(true);
       };
     
-      const closePasswordModal = () => {
-        setShowPasswordModal(false);
+    const closePasswordModal = () => {
+    setShowPasswordModal(false);
+    };
+
+    const openProfileModal = () => {
+    setShowProfileModal(true);
+    };
+
+    const closeProfileModal = () => {
+    setShowProfileModal(false);
+    };
+
+    const [showAvatarModal, setShowAvatarModal] = useState(false);
+    const handleAvatarClick = () => {
+        setShowAvatarModal(true);
       };
-    
-      const openProfileModal = () => {
-        setShowProfileModal(true);
-      };
-    
-      const closeProfileModal = () => {
-        setShowProfileModal(false);
-      };
-    
+      
+    const handleAvatarModalClose = () => {
+        setShowAvatarModal(false);
+    };
+
+
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setFormData((prevData) => ({
@@ -240,6 +248,69 @@ const UserScreen = () => {
         setSelectedChat(info.key);
       };
 
+    const AvatarSelectorModal = () => {
+        const handleAvatarChange = (selectedAvatar:string) => {
+            const { username,newUsername, newPassword, newAvatar, newEmail, newPhoneNumber } = formData;
+
+          // 向后端发送请求，更改用户头像
+          fetch(`${BACKEND_URL}/api/modify`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `${token}`
+            },
+            body: JSON.stringify({
+                userid,
+                password,
+                username,
+                newUsername,
+                newPassword,
+                newEmail,
+                newPhoneNumber,
+                newAvatar: selectedAvatar // 发送用户选择的新头像
+            })
+          })
+            .then((res) => res.json())
+            .then((res) => {
+              if (Number(res.code) === 0) {
+                alert("头像更新成功");
+                setSelectedAvatar(selectedAvatar);
+                dispatch(setavatar(selectedAvatar));
+                handleAvatarModalClose();
+              } else {
+                alert("头像更新失败：" + res.info);
+              }
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+              alert("发生错误，请重试");
+            });
+        };
+      
+        return (
+          <Modal
+            visible={showAvatarModal}
+            onCancel={handleAvatarModalClose}
+            footer={null}
+          >
+            <h2>选择头像</h2>
+            <div>
+              {Object.entries(avatarMap).map(([key, image]) => (
+                <Tooltip title={`选择${key}`} key={key}>
+                  <Avatar
+                    size={64}
+                    src={image.src}
+                    style={{ cursor: 'pointer', margin: '0 10px' }}
+                    onClick={() => handleAvatarChange(key)} // 在点击时调用handleAvatarChange函数并传入选定的头像键
+                  />
+                </Tooltip>
+              ))}
+            </div>
+          </Modal>
+        );
+      };
+      
+
     return (
         <Layout>
             <Header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -261,32 +332,22 @@ const UserScreen = () => {
                 width={200}
                 >
                 <div>
-                    <Avatar
+                    <Tooltip title="修改头像">
+                    <div 
+                        style={{ border: avatarHovered ? '2px solid blue' : 'none', display: 'inline-block' }}
+                        onMouseOver={() => setAvatarHovered(true)}
+                        onMouseOut={() => setAvatarHovered(false)}
+                        onClick={handleAvatarClick}
+                    >
+                        <Avatar
                         size={{ xs: 24, sm: 32, md: 40, lg: 64, xl: 80, xxl: 100 }}
                         src={UserAvatar.src}
-                    />
+                        style={{ cursor: 'pointer' }}
+                        />
+                    </div>
+                    </Tooltip>
+                    <AvatarSelectorModal />
                 </div>
-                <div>
-                {/* <h3>Select an Avatar</h3>
-                <div style={{ display: 'flex', gap: '10px' }}>
-                    <img
-                        src={faye.src}
-                        alt="faye"
-                        width={50}
-                        height={50}
-                        style={{ cursor: 'pointer', border: selectedAvatar === faye.src ? '2px solid blue' : 'none' }}
-                        onClick={() => handleAvatarClick(faye.src)}
-                    />
-                    <img
-                        src={spike.src}
-                        alt="spike"
-                        width={50}
-                        height={50}
-                        style={{ cursor: 'pointer', border: selectedAvatar === spike.src ? '2px solid blue' : 'none' }}
-                        onClick={() => handleAvatarClick(spike.src)}
-                    />
-                </div> */}
-            </div>
 
             <div>
                 <Button onClick={openPasswordModal}>Account Info</Button>

@@ -139,19 +139,25 @@ const Chatbox: React.FC<ChatboxProps> = ({
         </div>
           <Divider className={styles.divider} />
         </>
+        
       )}
 
       <div className={styles.messages}>
         {/* 消息列表容器 */}
-        {messages?.map((item) => ( //这里后续要传isRead和ReadBY（？
+        {conversation && (
+          messages?.map((item) => ( //这里后续要传isRead和ReadBY（？
           // <MessageBubble key={item.id} isMe={item.sender == me} onReply={() => handleReply({ messagecontent: item.content })} {...item} /> // 渲染每条消息为MessageBubble组件
           <MessageBubble key={item.id} isMe={item.sender == me} message_id={item.id} reply_id = {item.reply_to} response_count={item.responseCount} onDelete={handleDeleteMessage} 
           onReply={handleReply}
           onScrollToMessage={handleScrollToMessage}
+          conversationType={conversation.type}
+          readBy={item.readBy}
           {...item} /> // 渲染每条消息为MessageBubble组件
-        ))}
+        ))
+        )}
         <div ref={messageEndRef} /> {/* 用于自动滚动到消息列表底部的空div */}
       </div>
+
       {conversation && (
         <>
           <Input.TextArea
