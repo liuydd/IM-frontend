@@ -64,7 +64,7 @@ const Filterchat = ({conversationId, groupmemberslist}: {conversationId: number,
         setIsModalOpen(false);
       };
     
-    const formattime = ({timestamp} : {timestamp: number}) => {
+    const formattime = (timestamp: number) => {
         return new Date(timestamp).toLocaleTimeString('zh-CN', {
             hour: '2-digit',
             minute: '2-digit',
