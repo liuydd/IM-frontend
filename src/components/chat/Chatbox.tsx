@@ -151,7 +151,6 @@ const Chatbox: React.FC<ChatboxProps> = ({
           onReply={handleReply}
           onScrollToMessage={handleScrollToMessage}
           conversationType={conversation.type}
-          readBy={item.readBy}
           {...item} /> // 渲染每条消息为MessageBubble组件
         ))
         )}
