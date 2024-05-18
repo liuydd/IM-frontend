@@ -77,7 +77,7 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({
   const readStatus = () => {
     if (conversationType === 'private_chat') {
       let status: String = "未读";
-      if (readBy.length() === 2) {
+      if (readBy.length === 2) {
         status = "已读";
       }
       return status;
