@@ -13,7 +13,7 @@ export type AddMessageArgs = {
 export type DeleteMessageArgs = {
   // userid: number;
   me: string;
-  conversation: Conversation;
+  // conversation: Conversation;
   message_id : number;
 };
 
@@ -63,14 +63,14 @@ export async function addMessage({
 //向服务器中删除一条消息
 export async function deleteMessage({
   me,
-  conversation,
+  // conversation,
   message_id,
 }: DeleteMessageArgs){
   try {
     const res = await axios.delete(getUrl('messages'), {
       params: {
         username: me,
-        conversation_id: conversation.id,
+        // conversation_id: conversation.id,
         message_id: message_id,
       },
       headers: {
@@ -171,8 +171,8 @@ export const useMessageListener = (fn: () => void, me: string) => {
 
     const connect = () => {
       ws = new WebSocket(
-        getUrl(`ws/?username=${me}`).replace('https://', 'wss://') // 将http协议替换为ws协议，用于WebSocket连接
-        // getUrl(`ws/?username=${me}`).replace('http://', 'ws://')
+        // getUrl(`ws/?username=${me}`).replace('https://', 'wss://') // 将http协议替换为ws协议，用于WebSocket连接
+        getUrl(`ws/?username=${me}`).replace('http://', 'ws://')
       );
 
       ws.onopen = () => {

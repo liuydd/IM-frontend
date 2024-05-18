@@ -15,6 +15,8 @@ export type ChatboxProps = {
   me: string; // 当前用户
   conversation?: Conversation; // 当前选中的会话 (可能为空)
   lastUpdateTime?: number; // 本地消息数据最后更新时间，用于触发该组件数据更新
+  // onDeleteMessage?: (message_id: number) => void; // 删除消息的回调函数
+  onUpdateLastUpdateTime?: () => void; // 更新 lastUpdateTime 的回调函数
 };
 
 // 聊天框组件
@@ -22,6 +24,7 @@ const Chatbox: React.FC<ChatboxProps> = ({
   me,
   conversation,
   lastUpdateTime,
+  onUpdateLastUpdateTime,
 }) => {
   const cachedMessagesRef = useRef<Message[]>([]); // 使用ref存储组件内缓存的消息列表
   const [sending, setSending] = useState(false); // 控制发送按钮的状态
@@ -67,9 +70,12 @@ const Chatbox: React.FC<ChatboxProps> = ({
 
   const handleDeleteMessage = (message_id: number) => {
     try {
-      deleteMessage({me: me, message_id : message_id, conversation: conversation!})
+      deleteMessage({me: me, message_id : message_id})
       .then(() => {
         db.removeMessage(message_id);
+        if (onUpdateLastUpdateTime) {
+          onUpdateLastUpdateTime(); // 调用回调函数通知父组件更新 lastUpdateTime
+        }
       })
     } catch (error) {
       console.error('Error deleting message:', error);

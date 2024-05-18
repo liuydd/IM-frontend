@@ -10,6 +10,7 @@ import {
   joinConversation,
   leaveConversation,
   useMessageListener,
+  // deleteMessage,
   // markMessagesAsRead,
 } from '../../api/chat';
 import { db } from '../../api/db';
@@ -51,6 +52,20 @@ const HomePage = () => {
       // markMessagesAsRead(me!, activeChat); // 标记未读消息为已读
     }
   }, [activeChat, refresh]);
+
+  // const handleDeleteMessage = async (message_id: number) => {
+  //   try {
+  //     await deleteMessage({ me: me!, message_id }); // 调用删除消息的 API 函数
+  //     update(); // 删除消息后更新数据
+  //   } catch (error) {
+  //     console.error('Error deleting message:', error);
+  //     message.error('消息删除失败');
+  //   }
+  // };
+
+  const updateLastUpdateTime = () => {
+    setLastUpdateTime(Date.now());
+  };
 
   useMessageListener(update, me!); // 使用消息监听器钩子，当有新消息时调用更新函数
 
@@ -154,6 +169,7 @@ const HomePage = () => {
                 : undefined
             }
             lastUpdateTime={lastUpdateTime}
+            onUpdateLastUpdateTime={updateLastUpdateTime}
           />
         </div>
       </div>
