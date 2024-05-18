@@ -416,7 +416,7 @@ const UserScreen = () => {
                 <div className="demo-logo-vertical" />
                 <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']} style={{ height: '100%', borderRight: 0 }}>
                     {items.map((item) => (
-                    <Menu.Item key={item.key}>
+                    <Menu.Item key={item.key} onClick={cancelMenuClick}>
                         <Link href={item.to}>{item.label}</Link>
                     </Menu.Item>
                     ))}
