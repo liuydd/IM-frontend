@@ -1,5 +1,6 @@
 export type Message = {
   id: number; // 消息ID
+  avatar: string; // 发送者头像
   conversation: number; // 会话 ID
   sender: string; // 发送者
   content: string; // 消息内容

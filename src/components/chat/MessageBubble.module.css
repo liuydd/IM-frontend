@@ -10,6 +10,19 @@
   margin-bottom: 5px;
 }
 
+.messageWrapper {
+  display: flex;
+  align-items: center;
+}
+
+.meWrapper {
+  justify-content: flex-end;
+}
+
+.othersWrapper {
+  justify-content: flex-start;
+}
+
 .bubble {
   border-radius: 6px;
   padding: 10px 15px;
@@ -32,4 +45,8 @@
 
 .othersBubble {
   background-color: #fff;
+}
+
+.avatar {
+  margin: 0 10px;
 }

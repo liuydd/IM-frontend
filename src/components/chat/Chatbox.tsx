@@ -150,6 +150,7 @@ const Chatbox: React.FC<ChatboxProps> = ({
           // <MessageBubble key={item.id} isMe={item.sender == me} onReply={() => handleReply({ messagecontent: item.content })} {...item} /> // 渲染每条消息为MessageBubble组件
           <MessageBubble 
           sender={item.sender}
+          avatar={item.avatar}
           content={item.content}
           timestamp={item.timestamp}
           isMe={item.sender == me} 
