@@ -5,6 +5,7 @@ import { setName, setPassword, setToken } from "../../redux/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { Button, Checkbox, Form, Input } from "antd";
+import { addConversation } from "../../api/chat";
 
 // interface GroupMembers{
 //     memberid: number,
@@ -20,9 +21,14 @@ function CreateGroup({ friendlist }: { friendlist: Friend[] }) {
     const token = useSelector((state: RootState) => state.auth.token);
     // const [members, setGroupMembers] = useState<GroupMembers[]>([]);
     const [members, setGroupMembers] = useState<number[]>([]);
+    const [membersname, setGroupMembersname] = useState<string[]>([]);
 
-    const handleMemberChange = (checkedValues: number[]) => {
+    // const handleMemberChange = (checkedValues: number[]) => {
+    //   setGroupMembers(checkedValues);
+    // };
+    const handleMemberChange = (checkedValues: number[], checkedNames: string[]) => {
       setGroupMembers(checkedValues);
+      setGroupMembersname(checkedNames);
     };
 
     const createGroup = () =>{
@@ -40,6 +46,7 @@ function CreateGroup({ friendlist }: { friendlist: Friend[] }) {
         .then((res)=>res.json())
         .then((res)=>{
             alert(res.info);
+            addConversation({type: 'group_chat', members: membersname});
         })
         .catch((err)=>{
             alert(FAILURE_PREFIX);
@@ -54,10 +61,18 @@ function CreateGroup({ friendlist }: { friendlist: Friend[] }) {
                   key={index}
                   value={friend.friendid}
                   onChange={(e) =>
+                    // handleMemberChange(
+                    //   e.target.checked
+                    //     ? [...members, e.target.value]
+                    //     : members.filter((member) => member !== e.target.value)
+                    // )
                     handleMemberChange(
                       e.target.checked
                         ? [...members, e.target.value]
-                        : members.filter((member) => member !== e.target.value)
+                        : members.filter((member) => member !== e.target.value),
+                      e.target.checked
+                        ? [...membersname, friend.friend]
+                        : membersname.filter((name) => name !== friend.friend)
                     )
                   }
                   // onChange={(e) => {
