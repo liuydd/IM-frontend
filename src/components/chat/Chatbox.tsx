@@ -63,7 +63,12 @@ const Chatbox: React.FC<ChatboxProps> = ({
       // .then((res) =>{
       //   alert(res.error)
       // })
-      .then(() => setInputValue(''))
+      .then(() => {
+        setInputValue('')
+        if (onUpdateLastUpdateTime) {
+          onUpdateLastUpdateTime(); // 调用回调函数通知父组件更新 lastUpdateTime
+        }
+      })
       .catch(() => message.error('消息发送失败'))
       .finally(() => setSending(false));
   };

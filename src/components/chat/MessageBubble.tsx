@@ -65,10 +65,6 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({
   };
 
   const handleDelete = () =>{
-    // deleteMessage({me: sender, message_id : message_id})
-    // .then(() => {
-    //   db.removeMessage(message_id);
-    // })
     onDelete(message_id); // 通知父组件删除消息
   }
 
