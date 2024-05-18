@@ -11,6 +11,7 @@ export type MessageBubbleProps = {
   timestamp: number; // 消息时间戳
   isMe: boolean; // 判断消息是否为当前用户发送
   message_id : number;
+  onDelete: (message_id: number) => void; // 删除消息的回调函数
   // isRead: boolean; // 判断消息是否已读（针对私聊）
   // readBy: string[]; // 已读该消息的成员列表（针对群聊）
   // conversationType?: 'private_chat' | 'group_chat';
@@ -25,6 +26,7 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({
   timestamp,
   isMe,
   message_id,
+  onDelete,
   // isRead,
   // readBy,
   // conversationType,
@@ -63,10 +65,11 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({
   };
 
   const handleDelete = () =>{
-    deleteMessage({me: sender, message_id : message_id})
-    .then(() => {
-      db.removeMessage(message_id);
-    })
+    // deleteMessage({me: sender, message_id : message_id})
+    // .then(() => {
+    //   db.removeMessage(message_id);
+    // })
+    onDelete(message_id); // 通知父组件删除消息
   }
 
   return (

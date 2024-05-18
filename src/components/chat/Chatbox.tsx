@@ -4,7 +4,7 @@ import { useRequest } from 'ahooks';
 import styles from './Chatbox.module.css';
 import MessageBubble from './MessageBubble';
 import { Conversation, Message } from '../../api/types';
-import { addMessage } from '../../api/chat';
+import { addMessage, deleteMessage } from '../../api/chat';
 import { getConversationDisplayName } from '../../api/utils';
 import { db } from '../../api/db';
 import { useDispatch, useSelector } from "react-redux";
@@ -65,6 +65,18 @@ const Chatbox: React.FC<ChatboxProps> = ({
       .finally(() => setSending(false));
   };
 
+  const handleDeleteMessage = (message_id: number) => {
+    try {
+      deleteMessage({me: me, message_id : message_id, conversation: conversation!})
+      .then(() => {
+        db.removeMessage(message_id);
+      })
+    } catch (error) {
+      console.error('Error deleting message:', error);
+      message.error('消息删除失败');
+    }
+  };
+
   const handleReply = ({messagecontent} : {messagecontent: string}) =>{ //messagecontent: 回复的那条消息的内容
     // if (!inputValue) {
     //   message.error('消息内容不能为空');
@@ -96,7 +108,7 @@ const Chatbox: React.FC<ChatboxProps> = ({
         {/* 消息列表容器 */}
         {messages?.map((item) => ( //这里后续要传isRead和ReadBY（？
           // <MessageBubble key={item.id} isMe={item.sender == me} onReply={() => handleReply({ messagecontent: item.content })} {...item} /> // 渲染每条消息为MessageBubble组件
-          <MessageBubble key={item.id} isMe={item.sender == me} message_id={item.id} {...item} />
+          <MessageBubble key={item.id} isMe={item.sender == me} message_id={item.id} onDelete={handleDeleteMessage} {...item} /> // 渲染每条消息为MessageBubble组件
         ))}
         <div ref={messageEndRef} /> {/* 用于自动滚动到消息列表底部的空div */}
       </div>
