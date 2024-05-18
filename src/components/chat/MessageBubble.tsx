@@ -5,9 +5,31 @@ import { Popover, Button } from 'antd';
 import { deleteMessage } from '../../api/chat';
 import { db } from '../../api/db';
 import { BACKEND_URL, FAILURE_PREFIX} from "../../constants/string";
+import { Avatar } from 'antd';
+import faye from "../../avatars/faye.jpg";
+import spike from "../../avatars/spike.jpg";
+import asuka from "../../avatars/asuka.jpg";
+import fuu from "../../avatars/fuu.jpg";
+import jin from "../../avatars/jin.jpg";
+import mugen from "../../avatars/mugen.jpg";
+import Rei from "../../avatars/Rei.jpg";
+import ritsuko from "../../avatars/ritsuko.jpg";
+import { StaticImageData } from "next/image";
+
+const avatarMap: { [key: string]:  StaticImageData} = {
+  "faye": faye,
+  "spike": spike,
+  "asuka": asuka,
+  "fuu": fuu,
+  "jin": jin,
+  "mugen": mugen,
+  "Rei": Rei,
+  "ritsuko": ritsuko,
+};
 
 export type MessageBubbleProps = {
   sender: string; // 消息发送者
+  avatar: string; // 发送者头像
   content: string; // 消息内容
   timestamp: number; // 消息时间戳
   isMe: boolean; // 判断消息是否为当前用户发送
@@ -26,6 +48,7 @@ export type MessageBubbleProps = {
 // 消息气泡组件
 export const MessageBubble: React.FC<MessageBubbleProps> = ({
   sender,
+  avatar,
   content,
   timestamp,
   isMe,
@@ -109,73 +132,48 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({
     }
   };
   
-
   return (
     <div className={`${styles.container} ${isMe ? styles.me : styles.others}`}>
-      {/* 根据消息发送者显示不同的气泡样式 */}
       <div className={styles.sender}>
-        {sender} @ {formattedTime} {/* 显示发送者和消息时间 */}
-        {
-        // readStatus()
-        /* {conversationType === 'private_chat' && !isMe && (
-          <span>({isRead ? '已读' : '未读'})</span>
-        )}
-        {conversationType === 'group_chat' && !isMe && (
-          <span>
-            ({readBy.length > 0 ? readBy.join(', ') + ' 已读' : '尚未有人已读'})
-          </span>
-        )}
-        {!isMe && (
-          <span>({responseCount ? responseCount : 0 + ' 条回复'})</span>
-        )} */}
+        {sender} @ {formattedTime}
       </div>
-      <div
-        className={`${styles.bubble} ${
-          isMe ? styles.meBubble : styles.othersBubble
-        }`}
-        id = {String(message_id)}
-        onClick={() => {
-          // alert("点击成功");
-          // alert(response_count);
-          onScrollToMessage(reply_id);
-          // alert("点击成功" + reply_id);
-        }}
-      >
-        {/* {content}  */}
-        {/* {( */}
-          <Popover
-          style={{ width: 500 }}
-          // title="回复"
-          content = {<div>
-            <Button onClick={handleDelete}>删除</Button>
-            <Button onClick={handleReply}>回复</Button>
-            {/* <Button onClick={getResponseCount}>查看</Button> */}
-            <p><span>({response_count ? response_count + ' 条回复' : 0 + ' 条回复'})</span></p>
-            <p>{readStatus()}</p>
-          </div>}
-          trigger="hover"
-          open={hovered}
-          onOpenChange={handleHoverChange}
+      <div className={`${styles.messageWrapper} ${isMe ? styles.meWrapper : styles.othersWrapper}`}>
+        {!isMe && <Avatar size={48} src={avatarMap[avatar].src} className={styles.avatar} />}
+        <div
+          className={`${styles.bubble} ${isMe ? styles.meBubble : styles.othersBubble}`}
+          id={String(message_id)}
+          onClick={() => onScrollToMessage(reply_id)}
         >
           <Popover
-            // title="回复"
-            content = {<div>
-              <Button onClick={handleDelete}>删除</Button>
-              <Button onClick={handleReply}>回复</Button>
-            </div>}
-            trigger="contextMenu"
-            open={clicked}
-            onOpenChange={handleClickChange}
+            style={{ width: 500 }}
+            content={
+              <div>
+                <Button onClick={handleDelete}>删除</Button>
+                <Button onClick={handleReply}>回复</Button>
+                <p><span>({response_count ? response_count + ' 条回复' : 0 + ' 条回复'})</span></p>
+                <p>{readStatus()}</p>
+              </div>
+            }
+            trigger="hover"
+            open={hovered}
+            onOpenChange={handleHoverChange}
           >
+            <Popover
+              content={
+                <div>
+                  <Button onClick={handleDelete}>删除</Button>
+                  <Button onClick={handleReply}>回复</Button>
+                </div>
+              }
+              trigger="contextMenu"
+              open={clicked}
+              onOpenChange={handleClickChange}
+            >
               {content}
+            </Popover>
           </Popover>
-        </Popover>
-        {/* // )} */}
-      </div>
-      <div className={styles.sender}>
-        {/* {
-          <span>({response_count ? response_count : 0 + ' 条回复'})</span>
-        } */}
+        </div>
+        {isMe && <Avatar size={48} src={avatarMap[avatar].src} className={styles.avatar} />}
       </div>
     </div>
   );
