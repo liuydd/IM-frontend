@@ -87,7 +87,7 @@ export async function deleteMessage({
       },
     });
     console.log('Message deleted successfully');
-    return res.info; // 如果需要返回删除操作的结果，可以根据需要进行处理
+    return res.data; // 如果需要返回删除操作的结果，可以根据需要进行处理
   } catch (error) {
     console.error('Error deleting message:', error);
     throw error; // 将错误继续向上抛出，以便上层代码处理
