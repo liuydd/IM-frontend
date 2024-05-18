@@ -97,7 +97,7 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({
       <div className={styles.sender}>
         {sender} @ {formattedTime} {/* 显示发送者和消息时间 */}
         {
-        // readStatus()
+        readStatus()
         /* {conversationType === 'private_chat' && !isMe && (
           <span>({isRead ? '已读' : '未读'})</span>
         )}
