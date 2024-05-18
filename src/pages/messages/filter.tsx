@@ -63,6 +63,14 @@ const Filterchat = ({conversationId, groupmemberslist}: {conversationId: number,
       const handleCancel = () => {
         setIsModalOpen(false);
       };
+    
+    const formattime = (timestamp: number) => {
+        return new Date(timestamp).toLocaleTimeString('zh-CN', {
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+          })
+      };
 
     return(
         <div>
@@ -117,7 +125,7 @@ const Filterchat = ({conversationId, groupmemberslist}: {conversationId: number,
                 {messages.map((message, index) => (
                     <li key={index}>
                         <p>发送者: {message.sender}</p>
-                        <p>发送时间: {message.timestamp}</p>
+                        <p>发送时间: {formattime(message.timestamp)}</p>
                         <p>{message.content}</p>
                     </li>
                 ))}
