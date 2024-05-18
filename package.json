@@ -9,7 +9,8 @@
     "export": "next export",
     "lint": "next lint",
     "fix": "eslint src --ext .js,.jsx,.ts,.tsx --fix",
-    "test": "jest"
+    "test": "jest",
+    "update-browserslist": "npx browserslist@latest --update-db"
   },
   "dependencies": {
     "@emoji-mart/data": "^1.1.2",
