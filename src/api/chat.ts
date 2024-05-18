@@ -164,14 +164,6 @@ export async function markMessagesAsRead(me: string, conversationId: number) {
   });
 }
 
-//得到某条消息的已读未读状态
-export async function getMessageReadStatus(me: string, messageId: number) {
-  const response = await axios.get(getUrl(`messages/${messageId}/read`), {
-    params: { username: me },
-  });
-  return response.data; //后端传来的数据
-}
-
 export async function leaveConversation({
   me,
   conversationId,
