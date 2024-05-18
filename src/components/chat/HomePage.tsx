@@ -56,6 +56,7 @@ const HomePage = () => {
 
   const updateLastUpdateTime = () => {
     setLastUpdateTime(Date.now());
+    update();
   };
 
   useMessageListener(update, me!); // 使用消息监听器钩子，当有新消息时调用更新函数
