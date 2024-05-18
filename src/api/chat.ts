@@ -25,6 +25,11 @@ export type GetMessagesArgs = {
   limit?: number;
 };
 
+export type readMessageArgs = {
+  me: string;
+  message_id: number;
+};
+
 export type AddConversationArgs = {
   type: 'private_chat' | 'group_chat';
   members: string[];
@@ -58,6 +63,16 @@ export async function addMessage({
     content: content, // 消息内容
   });
   return data;
+}
+
+export async function readMessage( {
+  me,
+  message_id
+}: readMessageArgs) {
+  await axios.post(getUrl('messages/read'), {
+    username: me,
+    message_id: message_id
+  });
 }
 
 //向服务器中删除一条消息

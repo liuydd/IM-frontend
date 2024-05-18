@@ -1,6 +1,6 @@
 import Dexie, { UpdateSpec } from 'dexie';
 import { Conversation, Message } from './types';
-import { getConversations, getMessages } from './chat';
+import { getConversations, getMessages, readMessage } from './chat';
 
 // 定义一个继承自Dexie的类，用于管理本地缓存在IndexedDB的数据
 export class CachedData extends Dexie {
@@ -120,6 +120,13 @@ export class CachedData extends Dexie {
 
   // 清除会话的未读计数
   async clearUnreadCount(convId: number) {
+    
+    const messages = await this.messages
+      .where('conversation')
+      .equals(convId);
+    messages.forEach((message) => {
+      readMessage({me, message.id});
+    });
     await this.conversations.update(convId, { unreadCount: 0 });
   }
 
