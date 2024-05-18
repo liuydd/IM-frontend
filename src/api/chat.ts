@@ -157,9 +157,12 @@ export async function joinConversation({
 }
 
 //将某个聊天会话的消息全标记为已读
-// export async function markMessagesAsRead(me: string, conversationId: number) {
-//   await axios.post(getUrl(`conversations/${conversationId}/read`), {username: me});
-// }
+export async function markMessagesAsRead(me: string, conversationId: number) {
+   await axios.post(getUrl(`messages/read`), {
+    username: me,
+    conversationId: conversationId
+  });
+}
 
 //得到某条消息的已读未读状态
 export async function getMessageReadStatus(me: string, messageId: number) {

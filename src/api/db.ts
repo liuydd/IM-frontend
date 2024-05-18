@@ -120,14 +120,6 @@ export class CachedData extends Dexie {
 
   // 清除会话的未读计数
   async clearUnreadCount(convId: number) {
-    
-    const messages = await this.messages
-      .where('conversation')
-      .equals(convId)
-      .toArray();
-    messages.forEach((message) => {
-      readMessage({me, message.id});
-    });
     await this.conversations.update(convId, { unreadCount: 0 });
   }
 
