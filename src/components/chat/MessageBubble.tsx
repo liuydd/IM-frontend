@@ -15,7 +15,7 @@ export type MessageBubbleProps = {
   onReply: (messagecontent: string) => void; // 回复消息的回调函数
   onScrollToMessage: (message_id: number) => void; // 滚动到指定消息的回调函数
   // isRead: boolean; // 判断消息是否已读（针对私聊）
-  // readBy: string[]; // 已读该消息的成员列表（针对群聊）
+  readBy: string[]; // 已读该消息的成员列表（针对群聊）
   // conversationType?: 'private_chat' | 'group_chat';
   // onReply? : (data: { messagecontent: string }) => void;
   // responseCount?: number;
@@ -32,8 +32,8 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({
   onReply,
   onScrollToMessage,
   // isRead,
-  // readBy,
-  // conversationType,
+  readBy,
+  conversationType,
   // onReply,
   // responseCount,
 }) => {
@@ -71,12 +71,28 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({
     onDelete(message_id); // 通知父组件删除消息
   }
 
+  const readStatus = () => {
+    if (conversationType === 'private_chat') {
+      let status: String = "未读";
+      if (readBy.length() === 2) {
+        status = "已读";
+      }
+      return status;
+    }
+    else {
+      const result: string = `${readBy.join(", ")} 已读`;
+      return result;
+    }
+  }
+
   return (
     <div className={`${styles.container} ${isMe ? styles.me : styles.others}`}>
       {/* 根据消息发送者显示不同的气泡样式 */}
       <div className={styles.sender}>
         {sender} @ {formattedTime} {/* 显示发送者和消息时间 */}
-        {/* {conversationType === 'private_chat' && !isMe && (
+        {
+        readStatus()
+        /* {conversationType === 'private_chat' && !isMe && (
           <span>({isRead ? '已读' : '未读'})</span>
         )}
         {conversationType === 'group_chat' && !isMe && (

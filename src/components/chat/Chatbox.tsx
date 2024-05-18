@@ -132,6 +132,8 @@ const Chatbox: React.FC<ChatboxProps> = ({
           <MessageBubble key={item.id} isMe={item.sender == me} message_id={item.id} onDelete={handleDeleteMessage} 
           onReply={handleReply}
           onScrollToMessage={handleScrollToMessage}
+          conversationType={conversation.type}
+          readBy={item.readBy}
           {...item} /> // 渲染每条消息为MessageBubble组件
         ))}
         <div ref={messageEndRef} /> {/* 用于自动滚动到消息列表底部的空div */}
