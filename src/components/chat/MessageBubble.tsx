@@ -75,18 +75,21 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({
   }
 
   const readStatus = () => {
+    // 确保 readBy 已定义，如果未定义则赋予一个空数组
+    const safeReadBy = readBy || [];
+  
     if (conversationType === 'private_chat') {
-      let status: String = "未读";
-      if (readBy.length === 2) {
+      let status = "未读";
+      if (safeReadBy.length === 2) {
         status = "已读";
       }
       return status;
-    }
-    else {
-      const result: string = `${readBy.join(", ")} 已读`;
+    } else {
+      const result = `${safeReadBy.join(", ")} 已读`;
       return result;
     }
-  }
+  };
+  
 
   return (
     <div className={`${styles.container} ${isMe ? styles.me : styles.others}`}>
