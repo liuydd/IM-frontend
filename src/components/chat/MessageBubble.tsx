@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Popover, Button } from 'antd';
 import { deleteMessage } from '../../api/chat';
 import { db } from '../../api/db';
+import { BACKEND_URL, FAILURE_PREFIX} from "../../constants/string";
 
 export type MessageBubbleProps = {
   sender: string; // 消息发送者
@@ -30,12 +31,12 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({
   isMe,
   message_id,
   reply_id,
-  response_count,
+  // response_count,
   onDelete,
   onReply,
   onScrollToMessage,
   // isRead,
-  readBy,
+  // readBy,
   conversationType,
   // onReply,
 }) => {
@@ -48,20 +49,38 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({
 
   const [clicked, setClicked] = useState(false);
   const [hovered, setHovered] = useState(false);
+  const [response_count, setResponseCount] = useState(0);
+  const [readBy, setReadBy] = useState([]);
 
   const hide = () => {
     setClicked(false);
     setHovered(false);
   };
 
+  const getResponseCount = () => {
+    fetch(`${BACKEND_URL}/api/messages/detail?message_id=${message_id}`)
+      .then((response) => response.json())
+      .then((res) => {
+        if (Number(res.code) === 0) {
+          setResponseCount(res.responseCount);
+          setReadBy(res.readBy);
+      }
+      else {
+          alert(res.info);
+      }
+      })
+  }
+
   const handleHoverChange = (open: boolean) => {
     setHovered(open);
     setClicked(false);
+    getResponseCount();
   };
 
   const handleClickChange = (open: boolean) => {
     setHovered(false);
     setClicked(open);
+    getResponseCount();
   };
 
   const handleReply = () => {
@@ -97,7 +116,7 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({
       <div className={styles.sender}>
         {sender} @ {formattedTime} {/* 显示发送者和消息时间 */}
         {
-        readStatus()
+        // readStatus()
         /* {conversationType === 'private_chat' && !isMe && (
           <span>({isRead ? '已读' : '未读'})</span>
         )}
@@ -117,7 +136,7 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({
         id = {String(message_id)}
         onClick={() => {
           // alert("点击成功");
-          alert(response_count);
+          // alert(response_count);
           onScrollToMessage(reply_id);
           // alert("点击成功" + reply_id);
         }}
@@ -130,6 +149,9 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({
           content = {<div>
             <Button onClick={handleDelete}>删除</Button>
             <Button onClick={handleReply}>回复</Button>
+            {/* <Button onClick={getResponseCount}>查看</Button> */}
+            <p><span>({response_count ? response_count + ' 条回复' : 0 + ' 条回复'})</span></p>
+            <p>{readStatus()}</p>
           </div>}
           trigger="hover"
           open={hovered}
@@ -151,9 +173,9 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({
         {/* // )} */}
       </div>
       <div className={styles.sender}>
-        {
+        {/* {
           <span>({response_count ? response_count : 0 + ' 条回复'})</span>
-        }
+        } */}
       </div>
     </div>
   );
