@@ -12,6 +12,8 @@ export type MessageBubbleProps = {
   isMe: boolean; // 判断消息是否为当前用户发送
   message_id : number;
   onDelete: (message_id: number) => void; // 删除消息的回调函数
+  onReply: (messagecontent: string) => void; // 回复消息的回调函数
+  onScrollToMessage: (message_id: number) => void; // 滚动到指定消息的回调函数
   // isRead: boolean; // 判断消息是否已读（针对私聊）
   // readBy: string[]; // 已读该消息的成员列表（针对群聊）
   // conversationType?: 'private_chat' | 'group_chat';
@@ -27,6 +29,8 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({
   isMe,
   message_id,
   onDelete,
+  onReply,
+  onScrollToMessage,
   // isRead,
   // readBy,
   // conversationType,
@@ -59,9 +63,8 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({
   };
 
   const handleReply = () => {
-    // if (onReply) {
-    //   onReply({ messagecontent: content });
-    // }
+    onReply(content);
+    onScrollToMessage(message_id);
   };
 
   const handleDelete = () =>{

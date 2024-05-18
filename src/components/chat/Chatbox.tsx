@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { Input, Button, Divider, message } from 'antd';
 import { useRequest } from 'ahooks';
 import styles from './Chatbox.module.css';
@@ -31,6 +31,8 @@ const Chatbox: React.FC<ChatboxProps> = ({
   const [inputValue, setInputValue] = useState(''); // 控制输入框的值
   const messageEndRef = useRef<HTMLDivElement>(null); // 指向消息列表末尾的引用，用于自动滚动
   const userid = useSelector((state: RootState) => state.auth.userid);
+  const [replyingTo, setReplyingTo] = useState<string | null>(null);
+  const [scrollToMessage, setScrollToMessage] = useState<number | null>(null); //被回复消息的id
 
   // 使用ahooks的useRequest钩子从IndexedDB异步获取消息数据，依赖项为lastUpdateTime
   const { data: messages } = useRequest(
@@ -56,15 +58,15 @@ const Chatbox: React.FC<ChatboxProps> = ({
       message.error('消息内容不能为空');
       return;
     }
-    const content = inputValue.trim();
+    let content = inputValue.trim();
+    if (replyingTo) {
+      // content = `回复 ${replyingTo}:\n${content}`;
+      setReplyingTo(null);
+    }
     setSending(true);
     addMessage({ me, content, conversation: conversation! }) // 调用API发送消息
-      // .then((res) => res.json())
-      // .then((res) =>{
-      //   alert(res.error)
-      // })
       .then(() => {
-        setInputValue('')
+        setInputValue('');
         if (onUpdateLastUpdateTime) {
           onUpdateLastUpdateTime(); // 调用回调函数通知父组件更新 lastUpdateTime
         }
@@ -88,18 +90,25 @@ const Chatbox: React.FC<ChatboxProps> = ({
     }
   };
 
-  const handleReply = ({messagecontent} : {messagecontent: string}) =>{ //messagecontent: 回复的那条消息的内容
-    // if (!inputValue) {
-    //   message.error('消息内容不能为空');
-    //   return;
-    // }
-    const content = messagecontent + ' 回复：\n' + inputValue.trim();
-    setSending(true);
-    addMessage({ me, content, conversation: conversation! }) // 调用API发送消息
-      .then(() => setInputValue(''))
-      .catch(() => message.error('消息发送失败'))
-      .finally(() => setSending(false));
-  }; //待改，怎么区分被回复的消息和直接发送的消息。而且感觉发消息的逻辑也有点问题
+  const handleReply = (messagecontent: string ) => {
+    setInputValue(`回复 ${messagecontent}:\n`);
+    setReplyingTo(messagecontent);
+  };
+
+  const handleScrollToMessage = (message_id: number) => {
+    setScrollToMessage(message_id); // 设置要滚动到的消息的 message_id
+  };
+
+  useEffect(() => {
+    if (scrollToMessage !== null) {
+      // 使用 DOM 操作滚动到消息处
+      const messageElement = document.getElementById(`message-${scrollToMessage}`);
+      if (messageElement) {
+        messageElement.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
+        setScrollToMessage(null);
+      }
+    }
+  }, [scrollToMessage]);
 
   return (
     <div className={styles.container}>
@@ -119,7 +128,10 @@ const Chatbox: React.FC<ChatboxProps> = ({
         {/* 消息列表容器 */}
         {messages?.map((item) => ( //这里后续要传isRead和ReadBY（？
           // <MessageBubble key={item.id} isMe={item.sender == me} onReply={() => handleReply({ messagecontent: item.content })} {...item} /> // 渲染每条消息为MessageBubble组件
-          <MessageBubble key={item.id} isMe={item.sender == me} message_id={item.id} onDelete={handleDeleteMessage} {...item} /> // 渲染每条消息为MessageBubble组件
+          <MessageBubble key={item.id} isMe={item.sender == me} message_id={item.id} onDelete={handleDeleteMessage} 
+          onReply={handleReply}
+          onScrollToMessage={handleScrollToMessage}
+          {...item} /> // 渲染每条消息为MessageBubble组件
         ))}
         <div ref={messageEndRef} /> {/* 用于自动滚动到消息列表底部的空div */}
       </div>

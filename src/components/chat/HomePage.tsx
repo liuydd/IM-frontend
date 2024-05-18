@@ -53,15 +53,6 @@ const HomePage = () => {
     }
   }, [activeChat, refresh]);
 
-  // const handleDeleteMessage = async (message_id: number) => {
-  //   try {
-  //     await deleteMessage({ me: me!, message_id }); // 调用删除消息的 API 函数
-  //     update(); // 删除消息后更新数据
-  //   } catch (error) {
-  //     console.error('Error deleting message:', error);
-  //     message.error('消息删除失败');
-  //   }
-  // };
 
   const updateLastUpdateTime = () => {
     setLastUpdateTime(Date.now());
