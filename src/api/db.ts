@@ -123,7 +123,8 @@ export class CachedData extends Dexie {
     
     const messages = await this.messages
       .where('conversation')
-      .equals(convId);
+      .equals(convId)
+      .toArray();
     messages.forEach((message) => {
       readMessage({me, message.id});
     });
