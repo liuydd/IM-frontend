@@ -23,6 +23,12 @@ import ChatPage from "../components/chat/ChatLayout"; //测试页面
 import HomePage from "../components/chat/HomePage";
 import faye from "../avatars/faye.jpg";
 import spike from "../avatars/spike.jpg";
+import asuka from "../avatars/asuka.jpg";
+import fuu from "../avatars/fuu.jpg";
+import jin from "../avatars/jin.jpg";
+import mugen from "../avatars/mugen.jpg";
+import Rei from "../avatars/Rei.jpg";
+import ritsuko from "../avatars/ritsuko.jpg";
 import { StaticImageData } from "next/image";
 
 const UserScreen = () => {
@@ -37,6 +43,12 @@ const UserScreen = () => {
     const avatarMap: { [key: string]:  StaticImageData} = {
         "faye": faye,
         "spike": spike,
+        "asuka": asuka,
+        "fuu": fuu,
+        "jin": jin,
+        "mugen": mugen,
+        "Rei": Rei,
+        "ritsuko": ritsuko,
     };
     const UserAvatar = avatarMap[avatar]; // 根据字符串值获取图片路径
 
@@ -46,7 +58,8 @@ const UserScreen = () => {
     const router = useRouter();
     const dispatch = useDispatch();
 
-    const [showModal, setShowModal] = useState(false);
+    const [showPasswordModal, setShowPasswordModal] = useState(false);
+    const [showProfileModal, setShowProfileModal] = useState(false);
     const [formData, setFormData] = useState({
         username: "",
         newUsername: "",
@@ -60,13 +73,23 @@ const UserScreen = () => {
         newPhoneNumber: ""
     });
 
-    const openModal = () => {
-        setShowModal(true);
+    
+    const openPasswordModal = () => {
+        setShowPasswordModal(true);
       };
-    const closeModal = () => {
-        setShowModal(false);
-    };
-
+    
+      const closePasswordModal = () => {
+        setShowPasswordModal(false);
+      };
+    
+      const openProfileModal = () => {
+        setShowProfileModal(true);
+      };
+    
+      const closeProfileModal = () => {
+        setShowProfileModal(false);
+      };
+    
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setFormData((prevData) => ({
@@ -81,39 +104,87 @@ const UserScreen = () => {
         }
     };
 
-    const edit = () => {
+    const handlePasswordSubmit = () => {
+        // 发送密码到后端进行验证
+        fetch(`${BACKEND_URL}/api/checkPassword`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `${token}`,
+          },
+          body: JSON.stringify({
+            userid,
+            password: formData.password,
+          }),
+        })
+          .then((res) => res.json())
+          .then((res) => {
+            if (Number(res.code) === 0) {
+              // 密码验证成功，关闭密码验证模态框，显示修改profile的模态框
+              setShowPasswordModal(false);
+              setShowProfileModal(true);
+            } else {
+              // 密码验证失败，提示用户密码错误
+              alert("密码错误，请重试");
+            }
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+      };
+    
+    const handleProfileEdit = () => {
         const { username, password, newUsername, newPassword, newAvatar, newEmail, newPhoneNumber } = formData;
-        fetch(`${BACKEND_URL}/api/modify`, {
-            method : "POST",
-            headers : {
-                "Content-Type" : "application/json",
-                Authorization : `${token}`
+        
+        // Check if the password is correct before making the API call
+        fetch(`${BACKEND_URL}/api/checkPassword`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `${token}`
             },
-            body : JSON.stringify({
+            body: JSON.stringify({
                 userid,
-                username,
-                newUsername,
-                password,
-                newPassword,
-                newAvatar,
-                newEmail,
-                newPhoneNumber,
+                password
             })
         })
         .then((res) => res.json())
         .then((res) => {
             if (Number(res.code) === 0) {
-                alert("用户信息更新成功");
+                // Password is correct, proceed with the edit
+                fetch(`${BACKEND_URL}/api/modify`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `${token}`
+                    },
+                    body: JSON.stringify({
+                        userid,
+                        username,
+                        newUsername,
+                        password,
+                        newPassword,
+                        newAvatar,
+                        newEmail,
+                        newPhoneNumber,
+                    })
+                })
+                .then((res) => res.json())
+                .then((res) => {
+                    if (Number(res.code) === 0) {
+                        alert("用户信息更新成功");
+                    } else {
+                        alert("用户信息更新失败" + res.info);
+                    }
+                });
+            } else {
+                // Password is incorrect
+                alert("密码错误，请重试");
             }
-            else {
-                alert("用户信息更新失败"+res.info);
-            }
-        })
-        .catch((err) => alert(FAILURE_PREFIX + err));
-
-        closeModal();
+        });
+    setShowProfileModal(false);
     };
-
+    
     const logout = () => {
         localStorage.removeItem("token");
         localStorage.removeItem("username");
@@ -217,35 +288,69 @@ const UserScreen = () => {
                 </div> */}
             </div>
 
-                <div>
-                    <Button onClick={openModal}>Account Info</Button>
-                    {showModal && (
-                        <Modal
-                            visible={showModal}
-                            onCancel={closeModal}
-                            footer={null}
-                        >
-                            <h2>Edit Account Info</h2>
-                            <Form onFinish={edit}>
-                                <Form.Item label="Password">
-                                    <Input.Password name="password" value={formData.password} onChange={handleChange} />
-                                </Form.Item>
-                                <Form.Item label="New Username">
-                                    <Input name="newUsername" value={formData.newUsername} onChange={handleChange} />
-                                </Form.Item>
-                                <Form.Item label="New Password">
-                                    <Input.Password name="newPassword" value={formData.newPassword} onChange={handleChange} />
-                                </Form.Item>
-                                <Form.Item label="New Email">
-                                    <Input name="newEmail" value={formData.newEmail} onChange={handleChange} />
-                                </Form.Item>
-                                <Form.Item label="New Phone Number">
-                                    <Input name="newPhoneNumber" value={formData.newPhoneNumber} onChange={handleChange} />
-                                </Form.Item>
-                                <Button type="primary" htmlType="submit">Save</Button>
-                            </Form>
-                        </Modal>
-                    )}
+            <div>
+                <Button onClick={openPasswordModal}>Account Info</Button>
+                <Modal
+                    visible={showPasswordModal}
+                    onCancel={closePasswordModal}
+                    footer={null}
+                >
+                    <h2>Enter Your Password</h2>
+                    <Form onFinish={handlePasswordSubmit}>
+                    <Form.Item label="Password">
+                        <Input
+                        type="password"
+                        name="password"
+                        value={formData.password}
+                        onChange={handleChange}
+                        />
+                    </Form.Item>
+                    <Button type="primary" htmlType="submit">
+                        Confirm
+                    </Button>
+                    </Form>
+                </Modal>
+
+                <Modal
+                    visible={showProfileModal}
+                    onCancel={closeProfileModal}
+                    footer={null}
+                >
+                    <h2>Edit Account Info</h2>
+                    <Form onFinish={handleProfileEdit}>
+                    <Form.Item label="New Username">
+                        <Input
+                        name="newUsername"
+                        value={formData.newUsername}
+                        onChange={handleChange}
+                        />
+                    </Form.Item>
+                    <Form.Item label="New Password">
+                        <Input.Password
+                        name="newPassword"
+                        value={formData.newPassword}
+                        onChange={handleChange}
+                        />
+                    </Form.Item>
+                    <Form.Item label="New Email">
+                        <Input
+                        name="newEmail"
+                        value={formData.newEmail}
+                        onChange={handleChange}
+                        />
+                    </Form.Item>
+                    <Form.Item label="New Phone Number">
+                        <Input
+                        name="newPhoneNumber"
+                        value={formData.newPhoneNumber}
+                        onChange={handleChange}
+                        />
+                    </Form.Item>
+                    <Button type="primary" htmlType="submit">
+                        Save
+                    </Button>
+                    </Form>
+                </Modal>
                 </div>
                 <div className="demo-logo-vertical" />
                 <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']} style={{ height: '100%', borderRight: 0 }}>
