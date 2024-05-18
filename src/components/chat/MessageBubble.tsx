@@ -36,7 +36,7 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({
   onScrollToMessage,
   // isRead,
   readBy,
-  conversationType,
+  // conversationType,
   // onReply,
 }) => {
   // 格式化时间戳为易读的时间格式
@@ -74,19 +74,19 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({
     onDelete(message_id); // 通知父组件删除消息
   }
 
-  const readStatus = () => {
-    if (conversationType === 'private_chat') {
-      let status: String = "未读";
-      if (readBy.length() === 2) {
-        status = "已读";
-      }
-      return status;
-    }
-    else {
-      const result: string = `${readBy.join(", ")} 已读`;
-      return result;
-    }
-  }
+  // const readStatus = () => {
+  //   if (conversationType === 'private_chat') {
+  //     let status: String = "未读";
+  //     if (readBy.length() === 2) {
+  //       status = "已读";
+  //     }
+  //     return status;
+  //   }
+  //   else {
+  //     const result: string = `${readBy.join(", ")} 已读`;
+  //     return result;
+  //   }
+  // }
 
   return (
     <div className={`${styles.container} ${isMe ? styles.me : styles.others}`}>
@@ -94,7 +94,7 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({
       <div className={styles.sender}>
         {sender} @ {formattedTime} {/* 显示发送者和消息时间 */}
         {
-        readStatus()
+        // readStatus()
         /* {conversationType === 'private_chat' && !isMe && (
           <span>({isRead ? '已读' : '未读'})</span>
         )}
@@ -114,7 +114,7 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({
         id = {String(message_id)}
         onClick={() => {
           // alert("点击成功");
-          // alert(response_count);
+          alert(response_count);
           onScrollToMessage(reply_id);
           // alert("点击成功" + reply_id);
         }}

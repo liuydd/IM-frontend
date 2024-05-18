@@ -126,7 +126,8 @@ export async function getMessages({
     });
     data.messages.forEach((item: Message) => {
       messages.push(item);
-      alert("回复数为" + item.responseCount+",\n发送者为"+item.sender);}
+      // alert("回复数为" + item.responseCount+",\n发送者为"+item.sender);
+    }
       // console.log(item.responseCount);
     ); // 将获取到的消息添加到列表中
     if (!data.has_next) break; // 如果没有下一页，则停止循环
@@ -188,8 +189,8 @@ export const useMessageListener = (fn: () => void, me: string) => {
 
     const connect = () => {
       ws = new WebSocket(
-        getUrl(`ws/?username=${me}`).replace('https://', 'wss://') // 将http协议替换为ws协议，用于WebSocket连接
-        // getUrl(`ws/?username=${me}`).replace('http://', 'ws://')
+        // getUrl(`ws/?username=${me}`).replace('https://', 'wss://') // 将http协议替换为ws协议，用于WebSocket连接
+        getUrl(`ws/?username=${me}`).replace('http://', 'ws://')
       );
 
       ws.onopen = () => {

@@ -150,8 +150,8 @@ const Chatbox: React.FC<ChatboxProps> = ({
           <MessageBubble key={item.id} isMe={item.sender == me} message_id={item.id} reply_id = {item.reply_to} response_count={item.responseCount} onDelete={handleDeleteMessage} 
           onReply={handleReply}
           onScrollToMessage={handleScrollToMessage}
-          conversationType={conversation.type}
-          readBy={item.readBy}
+          // conversationType={conversation.type}
+          // readBy={item.readBy}
           {...item} /> // 渲染每条消息为MessageBubble组件
         ))
         )}
