@@ -141,8 +141,14 @@ export async function addConversation({ type, members }: AddConversationArgs) {
   const { data } = await axios.post(getUrl('conversations'), {
     type,
     members,
-  });
-  return data as Conversation;
+  })
+  if(data){
+    alert("会话创建成功")
+  }
+  else{
+    alert("不符合要求，会话创建失败")
+  }
+  return data as Conversation;  
 }
 
 // 从服务器查询指定会话信息
