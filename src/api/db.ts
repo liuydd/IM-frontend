@@ -8,6 +8,7 @@ export class CachedData extends Dexie {
   conversations: Dexie.Table<Conversation, number>; // 定义一个Dexie表用于存储消息，以数字类型的ID作为主键
   activeConversationId: number | null;
 
+
   constructor() {
     super('CachedData'); // 指定数据库名称
     this.version(1).stores({
@@ -43,6 +44,12 @@ export class CachedData extends Dexie {
     await this.pullConversations(missingConvIds);
 
     await this.updateUnreadCounts(newMessages);
+  }
+
+  async incrementResponseCount(messageId: number) {
+    const message = await this.messages.get(messageId);
+    alert("here");
+    if (message) {alert("adding");message.responseCount += 1;}
   }
 
   // 从服务器拉取新消息 (会话消息链) 并更新本地缓存

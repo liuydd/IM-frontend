@@ -32,6 +32,7 @@ const Chatbox: React.FC<ChatboxProps> = ({
   const messageEndRef = useRef<HTMLDivElement>(null); // 指向消息列表末尾的引用，用于自动滚动
   const userid = useSelector((state: RootState) => state.auth.userid);
   const [replyingTo, setReplyingTo] = useState<string | null>(null);
+  const [replyingToId, setReplyingToId] = useState<number>(0);
   const [scrollToMessage, setScrollToMessage] = useState<number | null>(null); //被回复消息的id
 
   // 使用ahooks的useRequest钩子从IndexedDB异步获取消息数据，依赖项为lastUpdateTime
@@ -60,11 +61,9 @@ const Chatbox: React.FC<ChatboxProps> = ({
     }
     let content = inputValue.trim();
     if (replyingTo) {
-      // content = `回复 ${replyingTo}:\n${content}`;
       setReplyingTo(null);
-    }
-    setSending(true);
-    addMessage({ me, content, conversation: conversation! }) // 调用API发送消息
+      setSending(true);
+    addMessage({ me, content, conversation: conversation!, target: replyingToId }) // 调用API发送消息
       .then(() => {
         setInputValue('');
         if (onUpdateLastUpdateTime) {
@@ -74,6 +73,21 @@ const Chatbox: React.FC<ChatboxProps> = ({
       })
       .catch(() => message.error('消息发送失败'))
       .finally(() => setSending(false));
+    }
+    else{
+      setSending(true);
+      addMessage({ me, content, conversation: conversation! }) // 调用API发送消息
+      .then(() => {
+        setInputValue('');
+        if (onUpdateLastUpdateTime) {
+          // alert('hello');
+          onUpdateLastUpdateTime(); // 调用回调函数通知父组件更新 lastUpdateTime
+        }
+      })
+      .catch(() => message.error('消息发送失败'))
+      .finally(() => setSending(false));
+    }
+    
   };
 
   const handleDeleteMessage = (message_id: number) => {
@@ -91,9 +105,10 @@ const Chatbox: React.FC<ChatboxProps> = ({
     }
   };
 
-  const handleReply = (messagecontent: string ) => {
+  const handleReply = (messagecontent: string, message_id: number) => {
     setInputValue(`回复 ${messagecontent}:\n`);
     setReplyingTo(messagecontent);
+    setReplyingToId(message_id);
   };
 
   const handleScrollToMessage = (message_id: number) => {
@@ -103,7 +118,8 @@ const Chatbox: React.FC<ChatboxProps> = ({
   useEffect(() => {
     if (scrollToMessage !== null) {
       // 使用 DOM 操作滚动到消息处
-      const messageElement = document.getElementById(`message-${scrollToMessage}`);
+      const iid = String(scrollToMessage);
+      const messageElement = document.getElementById(iid);
       if (messageElement) {
         messageElement.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
         setScrollToMessage(null);
@@ -129,7 +145,7 @@ const Chatbox: React.FC<ChatboxProps> = ({
         {/* 消息列表容器 */}
         {messages?.map((item) => ( //这里后续要传isRead和ReadBY（？
           // <MessageBubble key={item.id} isMe={item.sender == me} onReply={() => handleReply({ messagecontent: item.content })} {...item} /> // 渲染每条消息为MessageBubble组件
-          <MessageBubble key={item.id} isMe={item.sender == me} message_id={item.id} onDelete={handleDeleteMessage} 
+          <MessageBubble key={item.id} isMe={item.sender == me} message_id={item.id} reply_id = {item.reply_to} response_count={item.responseCount} onDelete={handleDeleteMessage} 
           onReply={handleReply}
           onScrollToMessage={handleScrollToMessage}
           {...item} /> // 渲染每条消息为MessageBubble组件

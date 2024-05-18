@@ -8,6 +8,7 @@ export type AddMessageArgs = {
   me: string;
   conversation: Conversation;
   content: string;
+  target?: number;
 };
 
 export type DeleteMessageArgs = {
@@ -50,12 +51,14 @@ export async function addMessage({
   me,
   conversation,
   content,
+  target,
 }: AddMessageArgs) {
   const { data } = await axios.post(getUrl('messages'), {
     // userid: userid,
     username: me, // 发送者的用户名
     conversation_id: conversation.id, // 会话ID
     content: content, // 消息内容
+    target: target, //回复的对象名
   });
   return data;
 }
@@ -106,7 +109,11 @@ export async function getMessages({
         limit: limit || 100, // 每次请求的消息数量限制
       },
     });
-    data.messages.forEach((item: Message) => messages.push(item)); // 将获取到的消息添加到列表中
+    data.messages.forEach((item: Message) => {
+      messages.push(item);
+      alert("回复数为" + item.responseCount+",\n发送者为"+item.sender);}
+      // console.log(item.responseCount);
+    ); // 将获取到的消息添加到列表中
     if (!data.has_next) break; // 如果没有下一页，则停止循环
     cursor = messages[messages.length - 1].timestamp; // 更新游标为最后一条消息的时间戳，用于下轮查询
   }

@@ -11,14 +11,15 @@ export type MessageBubbleProps = {
   timestamp: number; // 消息时间戳
   isMe: boolean; // 判断消息是否为当前用户发送
   message_id : number;
+  reply_id: number;
+  response_count: number;
   onDelete: (message_id: number) => void; // 删除消息的回调函数
-  onReply: (messagecontent: string) => void; // 回复消息的回调函数
+  onReply: (messagecontent: string, message_id: number) => void; // 回复消息的回调函数
   onScrollToMessage: (message_id: number) => void; // 滚动到指定消息的回调函数
   // isRead: boolean; // 判断消息是否已读（针对私聊）
   // readBy: string[]; // 已读该消息的成员列表（针对群聊）
   // conversationType?: 'private_chat' | 'group_chat';
   // onReply? : (data: { messagecontent: string }) => void;
-  // responseCount?: number;
 };
 
 // 消息气泡组件
@@ -28,6 +29,8 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({
   timestamp,
   isMe,
   message_id,
+  reply_id,
+  response_count,
   onDelete,
   onReply,
   onScrollToMessage,
@@ -35,7 +38,6 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({
   // readBy,
   // conversationType,
   // onReply,
-  // responseCount,
 }) => {
   // 格式化时间戳为易读的时间格式
   const formattedTime = new Date(timestamp).toLocaleTimeString('zh-CN', {
@@ -63,8 +65,9 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({
   };
 
   const handleReply = () => {
-    onReply(content);
-    onScrollToMessage(message_id);
+    onReply(content, message_id);
+    
+    // onScrollToMessage(message_id);
   };
 
   const handleDelete = () =>{
@@ -92,6 +95,13 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({
         className={`${styles.bubble} ${
           isMe ? styles.meBubble : styles.othersBubble
         }`}
+        id = {String(message_id)}
+        onClick={() => {
+          // alert("点击成功");
+          // alert(response_count);
+          onScrollToMessage(reply_id);
+          // alert("点击成功" + reply_id);
+        }}
       >
         {/* {content}  */}
         {/* {( */}
@@ -116,10 +126,15 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({
             open={clicked}
             onOpenChange={handleClickChange}
           >
-            {content} 
+              {content}
           </Popover>
         </Popover>
         {/* // )} */}
+      </div>
+      <div className={styles.sender}>
+        {
+          <span>({response_count ? response_count : 0 + ' 条回复'})</span>
+        }
       </div>
     </div>
   );
