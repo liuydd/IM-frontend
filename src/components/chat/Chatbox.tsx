@@ -4,7 +4,7 @@ import { useRequest } from 'ahooks';
 import styles from './Chatbox.module.css';
 import MessageBubble from './MessageBubble';
 import { Conversation, Message } from '../../api/types';
-import { addMessage, deleteMessage } from '../../api/chat';
+import { addMessage, deleteMessage, markMessagesAsRead } from '../../api/chat';
 import { getConversationDisplayName } from '../../api/utils';
 import { db } from '../../api/db';
 import { useDispatch, useSelector } from "react-redux";
@@ -48,6 +48,7 @@ const Chatbox: React.FC<ChatboxProps> = ({
           behavior: curMessages.length > 0 ? 'smooth' : 'instant', // 根据消息数量选择滚动方式 (平滑滚动 / 瞬间跳转)
         });
       }, 10);
+      markMessagesAsRead(me, conversation.id)
       return cachedMessagesRef.current; // 返回更新后的消息列表
     },
     { refreshDeps: [conversation, lastUpdateTime] }
