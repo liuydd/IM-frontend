@@ -11,6 +11,7 @@ import EditAnnouncement from "../pages/group/edit_announcement";
 import ListAnnouncement from "../pages/group/list_announcement";
 import InviteMember from "../pages/group/invitation/send";
 import GetInvitation from "../pages/group/invitation/get";
+import FriendRequest from "./friend/send_friend_request";
 
 interface GroupMembers{
   name: string;
@@ -80,7 +81,9 @@ function GroupList() {
           <Divider>Members</Divider>
           <ul>
             {group.members.map((member) => (
-              <li key={member.id}>{member.name}</li>
+              <li key={member.id}>{member.name}<FriendRequest friend={member.name} /></li>
+
+              
             ))}
           </ul>
           <InviteMember groupid = {group.groupid} conversationId={group.conversationid}/>
@@ -104,7 +107,8 @@ function GroupList() {
           <Divider>Members</Divider>
           <ul>
             {group.members.map((member) => (
-              <li key={member.id}>{member.name}</li>
+              <li key={member.id}>{member.name}<FriendRequest friend={member.name} /></li>
+              
             ))}
           </ul>
           <InviteMember groupid = {group.groupid} conversationId={group.conversationid}/>
@@ -128,7 +132,7 @@ function GroupList() {
           <Divider>Members</Divider>
           <ul>
             {group.members.map((member) => (
-              <li key={member.id}>{member.name}</li>
+              <li key={member.id}>{member.name}<FriendRequest friend={member.name} /></li>
             ))}
           </ul>
           <InviteMember groupid = {group.groupid} conversationId={group.conversationid}/>
