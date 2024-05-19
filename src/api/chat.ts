@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import axios from 'axios';
 import { getUrl } from './utils';
 import { Conversation, Message } from './types';
+import { WS_BASE_URL } from './constants';
 
 export type AddMessageArgs = {
   // userid: number;
@@ -195,8 +196,8 @@ export const useMessageListener = (fn: () => void, me: string) => {
 
     const connect = () => {
       ws = new WebSocket(
-        // getUrl(`ws/?username=${me}`).replace('https://', 'wss://') // 将http协议替换为ws协议，用于WebSocket连接
-        getUrl(`ws/?username=${me}`).replace('http://', 'ws://')
+        WS_BASE_URL + me
+        // getUrl(`ws/?username=${me}`).replace('http://', 'ws://')
       );
 
       ws.onopen = () => {

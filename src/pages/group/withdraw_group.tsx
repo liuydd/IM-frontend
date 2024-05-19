@@ -54,6 +54,7 @@ function WithdrawGroup({ groupid, conversationId }: { groupid: number, conversat
             
             const res = await response.json();
             alert(res.info);
+            alert(conversationId);
             try {
                 await leaveConversation({
                   conversationId: conversationId,

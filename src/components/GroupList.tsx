@@ -23,7 +23,7 @@ interface Group {
   monitor: string;
   managers: GroupMembers[];
   members: GroupMembers[];
-  conversation_id: number;
+  conversationid: number;
   // announcements: string[];
 }
 
@@ -66,6 +66,7 @@ function GroupList() {
           <ListAnnouncement groupid = {group.groupid} />
           <GetInvitation groupid = {group.groupid} />
           <p>Monitor: {group.monitor}</p>
+          <p>Group ID: {group.groupid} Conversation ID: {group.conversationid}</p>
           <p><AssignManager groupmemberslist = {group.members} groupid ={group.groupid}/></p>
           <p><TransferMonitor groupmemberslist = {group.members} groupid ={group.groupid}/></p>
           <p><RemoveMember groupmemberslist = {group.members} groupid ={group.groupid}/></p>
@@ -92,6 +93,7 @@ function GroupList() {
           <ListAnnouncement groupid = {group.groupid} />
           <GetInvitation groupid = {group.groupid} />
           <p>Monitor: {group.monitor}</p>
+          <p>Group ID: {group.groupid} Conversation ID: {group.conversationid}</p>
           <Divider>Managers</Divider>
           <p><RemoveMember groupmemberslist = {group.members} groupid ={group.groupid}/></p>
           <ul>
@@ -112,10 +114,11 @@ function GroupList() {
       <h2>Groups You Are a Member Of</h2>
       {memberOfGroup && memberOfGroup.map((group) => (
         <Card key={group.groupid} title={group.groupname}>
-          <p><WithdrawGroup groupid = {group.groupid} conversationId={group.conversation_id}/></p>
+          <p><WithdrawGroup groupid = {group.groupid} conversationId={group.conversationid}/></p>
           <ListAnnouncement groupid = {group.groupid} />
           <GetInvitation groupid = {group.groupid} />
           <p>Monitor: {group.monitor}</p>
+          <p>Group ID: {group.groupid} Conversation ID: {group.conversationid}</p>
           <Divider>Managers</Divider>
           <ul>
             {group.managers.map((manager) => (
