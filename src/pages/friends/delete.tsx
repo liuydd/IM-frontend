@@ -27,14 +27,6 @@ function DeleteFriend(props: DeleteFriendProps){
             })
         })
         .then((res) => res.json())
-        .then(res => {
-            if(Number(res.code) === 0) {
-                alert(res.info)
-            }
-            else {
-                alert(res.info);
-            }
-        })
         .catch((err) => {
             alert("An error occurred while deleting friend.");
         });
