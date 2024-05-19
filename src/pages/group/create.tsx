@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { Button, Checkbox, Form, Input } from "antd";
 import { addConversation } from "../../api/chat";
+import { db } from '../../api/db';
 
 // interface GroupMembers{
 //     memberid: number,
@@ -31,27 +32,50 @@ function CreateGroup({ friendlist }: { friendlist: Friend[] }) {
       setGroupMembersname(checkedNames);
     };
 
-    const createGroup = () =>{
-        fetch(`${BACKEND_URL}/api/group/create`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `${token}`,
-            },
-            body: JSON.stringify({
-                userid,
-                members,
-            })
-        })
-        .then((res)=>res.json())
-        .then((res)=>{
-            alert(res.info);
-            addConversation({type: 'group_chat', members: membersname});
-        })
-        .catch((err)=>{
-            alert(FAILURE_PREFIX);
-        });
+    // const createGroup =() =>{
+    //     fetch(`${BACKEND_URL}/api/group/create`, {
+    //         method: "POST",
+    //         headers: {
+    //             "Content-Type": "application/json",
+    //             Authorization: `${token}`,
+    //         },
+    //         body: JSON.stringify({
+    //             userid,
+    //             members,
+    //         })
+    //     })
+    //     .then((res)=>res.json())
+    //     .then((res)=>{
+    //         alert(res.info);
+    //     })
+    //     .catch((err)=>{
+    //         alert(FAILURE_PREFIX);
+    //     });
+    // };
+    const createGroup = async function createGroup() {
+      try {
+          const response = await fetch(`${BACKEND_URL}/api/group/create`, {
+              method: "POST",
+              headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `${token}`,
+              },
+              body: JSON.stringify({
+                  userid,
+                  members,
+              }),
+          });
+          
+          const res = await response.json();
+          alert(res.info);
+          
+          const conv = await addConversation({ type: 'group_chat', members: membersname });
+          await db.pullConversations([conv.id]);
+      } catch (err) {
+          alert(FAILURE_PREFIX);
+      }
     };
+
     return (
         <Form onFinish={createGroup}>
           <Form.Item label="选择群成员">
