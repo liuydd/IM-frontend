@@ -11,7 +11,7 @@ import EditAnnouncement from "../pages/group/edit_announcement";
 import ListAnnouncement from "../pages/group/list_announcement";
 import InviteMember from "../pages/group/invitation/send";
 import GetInvitation from "../pages/group/invitation/get";
-import FriendRequest from "./friend/send_friend_request";
+import FriendRequest from "../pages/friend/send_friend_request";
 
 interface GroupMembers{
   name: string;
