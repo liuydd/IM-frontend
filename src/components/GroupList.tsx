@@ -23,6 +23,7 @@ interface Group {
   monitor: string;
   managers: GroupMembers[];
   members: GroupMembers[];
+  conversation_id: number;
   // announcements: string[];
 }
 
@@ -111,7 +112,7 @@ function GroupList() {
       <h2>Groups You Are a Member Of</h2>
       {memberOfGroup && memberOfGroup.map((group) => (
         <Card key={group.groupid} title={group.groupname}>
-          <p><WithdrawGroup groupid = {group.groupid}/></p>
+          <p><WithdrawGroup groupid = {group.groupid} conversationId={group.conversation_id}/></p>
           <ListAnnouncement groupid = {group.groupid} />
           <GetInvitation groupid = {group.groupid} />
           <p>Monitor: {group.monitor}</p>

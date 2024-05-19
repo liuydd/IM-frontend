@@ -23,6 +23,8 @@ function CreateGroup({ friendlist }: { friendlist: Friend[] }) {
     // const [members, setGroupMembers] = useState<GroupMembers[]>([]);
     const [members, setGroupMembers] = useState<number[]>([]);
     const [membersname, setGroupMembersname] = useState<string[]>([]);
+    const [groupid, setGroupid] = useState<number>(0);
+    const [conversation_id, setConversationId] = useState<number>(0);
 
     // const handleMemberChange = (checkedValues: number[]) => {
     //   setGroupMembers(checkedValues);
@@ -32,26 +34,6 @@ function CreateGroup({ friendlist }: { friendlist: Friend[] }) {
       setGroupMembersname(checkedNames);
     };
 
-    // const createGroup =() =>{
-    //     fetch(`${BACKEND_URL}/api/group/create`, {
-    //         method: "POST",
-    //         headers: {
-    //             "Content-Type": "application/json",
-    //             Authorization: `${token}`,
-    //         },
-    //         body: JSON.stringify({
-    //             userid,
-    //             members,
-    //         })
-    //     })
-    //     .then((res)=>res.json())
-    //     .then((res)=>{
-    //         alert(res.info);
-    //     })
-    //     .catch((err)=>{
-    //         alert(FAILURE_PREFIX);
-    //     });
-    // };
     const createGroup = async function createGroup() {
       try {
           const response = await fetch(`${BACKEND_URL}/api/group/create`, {
@@ -68,12 +50,26 @@ function CreateGroup({ friendlist }: { friendlist: Friend[] }) {
           
           const res = await response.json();
           alert(res.info);
+          setGroupid(res.groupid);
           
           const conv = await addConversation({ type: 'group_chat', members: membersname });
+          setConversationId(conv.id);
           await db.pullConversations([conv.id]);
       } catch (err) {
           alert(FAILURE_PREFIX);
       }
+      const response = await fetch(`${BACKEND_URL}/api/group/bind`, {
+          method: "POST",
+          headers: {
+              "Content-Type": "application/json",
+              Authorization: `${token}`,
+          },
+          body: JSON.stringify({
+              groupid,
+              conversation_id,
+          }),
+      });
+      
     };
 
     return (
