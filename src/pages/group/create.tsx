@@ -20,6 +20,7 @@ interface Friend{
 function CreateGroup({ friendlist }: { friendlist: Friend[] }) {
     const userid = useSelector((state: RootState) => state.auth.userid);
     const token = useSelector((state: RootState) => state.auth.token);
+    const username = useSelector((state: RootState) => state.auth.name);
     // const [members, setGroupMembers] = useState<GroupMembers[]>([]);
     const [members, setGroupMembers] = useState<number[]>([]);
     const [membersname, setGroupMembersname] = useState<string[]>([]);
@@ -52,7 +53,7 @@ function CreateGroup({ friendlist }: { friendlist: Friend[] }) {
           alert(res.info);
           setGroupid(res.groupid);
           
-          const conv = await addConversation({ type: 'group_chat', members: membersname });
+          const conv = await addConversation({ type: 'group_chat', members: [...membersname, username] });
           setConversationId(conv.id);
           await db.pullConversations([conv.id]);
 
