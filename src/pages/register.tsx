@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { BACKEND_URL, FAILURE_PREFIX, REGISTER_FAILED, REGISTER_SUCCESS_PREFIX } from "../constants/string";
 import { useRouter } from "next/router";
-import { setName, setToken, setUserid } from "../redux/auth";
+import { setName, setToken, setUserid,setPassword } from "../redux/auth";
 import { useDispatch } from "react-redux";
 import { Button, Checkbox, Form, Input } from 'antd';
 import Link from 'next/link';
@@ -9,7 +9,7 @@ import { CLIENT_STATIC_FILES_RUNTIME_MAIN_APP } from "next/dist/shared/lib/const
 
 const RegisterScreen = () => {
     const [username, setUserName] = useState("");
-    const [password, setPassword] = useState("");
+    const [password, setPassWord] = useState("");
     const [email, setEmail] = useState("");
     const [phoneNumber, setPhoneNumber] = useState("");
     //const [error, setError] = useState("");
@@ -33,6 +33,7 @@ const RegisterScreen = () => {
                     dispatch(setName(username));
                     dispatch(setToken(res.token));
                     dispatch(setUserid(res.userid));
+                    dispatch(setPassword(password));
                     alert(REGISTER_SUCCESS_PREFIX + username);
                     router.push("/login");
                 }
@@ -75,7 +76,7 @@ const RegisterScreen = () => {
             name="password"
             rules={[{ required: true, message: 'Please input your password!' }]}
           >
-            <Input.Password value={password} onChange={(e) => setPassword(e.target.value)} />
+            <Input.Password value={password} onChange={(e) => setPassWord(e.target.value)} />
           </Form.Item>
     
           <Form.Item

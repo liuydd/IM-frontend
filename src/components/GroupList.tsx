@@ -11,6 +11,7 @@ import EditAnnouncement from "../pages/group/edit_announcement";
 import ListAnnouncement from "../pages/group/list_announcement";
 import InviteMember from "../pages/group/invitation/send";
 import GetInvitation from "../pages/group/invitation/get";
+import FriendRequest from "../pages/friend/send_friend_request";
 
 interface GroupMembers{
   name: string;
@@ -23,6 +24,7 @@ interface Group {
   monitor: string;
   managers: GroupMembers[];
   members: GroupMembers[];
+  conversationid: number;
   // announcements: string[];
 }
 
@@ -65,9 +67,10 @@ function GroupList() {
           <ListAnnouncement groupid = {group.groupid} />
           <GetInvitation groupid = {group.groupid} />
           <p>Monitor: {group.monitor}</p>
+          <p>Group ID: {group.groupid} Conversation ID: {group.conversationid}</p>
           <p><AssignManager groupmemberslist = {group.members} groupid ={group.groupid}/></p>
           <p><TransferMonitor groupmemberslist = {group.members} groupid ={group.groupid}/></p>
-          <p><RemoveMember groupmemberslist = {group.members} groupid ={group.groupid}/></p>
+          <p><RemoveMember groupmemberslist = {group.members} groupid ={group.groupid} conversationId={group.conversationid}/></p>
           <p><EditAnnouncement groupid={group.groupid}/></p>
           <Divider>Managers</Divider>
           <ul>
@@ -78,10 +81,13 @@ function GroupList() {
           <Divider>Members</Divider>
           <ul>
             {group.members.map((member) => (
-              <li key={member.id}>{member.name}</li>
+              <li key={member.id}>
+                {member.name}
+                <FriendRequest friend={member.name} />
+              </li>
             ))}
           </ul>
-          <InviteMember groupid = {group.groupid}/>
+          <InviteMember groupid = {group.groupid} conversationId={group.conversationid}/>
         </Card>
       ))}
 
@@ -91,8 +97,9 @@ function GroupList() {
           <ListAnnouncement groupid = {group.groupid} />
           <GetInvitation groupid = {group.groupid} />
           <p>Monitor: {group.monitor}</p>
+          <p>Group ID: {group.groupid} Conversation ID: {group.conversationid}</p>
           <Divider>Managers</Divider>
-          <p><RemoveMember groupmemberslist = {group.members} groupid ={group.groupid}/></p>
+          <p><RemoveMember groupmemberslist = {group.members} groupid ={group.groupid} conversationId={group.conversationid}/></p>
           <ul>
             {group.managers.map((manager) => (
               <li key={manager.id}>{manager.name}</li>
@@ -101,20 +108,25 @@ function GroupList() {
           <Divider>Members</Divider>
           <ul>
             {group.members.map((member) => (
-              <li key={member.id}>{member.name}</li>
+              <li key={member.id}>
+                {member.name}
+                <FriendRequest friend={member.name} />
+              </li>
+              
             ))}
           </ul>
-          <InviteMember groupid = {group.groupid}/>
+          <InviteMember groupid = {group.groupid} conversationId={group.conversationid}/>
         </Card>
       ))}
 
       <h2>Groups You Are a Member Of</h2>
       {memberOfGroup && memberOfGroup.map((group) => (
         <Card key={group.groupid} title={group.groupname}>
-          <p><WithdrawGroup groupid = {group.groupid}/></p>
+          <p><WithdrawGroup groupid = {group.groupid} conversationId={group.conversationid}/></p>
           <ListAnnouncement groupid = {group.groupid} />
           <GetInvitation groupid = {group.groupid} />
           <p>Monitor: {group.monitor}</p>
+          <p>Group ID: {group.groupid} Conversation ID: {group.conversationid}</p>
           <Divider>Managers</Divider>
           <ul>
             {group.managers.map((manager) => (
@@ -124,10 +136,13 @@ function GroupList() {
           <Divider>Members</Divider>
           <ul>
             {group.members.map((member) => (
-              <li key={member.id}>{member.name}</li>
+              <li key={member.id}>
+                {member.name}
+                <FriendRequest friend={member.name} />
+              </li>
             ))}
           </ul>
-          <InviteMember groupid = {group.groupid}/>
+          <InviteMember groupid = {group.groupid} conversationId={group.conversationid}/>
         </Card>
       ))}
     </div>

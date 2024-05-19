@@ -1,15 +1,18 @@
 import { useState } from "react";
 import { BACKEND_URL, FAILURE_PREFIX, LOGIN_FAILED, LOGIN_SUCCESS_PREFIX } from "../constants/string";
 import { useRouter } from "next/router";
-import { setName, setToken, setUserid } from "../redux/auth";
+import { setName, setToken, setUserid, setPassword } from "../redux/auth";
 import { useDispatch } from "react-redux";
 import { Button, Checkbox, Form, Input, Typography } from 'antd';
 import Link from 'next/link';
+import { useLocalStorageState, useRequest } from 'ahooks';
 const { Title } = Typography;
+import { db } from '../api/db';
 
 const LoginScreen = () => {
     const [username, setUserName] = useState("");
-    const [password, setPassword] = useState("");
+    const [password, setPassWord] = useState("");
+    const [me, setMe] = useLocalStorageState('me', { defaultValue: 'test' });
 
     const router = useRouter();
     const dispatch = useDispatch();
@@ -28,6 +31,8 @@ const LoginScreen = () => {
                     dispatch(setName(username));
                     dispatch(setToken(res.token));
                     dispatch(setUserid(res.userid));
+                    dispatch(setPassword(password));
+                    setMe(username);
                     alert(LOGIN_SUCCESS_PREFIX + username);
 
                     router.push(`./home`);
@@ -65,7 +70,7 @@ const LoginScreen = () => {
             name="password"
             rules={[{ required: true, message: 'Please input your password!' }]}
           >
-            <Input.Password value={password} onChange={(e) => setPassword(e.target.value)} />
+            <Input.Password value={password} onChange={(e) => setPassWord(e.target.value)} />
           </Form.Item>
     
           <Form.Item

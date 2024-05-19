@@ -14,6 +14,7 @@ interface Invitation{
     receiver: string;
     receiverid: number;
     timestamp: string;
+    conversationid: number;
   }
 
 const GetInvitation = ({ groupid }: { groupid: number }) => {
@@ -78,7 +79,7 @@ const GetInvitation = ({ groupid }: { groupid: number }) => {
                     title={`${item.receiver}请求入群 邀请来自 ${item.sender}`}
                     description={`时间：${item.timestamp}`}
                   />
-                  <div><ProcessInvitation id = {item.id} /></div>
+                  <div><ProcessInvitation id = {item.id} conversationId={item.conversationid}/></div>
                 </List.Item>
               )}
             />

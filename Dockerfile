@@ -19,6 +19,7 @@ COPY --from=builder /build/.next/standalone .
 COPY --from=builder /build/.next/static .next/static
 
 COPY --from=builder /build/public public
+ENV HOSTNAME 0.0.0.0
 
 ENV PORT 80
 
