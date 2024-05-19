@@ -196,8 +196,8 @@ export const useMessageListener = (fn: () => void, me: string) => {
 
     const connect = () => {
       ws = new WebSocket(
-        WS_BASE_URL + me
-        // getUrl(`ws/?username=${me}`).replace('http://', 'ws://')
+        // WS_BASE_URL + me
+        getUrl(`ws/?username=${me}`).replace('http://', 'ws://')
       );
 
       ws.onopen = () => {

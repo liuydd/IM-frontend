@@ -83,7 +83,7 @@ function GroupList() {
               <li key={member.id}>{member.name}</li>
             ))}
           </ul>
-          <InviteMember groupid = {group.groupid}/>
+          <InviteMember groupid = {group.groupid} conversationId={group.conversationid}/>
         </Card>
       ))}
 
@@ -107,7 +107,7 @@ function GroupList() {
               <li key={member.id}>{member.name}</li>
             ))}
           </ul>
-          <InviteMember groupid = {group.groupid}/>
+          <InviteMember groupid = {group.groupid} conversationId={group.conversationid}/>
         </Card>
       ))}
 
@@ -131,7 +131,7 @@ function GroupList() {
               <li key={member.id}>{member.name}</li>
             ))}
           </ul>
-          <InviteMember groupid = {group.groupid}/>
+          <InviteMember groupid = {group.groupid} conversationId={group.conversationid}/>
         </Card>
       ))}
     </div>

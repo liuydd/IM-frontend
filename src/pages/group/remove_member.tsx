@@ -70,7 +70,7 @@ function RemoveMember({ groupmemberslist, groupid, conversationId }: { groupmemb
           
           const res = await response.json();
           alert(res.info);
-          alert(conversationId);
+          // alert(conversationId);
           try {
               await leaveConversation({
                 conversationId: conversationId,
