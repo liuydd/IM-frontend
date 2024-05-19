@@ -81,9 +81,10 @@ function GroupList() {
           <Divider>Members</Divider>
           <ul>
             {group.members.map((member) => (
-              <li key={member.id}>{member.name}<FriendRequest friend={member.name} /></li>
-
-              
+              <li key={member.id}>
+                {member.name}
+                <FriendRequest friend={member.name} />
+              </li>
             ))}
           </ul>
           <InviteMember groupid = {group.groupid} conversationId={group.conversationid}/>
@@ -107,7 +108,10 @@ function GroupList() {
           <Divider>Members</Divider>
           <ul>
             {group.members.map((member) => (
-              <li key={member.id}>{member.name}<FriendRequest friend={member.name} /></li>
+              <li key={member.id}>
+                {member.name}
+                <FriendRequest friend={member.name} />
+              </li>
               
             ))}
           </ul>
@@ -132,7 +136,10 @@ function GroupList() {
           <Divider>Members</Divider>
           <ul>
             {group.members.map((member) => (
-              <li key={member.id}>{member.name}<FriendRequest friend={member.name} /></li>
+              <li key={member.id}>
+                {member.name}
+                <FriendRequest friend={member.name} />
+              </li>
             ))}
           </ul>
           <InviteMember groupid = {group.groupid} conversationId={group.conversationid}/>
