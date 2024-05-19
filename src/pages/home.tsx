@@ -30,6 +30,7 @@ import mugen from "../avatars/mugen.jpg";
 import Rei from "../avatars/Rei.jpg";
 import ritsuko from "../avatars/ritsuko.jpg";
 import { StaticImageData } from "next/image";
+import { useLocalStorageState, useRequest } from 'ahooks';
 
 const UserScreen = () => {
     //获取现有的userName, token, password
@@ -40,6 +41,7 @@ const UserScreen = () => {
     const password = useSelector((state: RootState) => state.auth.password);
     const [selectedAvatar, setSelectedAvatar] = useState<string>(avatar);
     const [avatarHovered, setAvatarHovered] = useState(false);
+    const [me, setMe] = useLocalStorageState('me', { defaultValue: 'test' });
 
     const avatarMap: { [key: string]:  StaticImageData} = {
         "faye": faye,

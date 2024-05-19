@@ -69,7 +69,7 @@ function GroupList() {
           <p>Group ID: {group.groupid} Conversation ID: {group.conversationid}</p>
           <p><AssignManager groupmemberslist = {group.members} groupid ={group.groupid}/></p>
           <p><TransferMonitor groupmemberslist = {group.members} groupid ={group.groupid}/></p>
-          <p><RemoveMember groupmemberslist = {group.members} groupid ={group.groupid}/></p>
+          <p><RemoveMember groupmemberslist = {group.members} groupid ={group.groupid} conversationId={group.conversationid}/></p>
           <p><EditAnnouncement groupid={group.groupid}/></p>
           <Divider>Managers</Divider>
           <ul>
@@ -95,7 +95,7 @@ function GroupList() {
           <p>Monitor: {group.monitor}</p>
           <p>Group ID: {group.groupid} Conversation ID: {group.conversationid}</p>
           <Divider>Managers</Divider>
-          <p><RemoveMember groupmemberslist = {group.members} groupid ={group.groupid}/></p>
+          <p><RemoveMember groupmemberslist = {group.members} groupid ={group.groupid} conversationId={group.conversationid}/></p>
           <ul>
             {group.managers.map((manager) => (
               <li key={manager.id}>{manager.name}</li>
