@@ -52,10 +52,12 @@ function CreateGroup({ friendlist }: { friendlist: Friend[] }) {
           const res = await response.json();
           alert(res.info);
           setGroupid(res.groupid);
+          const newGroupid = res.groupid;
           
           const conv = await addConversation({ type: 'group_chat', members: [...membersname, username] });
           setConversationId(conv.id);
-          await db.pullConversations([conv.id]);
+          const newConversationId = conv.id;
+          await db.pullConversations([newConversationId]);
 
           const ress = await fetch(`${BACKEND_URL}/api/group/bind`, {
             method: "POST",
@@ -64,8 +66,8 @@ function CreateGroup({ friendlist }: { friendlist: Friend[] }) {
                 Authorization: `${token}`,
             },
             body: JSON.stringify({
-                groupid,
-                conversation_id,
+                groupid: newGroupid,
+                conversation_id: newConversationId,
             }),
         });
       } catch (err) {
