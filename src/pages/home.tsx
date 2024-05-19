@@ -31,6 +31,7 @@ import Rei from "../avatars/Rei.jpg";
 import ritsuko from "../avatars/ritsuko.jpg";
 import { StaticImageData } from "next/image";
 import { useLocalStorageState, useRequest } from 'ahooks';
+import { db } from "../api/db"
 
 const UserScreen = () => {
     //获取现有的userName, token, password
@@ -217,6 +218,7 @@ const UserScreen = () => {
         .then(response => {
             if(response.ok) {
                 logout();
+                db.clearCachedData();
             }
             else {
                 alert(FAILURE_PREFIX);
